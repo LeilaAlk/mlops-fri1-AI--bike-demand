@@ -20,3 +20,7 @@ def test_rejects_blank_names():
 
 def test_joins_newlines_and_mixed_whitespace():
     assert normalize_team_slug("Team\nBlue \t North") == "team-blue-north"
+
+
+def test_trims_tabs_and_newlines():
+    assert normalize_team_slug("\tTeam Blue\n") == "team-blue"
