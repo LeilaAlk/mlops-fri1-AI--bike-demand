@@ -1,4 +1,5 @@
 def normalize_team_slug(team_name: str) -> str:
+    """Return a trimmed, lowercase, hyphen-joined team slug."""
     if not team_name.strip():
         raise ValueError(
             "Team name must contain at least one non-whitespace character."

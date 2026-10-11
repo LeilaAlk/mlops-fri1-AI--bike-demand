@@ -1,9 +1,9 @@
 # Team working agreement
 
-- Team and repository (`mlops-<session>-<team-name>-bike-demand`): ________
-- Members: ________
-- Current driver / reviewer / evidence recorder: ________
-- Fourth member's temporary responsibility, if applicable: ________
+- Team and repository (`mlops-<session>-<team-name>-bike-demand`): team AI, mlops-fri1-AI--bike-demand
+- Members: Julia (@JuliaEzzedine), Leila (@LeilaAlk), Talia (@taliaalg), Andrea (@andrea180904)
+- Current driver / reviewer / evidence recorder: Lab 1 fix (PR #1): Julia / Leila / Julia. Lab 1 docs PR: Talia / Andrea / Talia
+- Fourth member's temporary responsibility, if applicable: Leila created the repository and manages collaborators and access; members without a PR role verify the setup on their own machine
 
 ## Workflow
 
@@ -16,6 +16,6 @@
 
 ## Support and handover
 
-- Approved support route / supported workstation: ________
-- How to report a setup or repository-access blocker: ________
-- Next driver and unfinished work: ________
+- Approved support route / supported workstation: ask the instructor during the lab session; all members work on Windows with PowerShell
+- How to report a setup or repository-access blocker: message in the team group chat right away, then the instructor if it is not solved within the session
+- Next driver and unfinished work: to be decided at the start of Lab 2; Lab 2 exercises not started
