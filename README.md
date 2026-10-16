@@ -3,7 +3,8 @@
 Teams of 3–4 use one private GitHub repository throughout the course. Lab 1 is
 repository setup, Git workflow and quality checks. Lab 2 adds validated data,
 chronological splitting, a baseline comparison and local MLflow tracking.
-No Docker, cloud account or MLflow server is needed this week.
+Week 2 (Lab 3) adds a Docker image: see "Lab 3: build and rerun
+in a container" below.
 
 ## Setup: Lab 1
 
@@ -101,6 +102,37 @@ uv run --locked mlflow server --backend-store-uri sqlite:///tracking/mlflow.db -
 `artifacts/`, `tracking/` and `.venv/` are ignored by Git. Team metrics may be
 committed as evidence; never commit credentials or individual private reports.
 CI currently checks only infrastructure/quality; expand it in Week 3.
+
+## Lab 3: build and rerun in a container
+The image installs exactly `uv.lock` and reruns the Lab 2 baseline away from
+your laptop.
+**Prerequisites:** Docker Desktop running (`docker run --rm hello-world`
+works) and a clean checkout of `main`.
+**What goes into the image** (allowlist in `.dockerignore`):
+`pyproject.toml`, `uv.lock`, `.python-version`, `src/`, `configs/`, `data/`,
+`tests/`, plus `README.md`, `reports/week-01-team.md` and
+`.github/workflows/ci.yml`, which preflight requires. Everything else stays
+out: `.git`, `.venv`, `.env`, `artifacts/`, `tracking/`, caches and
+screenshots.
+**Build, run and test** (from the repository root, bash or PowerShell):
+docker build --build-arg GIT_COMMIT=$(git rev-parse HEAD) -t bikedemand:lab3 .
+docker image inspect bike-demand:lab3 --format '{{.Id}} {{json
+.Config.Labels}}'
+docker run --name lab3-run --network none bike-demand:lab3
+docker cp lab3-run:/app/reports/metrics.json ./container-metrics.json
+docker rm lab3-run
+docker run --rm --network none bike-demand:lab3 uv run --locked pytest -q
+**Expected:** validation MAE 154.23 (train mean) and 86.85 (random forest),
+the same as Lab 2; tests `51 passed`.
+**Normal differences:** inside the container `training_commit` is
+`unavailable` and `working_tree_dirty` is `null`, because `.git` is not
+copied; the commit is recorded in the image label
+`org.opencontainers.image.revision`. Run IDs, `timestamp`, `model_version`
+and possibly `model_sha256` change on every run.
+**Lock:** both `uv sync` steps use `--locked`. A missing or stale `uv.lock`
+stops the build; never run `uv lock` just to make it pass.
+**CI:** GitHub Actions checks the lock and the tests but does not build the
+image; container runs are local evidenc
 
 ## Support and individual reports
 
