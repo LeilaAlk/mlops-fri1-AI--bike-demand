@@ -1,0 +1,9 @@
+# commit: 6d7f8ec89429d0709a1206003998f063be31ebc3
+# setup: throwaway clone of main, added "httpx>=0.27" to pyproject.toml dependencies
+# command: uv sync --locked
+# exit code: 1
+
+Resolved 100 packages in 1.07s
+error: The lockfile at `uv.lock` needs to be updated, but `--locked` was provided.
+
+hint: To update the lockfile, run `uv lock`.
