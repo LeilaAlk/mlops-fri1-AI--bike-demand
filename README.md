@@ -115,7 +115,7 @@ works) and a clean checkout of `main`.
 out: `.git`, `.venv`, `.env`, `artifacts/`, `tracking/`, caches and
 screenshots.
 **Build, run and test** (from the repository root, bash or PowerShell):
-docker build --build-arg GIT_COMMIT=$(git rev-parse HEAD) -t bikedemand:lab3 .
+docker build --build-arg GIT_COMMIT=$(git rev-parse HEAD) -t bike-demand:lab3 .
 docker image inspect bike-demand:lab3 --format '{{.Id}} {{json
 .Config.Labels}}'
 docker run --name lab3-run --network none bike-demand:lab3

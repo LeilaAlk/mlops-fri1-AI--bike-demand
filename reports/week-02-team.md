@@ -1,6 +1,6 @@
-\# Week 2, Lab 3: team evidence
+# Week 2, Lab 3: team evidence
 
-\## Team and roles
+## Team and roles
 
 | Area | Author | Reviewer | PR |
 
@@ -14,37 +14,37 @@
 
 | Clean rerun | Julia (@JuliaEzzedine) | Talia | #… |
 
-\## Revision
+## Revision
 
 TO FILL (Julia): packaged commit SHA, link to uv.lock at that commit, uv.lock
 
 SHA-256.
 
-\## Image
+## Image
 
 TO FILL (Julia): link to the build log, image ID, base image digest.
 
-\## Run and comparison with Lab 2
+## Run and comparison with Lab 2
 
 TO FILL (Julia): MAEs, run IDs, model, comparison table and explanation of
 
 differences.
 
-\## Lock checks
+## Lock checks
 
 TO FILL (Julia): links to lock-check.log, lock-missing.log, lock-stale.log,
 
 docker-lock-stale.log.
 
-\## Reviews
+## Reviews
 
 TO FILL: one line per PR with the reviewer's finding.
 
-\## Blocked steps
+## Blocked steps
 
 None so far.
 
-\## Local runs vs CI
+## Local runs vs CI
 
 Docker builds and reruns were run locally. CI checks `uv lock --check`, `uv
 
