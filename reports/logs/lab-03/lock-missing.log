@@ -1,3 +1,8 @@
+# commit: 6d7f8ec89429d0709a1206003998f063be31ebc3
+# setup: throwaway clone of main, uv.lock deleted
+# command: uv sync --locked
+# exit code: 1
+
 Using CPython 3.12.15
 Creating virtual environment at: .venv
 error: Unable to find lockfile at `uv.lock`, but `--locked` was provided. To create a lockfile, run `uv lock` or `uv sync` without the flag.
