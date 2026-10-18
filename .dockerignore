@@ -1,0 +1,33 @@
+# Allowlist: exclude everything, then let in only what the image needs.
+# Anything new added to the repository stays out of the build until someone
+# decides it belongs here.
+*
+
+# Manifest and lock
+!pyproject.toml
+!uv.lock
+!.python-version
+
+# Code, config, frozen data snapshot and tests
+!src/
+!configs/
+!data/
+!tests/
+
+# Files that preflight requires to exist
+!README.md
+!reports/week-01-team.md
+!.github/workflows/ci.yml
+
+# Never inside, even within allowed folders: local environment, caches,
+# outputs of earlier runs and secrets.
+**/.venv
+**/__pycache__
+**/*.py[cod]
+**/.pytest_cache
+**/.ruff_cache
+**/artifacts
+**/tracking
+**/.env
+**/.env.*
+**/.DS_Store
