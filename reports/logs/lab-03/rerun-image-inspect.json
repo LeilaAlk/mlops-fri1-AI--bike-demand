@@ -1,0 +1,82 @@
+[
+    {
+        "Id": "sha256:bb129a0c6363358000018c124e8f3c740cc2295875c8ea89693c2199b09943d5",
+        "RepoTags": [
+            "bike-demand:lab3"
+        ],
+        "RepoDigests": [
+            "bike-demand@sha256:bb129a0c6363358000018c124e8f3c740cc2295875c8ea89693c2199b09943d5"
+        ],
+        "Comment": "buildkit.dockerfile.v0",
+        "Created": "2026-10-18T14:24:07.606349469Z",
+        "Config": {
+            "Env": [
+                "PATH=/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "LANG=C.UTF-8",
+                "GPG_KEY=7169605F62C751356D054A26A821E680E5FA6305",
+                "PYTHON_VERSION=3.12.15",
+                "PYTHON_SHA256=c2c4321961fab0fb999d66e0cecf521c2ab3994c7992873ea99e306c1094fd5a",
+                "UV_PYTHON_DOWNLOADS=never",
+                "UV_LINK_MODE=copy",
+                "UV_COMPILE_BYTECODE=1"
+            ],
+            "Cmd": [
+                "uv",
+                "run",
+                "--locked",
+                "python",
+                "-m",
+                "bike_demand.train",
+                "--config",
+                "configs/baseline.yaml"
+            ],
+            "WorkingDir": "/app",
+            "Labels": {
+                "org.opencontainers.image.revision": "349e9d0e26a547ca3ae612aab25aeb3192609e57",
+                "org.opencontainers.image.source": "https://github.com/LeilaAlk/mlops-fri1-AI--bike-demand"
+            },
+            "ArgsEscaped": true
+        },
+        "Architecture": "amd64",
+        "Os": "linux",
+        "Size": 2451860998,
+        "RootFS": {
+            "Type": "layers",
+            "Layers": [
+                "sha256:15f1c8eb1ab18eae260c7fb6296434cbe1ff0e1e30fd814ae92a80dd54005e62",
+                "sha256:e1fa2746ad6d51e7de9171dfcbb1fe93d01d51c5d8d3623e0c3b223076dc5d23",
+                "sha256:b361fa3b97940ee89a1aab8fde1027e47ab2c2e700ca2f8d5988ad2c64386e5c",
+                "sha256:dca2a125b4903477bcb42084172cfc98865299810620ffd617bf6e12dd83d89f",
+                "sha256:4fc76b774467a3b2c87590636fa0252ea1a919882897892be9ccd0c05ecad111",
+                "sha256:a3dbdb055fd4b5a703d0a73bffcbcc59a66b98e3122392810b42dc120567ae4b",
+                "sha256:91e077d7a470dcce789c5428ce21e0fa8c91eab371c3e1f9c7e5cc7cf68f1093",
+                "sha256:e54ad241d9663c694ce6f798fcfaf453c5166411c50807ba379dd9a263cc90b5",
+                "sha256:0e67736d591a4ac20de491d14b416c2af3a5b17eeeeee20557723244cc25feda",
+                "sha256:5645af571d30aa500f7a417c819c68e6ed0727b88d75166676dd4ff128ae5820",
+                "sha256:e4771829e22e54f8b454134c3d8e1de18e6e113085831323f5059e3c49887882",
+                "sha256:d59f5ea385707b4620ed3c89a396d4a452dca366e435708605af6a5153b4e659",
+                "sha256:7dc486fd836b134260f862e64b5e9f629a8c7ca7452f7955e2751a7f7aa0a7c5",
+                "sha256:dee401f3025d5176c447351921b0ba340b02d02d5f7a3e54074731692fc9f842",
+                "sha256:11382bc569b5c3dc547efe09da9ecfe36c15b8d2c7fbde18dab86062cac44d73",
+                "sha256:9baa80923c66322a7b057dfff38be6bc6095183390ff32eff4a81f452f43f5d9",
+                "sha256:63c4c83cd4efc7f38cb17a718bde1093e56905cca4f7037867be6e0ce41dffac"
+            ]
+        },
+        "Metadata": {
+            "LastTagTime": "2026-10-18T14:26:52.706159791Z"
+        },
+        "Descriptor": {
+            "mediaType": "application/vnd.oci.image.index.v1+json",
+            "digest": "sha256:bb129a0c6363358000018c124e8f3c740cc2295875c8ea89693c2199b09943d5",
+            "size": 856
+        },
+        "Identity": {
+            "Build": [
+                {
+                    "Ref": "vov95yxb2fjd538l7ujw03nl3",
+                    "CreatedAt": "2026-10-18T14:30:04.692619685Z"
+                }
+            ]
+        }
+    }
+]
