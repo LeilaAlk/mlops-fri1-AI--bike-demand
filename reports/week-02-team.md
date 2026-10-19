@@ -12,7 +12,7 @@
 
 | README + team report | Leila (@LeilaAlk) | Andrea | #10 |
 
-| Clean rerun | Julia (@JuliaEzzedine) | Talia | #… |
+| Clean rerun | Julia (@JuliaEzzedine) | Talia | #11 |
 
 ## Revision
 
