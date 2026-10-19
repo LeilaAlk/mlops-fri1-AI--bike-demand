@@ -143,6 +143,55 @@ features. Unknown fields are rejected (`extra="forbid"` in
 missing, extra or out-of-range field returns HTTP 422 before any prediction is
 made.
 
+
+Lab 4: prediction API
+The image ships the saved, evaluated baseline model and serves it with FastAPI.
+The model is trained once at image build time (`docker build`), then the
+service only loads `artifacts/model.joblib` and `artifacts/model-metadata.json`
+at startup. It never trains at startup or per request.
+Endpoints (both read the same model-availability state):
+Request	Model loaded	Answer
+`GET /health`	yes	`200 {"status": "ok", "model_version": "..."}`
+`GET /health`	no	`503 {"detail": "model unavailable: ..."}`
+`POST /predict`, valid body	yes	`200 {"prediction": <finite, >= 0>, "model_version": "..."}`
+`POST /predict`, invalid body	yes or no	`422` (FastAPI validation), before any inference
+`POST /predict`, valid body	no	`503`, never a guessed number
+`model_version` is read from the artifact's own `model-metadata.json`, not hard-coded.
+At startup the service also checks that `model.joblib` matches the SHA-256 and the
+feature order recorded in its metadata; otherwise it reports 503.
+Input contract: one flat JSON object with exactly the twelve training features.
+`season` 1-4, `yr` 0-1, `mnth` 1-12, `hr` 0-23, `holiday` 0-1, `weekday` 0-6,
+`workingday` 0-1, `weathersit` 1-4 (integers); `temp`, `atemp`, `hum`, `windspeed`
+finite numbers in [0, 1] (normalised, not Celsius or percentages).
+Extra fields are rejected with 422, including `cnt`, `casual` and `registered`.
+Types are strict: `"17"`, `17.5` or `true` are not accepted for an integer field.
+Example body: `examples/predict-request.json`.
+Build and run (repository root; in Windows PowerShell use `curl.exe`, not `curl`):
+    docker build --build-arg GIT_COMMIT=$(git rev-parse HEAD) -t bike-demand:lab4 .
+    docker run -d --name lab4-api -p 127.0.0.1:8000:8000 bike-demand:lab4
+    curl.exe -s -i http://127.0.0.1:8000/health
+    curl.exe -s -i -X POST http://127.0.0.1:8000/predict -H "Content-Type: application/json" --data "@examples/predict-request.json"
+    docker stop lab4-api
+    docker rm lab4-api
+
+The OpenAPI page is at http://127.0.0.1:8000/docs while the container runs.
+The port is published on `127.0.0.1` only (your own machine).
+Tests inside the image (normal, invalid and missing-model cases, no server needed):
+    docker run --rm --network none bike-demand:lab4 uv run --locked pytest -q
+
+Missing model on purpose (the service starts but answers 503):
+    docker run -d --name lab4-nomodel -p 127.0.0.1:8001:8000 -e BIKE_DEMAND_MODEL_DIR=/app/no-model bike-demand:lab4
+    curl.exe -s -i http://127.0.0.1:8001/health
+    docker rm -f lab4-nomodel
+
+Lab 3 rerun with this image: the default command is now the API, so run the
+baseline explicitly:
+    docker run --rm --network none bike-demand:lab4 uv run --locked python -m bike_demand.train --config configs/baseline.yaml
+
+Local run without Docker (needs `artifacts/` from a local `train` run):
+    uv run --locked uvicorn bike_demand.api:app --host 127.0.0.1 --port 8000
+
+
 ## Support and individual reports
 
 If setup remains blocked after five minutes, contact the instructor using the
