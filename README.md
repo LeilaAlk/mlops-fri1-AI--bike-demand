@@ -132,7 +132,16 @@ and possibly `model_sha256` change on every run.
 **Lock:** both `uv sync` steps use `--locked`. A missing or stale `uv.lock`
 stops the build; never run `uv lock` just to make it pass.
 **CI:** GitHub Actions checks the lock and the tests but does not build the
-image; container runs are local evidenc
+image; container runs are local evidence.
+
+## Lab 4: request validation
+
+The `/predict` request is one flat JSON object with exactly the twelve training
+features. Unknown fields are rejected (`extra="forbid"` in
+`src/bike_demand/schemas.py`), including the targets `cnt`, `casual` and
+`registered`, so the target can never be sent to the API. A request with a
+missing, extra or out-of-range field returns HTTP 422 before any prediction is
+made.
 
 ## Support and individual reports
 
