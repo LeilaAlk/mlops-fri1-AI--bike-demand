@@ -1,0 +1,7 @@
+HTTP/1.1 200 OK
+date: Mon, 19 Oct 2026 19:12:48 GMT
+server: uvicorn
+content-length: 55
+content-type: application/json
+
+{"status":"ok","model_version":"baseline-b4dc04276ce2"}
