@@ -1,0 +1,7 @@
+HTTP/1.1 200 OK
+date: Tue, 20 Oct 2026 12:27:13 GMT
+server: uvicorn
+content-length: 72
+content-type: application/json
+
+{"prediction":519.4906075228514,"model_version":"baseline-ecb8e263039f"}
