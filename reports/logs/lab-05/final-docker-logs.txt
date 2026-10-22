@@ -1,0 +1,14 @@
+   Building bike-demand @ file:///app
+      Built bike-demand @ file:///app
+Uninstalled 1 package in 1ms
+Installed 1 package in 1ms
+Bytecode compiled 8811 files in 285ms
+INFO:     Started server process [44]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+{"ts": "2026-10-22T14:54:30.265973+00:00", "level": "INFO", "event": "model_loaded", "service_revision": "a970abba447d3dd2a25ea6233ce3d32b52af6c18", "model_version": "baseline-68d00f8187dd", "model_sha256": "d24c050e3631d5b4c2feb8cb571bef6382d8c975c42a5c11edd28de78a0b8c07"}
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+{"ts": "2026-10-22T14:55:02.962985+00:00", "level": "INFO", "event": "request", "request_id": "43ffa146fa7f491eadcd8a280f43e053", "method": "GET", "path": "/health", "status": 200, "outcome": "ok", "duration_ms": 2.6, "service_revision": "a970abba447d3dd2a25ea6233ce3d32b52af6c18", "model_version": "baseline-68d00f8187dd", "model_sha256": "d24c050e3631d5b4c2feb8cb571bef6382d8c975c42a5c11edd28de78a0b8c07"}
+{"ts": "2026-10-22T14:55:02.990516+00:00", "level": "INFO", "event": "request", "request_id": "226b080f8028409688aa323cd5b6ad19", "method": "GET", "path": "/version", "status": 200, "outcome": "ok", "duration_ms": 1.4, "service_revision": "a970abba447d3dd2a25ea6233ce3d32b52af6c18", "model_version": "baseline-68d00f8187dd", "model_sha256": "d24c050e3631d5b4c2feb8cb571bef6382d8c975c42a5c11edd28de78a0b8c07"}
+{"ts": "2026-10-22T14:55:03.013658+00:00", "level": "INFO", "event": "request", "request_id": "check-5b81f831", "method": "POST", "path": "/predict", "status": 200, "outcome": "predicted", "duration_ms": 19.4, "service_revision": "a970abba447d3dd2a25ea6233ce3d32b52af6c18", "model_version": "baseline-68d00f8187dd", "model_sha256": "d24c050e3631d5b4c2feb8cb571bef6382d8c975c42a5c11edd28de78a0b8c07"}
+{"ts": "2026-10-22T14:55:03.018849+00:00", "level": "INFO", "event": "request", "request_id": "61e05d34236d45608dfd98e707ec12f6", "method": "POST", "path": "/predict", "status": 422, "outcome": "rejected", "duration_ms": 1.2, "service_revision": "a970abba447d3dd2a25ea6233ce3d32b52af6c18", "model_version": "baseline-68d00f8187dd", "model_sha256": "d24c050e3631d5b4c2feb8cb571bef6382d8c975c42a5c11edd28de78a0b8c07"}

@@ -1,0 +1,54 @@
+{
+  "url": "http://127.0.0.1:8000",
+  "claims": [
+    {
+      "claim": "ready (/health)",
+      "expected": 200,
+      "observed": 200,
+      "ok": true
+    },
+    {
+      "claim": "model_version",
+      "expected": "baseline-68d00f8187dd",
+      "observed": "baseline-68d00f8187dd",
+      "ok": true
+    },
+    {
+      "claim": "model_sha256",
+      "expected": "d24c050e3631d5b4c2feb8cb571bef6382d8c975c42a5c11edd28de78a0b8c07",
+      "observed": "d24c050e3631d5b4c2feb8cb571bef6382d8c975c42a5c11edd28de78a0b8c07",
+      "ok": true
+    },
+    {
+      "claim": "service_revision",
+      "expected": "a970abba447d3dd2a25ea6233ce3d32b52af6c18",
+      "observed": "a970abba447d3dd2a25ea6233ce3d32b52af6c18",
+      "ok": true
+    },
+    {
+      "claim": "valid input -> 200",
+      "expected": "200, finite >= 0",
+      "observed": "200, 519.4906075228514",
+      "ok": true
+    },
+    {
+      "claim": "prediction model_version",
+      "expected": "baseline-68d00f8187dd",
+      "observed": "baseline-68d00f8187dd",
+      "ok": true
+    },
+    {
+      "claim": "request id echoed",
+      "expected": "check-5b81f831",
+      "observed": "check-5b81f831",
+      "ok": true
+    },
+    {
+      "claim": "invalid hr=24 -> 422",
+      "expected": 422,
+      "observed": 422,
+      "ok": true
+    }
+  ],
+  "passed": true
+}

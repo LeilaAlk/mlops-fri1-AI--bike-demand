@@ -1,0 +1,15 @@
+   Building bike-demand @ file:///app
+      Built bike-demand @ file:///app
+Uninstalled 1 package in 1ms
+Installed 1 package in 3ms
+Bytecode compiled 8811 files in 253ms
+INFO:     Started server process [43]
+INFO:     Waiting for application startup.
+{"ts": "2026-10-22T14:57:25.641501+00:00", "level": "ERROR", "event": "model_unavailable", "reason": "model.joblib sha256 d24c050e3631 differs from expected 000000000000", "service_revision": "a970abba447d3dd2a25ea6233ce3d32b52af6c18", "model_version": null, "model_sha256": null}
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+{"ts": "2026-10-22T14:57:47.459019+00:00", "level": "WARNING", "event": "request", "request_id": "c91ff4790b004d4d8c9c7ffbcd0a79b7", "method": "GET", "path": "/health", "status": 503, "outcome": "unavailable", "duration_ms": 2.0, "service_revision": "a970abba447d3dd2a25ea6233ce3d32b52af6c18", "model_version": null, "model_sha256": null}
+{"ts": "2026-10-22T14:57:54.774027+00:00", "level": "WARNING", "event": "request", "request_id": "d7f886bf3b2540c8a9b7c851cc3a01eb", "method": "GET", "path": "/health", "status": 503, "outcome": "unavailable", "duration_ms": 1.1, "service_revision": "a970abba447d3dd2a25ea6233ce3d32b52af6c18", "model_version": null, "model_sha256": null}
+{"ts": "2026-10-22T14:57:54.781417+00:00", "level": "INFO", "event": "request", "request_id": "b2c19792e95d4568aab4af4e664fcef1", "method": "GET", "path": "/version", "status": 200, "outcome": "ok", "duration_ms": 3.6, "service_revision": "a970abba447d3dd2a25ea6233ce3d32b52af6c18", "model_version": null, "model_sha256": null}
+{"ts": "2026-10-22T14:57:54.797508+00:00", "level": "WARNING", "event": "request", "request_id": "check-aa44912b", "method": "POST", "path": "/predict", "status": 503, "outcome": "unavailable", "duration_ms": 1.6, "service_revision": "a970abba447d3dd2a25ea6233ce3d32b52af6c18", "model_version": null, "model_sha256": null}
+{"ts": "2026-10-22T14:57:54.802354+00:00", "level": "INFO", "event": "request", "request_id": "d2954fa3fc304bb4a685ca791c72d379", "method": "POST", "path": "/predict", "status": 422, "outcome": "rejected", "duration_ms": 0.8, "service_revision": "a970abba447d3dd2a25ea6233ce3d32b52af6c18", "model_version": null, "model_sha256": null}
