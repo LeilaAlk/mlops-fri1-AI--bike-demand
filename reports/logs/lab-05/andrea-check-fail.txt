@@ -1,0 +1,10 @@
+claim                      expected                   observed                   result
+ready (/health)            200                        200                        ok
+model_version              baseline-889279a542e4      baseline-889279a542e4      ok
+model_sha256               d24c050e3631d5b4c2feb...   d24c050e3631d5b4c2feb...   ok
+service_revision           0000000                    b581f99093ea68df1ce09...   FAIL
+valid input -> 200         200, finite >= 0           200, 519.4906075228514     ok
+prediction model_version   baseline-889279a542e4      baseline-889279a542e4      ok
+request id echoed          check-33fbd8d6             check-33fbd8d6             ok
+invalid hr=24 -> 422       422                        422                        ok
+exit status 1 (failed: ['service_revision'])
