@@ -1,0 +1,12 @@
+   Building bike-demand @ file:///app
+      Built bike-demand @ file:///app
+Uninstalled 1 package in 4ms
+Installed 1 package in 2ms
+Bytecode compiled 8811 files in 632ms
+INFO:     Started server process [43]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+{"ts": "2026-10-22T13:40:36.906642+00:00", "level": "INFO", "event": "model_loaded", "service_revision": "98494f437148707cf293e055c420d0a1699e67e7", "model_version": "baseline-f4e0adcc0601", "model_sha256": "d24c050e3631d5b4c2feb8cb571bef6382d8c975c42a5c11edd28de78a0b8c07"}
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+{"ts": "2026-10-22T13:40:48.465192+00:00", "level": "INFO", "event": "request", "request_id": "julia-1", "method": "GET", "path": "/health", "status": 200, "outcome": "ok", "duration_ms": 2.9, "service_revision": "98494f437148707cf293e055c420d0a1699e67e7", "model_version": "baseline-f4e0adcc0601", "model_sha256": "d24c050e3631d5b4c2feb8cb571bef6382d8c975c42a5c11edd28de78a0b8c07"}
+{"ts": "2026-10-22T13:40:48.596705+00:00", "level": "INFO", "event": "request", "request_id": "9f7451ab13454fb1a0e16f469f2c2b04", "method": "POST", "path": "/predict", "status": 200, "outcome": "predicted", "duration_ms": 26.9, "service_revision": "98494f437148707cf293e055c420d0a1699e67e7", "model_version": "baseline-f4e0adcc0601", "model_sha256": "d24c050e3631d5b4c2feb8cb571bef6382d8c975c42a5c11edd28de78a0b8c07"}
