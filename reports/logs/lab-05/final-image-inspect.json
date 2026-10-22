@@ -1,0 +1,94 @@
+[
+    {
+        "Id": "sha256:c283510c04c7d93b9125d66226e329a31587b72ca3d73ba0b8d04a82d5ca86ea",
+        "RepoTags": [
+            "bike-demand:lab5"
+        ],
+        "RepoDigests": [
+            "bike-demand@sha256:c283510c04c7d93b9125d66226e329a31587b72ca3d73ba0b8d04a82d5ca86ea"
+        ],
+        "Parent": "",
+        "Comment": "buildkit.dockerfile.v0",
+        "Created": "2026-10-22T14:52:16.629024223Z",
+        "DockerVersion": "",
+        "Author": "",
+        "Architecture": "amd64",
+        "Os": "linux",
+        "Size": 363150133,
+        "GraphDriver": {
+            "Data": null,
+            "Name": "overlayfs"
+        },
+        "RootFS": {
+            "Type": "layers",
+            "Layers": [
+                "sha256:15f1c8eb1ab18eae260c7fb6296434cbe1ff0e1e30fd814ae92a80dd54005e62",
+                "sha256:e1fa2746ad6d51e7de9171dfcbb1fe93d01d51c5d8d3623e0c3b223076dc5d23",
+                "sha256:b361fa3b97940ee89a1aab8fde1027e47ab2c2e700ca2f8d5988ad2c64386e5c",
+                "sha256:dca2a125b4903477bcb42084172cfc98865299810620ffd617bf6e12dd83d89f",
+                "sha256:db8c76f23f09d2136588e3addc345c27ed63a88e155f67aba6b559bbfd0b1ff6",
+                "sha256:7e0269ce5bd04bed43a3723c56fef9e8daacd1caca5a0e785275f77b5f30a0bc",
+                "sha256:dd2597c8a5b9a598801249ea397962d026bcefa8f20c675f510664d65e0a98ac",
+                "sha256:e6b60c0f9dcd504abc2b5a1d3a129a611ba2e0394c30a9676d0d9fd1d28a4799",
+                "sha256:076c11c27a02750c49f59dde481c910d2ec299bad3efe01cdd90394f7a5672f0",
+                "sha256:23306e7d9c53caa66bd56bc3a3d598f483d58c17d2bf0ef3d7f3278e0a1a69ea",
+                "sha256:4b5ddc3c923aec7714b2c038942a4683291c2ff7ffac42e49ac4251360745422",
+                "sha256:d6220622ae21665d87aac33f5757237f8b61d029ad82b7b68be7a50d3b28e0bf",
+                "sha256:a3978e67f54b06bc04422e4a68b54890f591c1189d4b41eafaeb894ccdc774c4",
+                "sha256:bd076a63a7637cebf180f0fdac0d832d7d506f8ac2c9a7cf878a0bf07015404e",
+                "sha256:948ca7e6763a1528ff71040c8a4d8a22b124c04a8b17acbf587f2514d2b922bc",
+                "sha256:660525635e0760a539a88593b274edfdeb82b638fac6f770c7e2ba45b6090ba2",
+                "sha256:40715d712c52c1976d4eaf47fbf8fa8fdd070e5f335b434b102bc3f982b169b5",
+                "sha256:8c85469fcf88a7a225dff12a2c6591348209f1bc33ba0826b9d083450642b43a"
+            ]
+        },
+        "Metadata": {
+            "LastTagTime": "2026-10-22T14:52:51.388503714Z"
+        },
+        "Descriptor": {
+            "mediaType": "application/vnd.oci.image.index.v1+json",
+            "digest": "sha256:c283510c04c7d93b9125d66226e329a31587b72ca3d73ba0b8d04a82d5ca86ea",
+            "size": 856
+        },
+        "Config": {
+            "ArgsEscaped": true,
+            "Cmd": [
+                "uv",
+                "run",
+                "--locked",
+                "uvicorn",
+                "bike_demand.api:app",
+                "--host",
+                "0.0.0.0",
+                "--port",
+                "8000",
+                "--no-access-log"
+            ],
+            "Entrypoint": null,
+            "Env": [
+                "PATH=/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "LANG=C.UTF-8",
+                "GPG_KEY=7169605F62C751356D054A26A821E680E5FA6305",
+                "PYTHON_VERSION=3.12.15",
+                "PYTHON_SHA256=c2c4321961fab0fb999d66e0cecf521c2ab3994c7992873ea99e306c1094fd5a",
+                "UV_PYTHON_DOWNLOADS=never",
+                "UV_LINK_MODE=copy",
+                "UV_COMPILE_BYTECODE=1",
+                "UV_NO_CACHE=1",
+                "SERVICE_REVISION=a970abba447d3dd2a25ea6233ce3d32b52af6c18",
+                "PYTHONUNBUFFERED=1"
+            ],
+            "ExposedPorts": {
+                "8000/tcp": {}
+            },
+            "Labels": {
+                "org.opencontainers.image.revision": "a970abba447d3dd2a25ea6233ce3d32b52af6c18",
+                "org.opencontainers.image.source": "https://github.com/LeilaAlk/mlops-fri1-AI--bike-demand"
+            },
+            "OnBuild": null,
+            "User": "",
+            "Volumes": null,
+            "WorkingDir": "/app"
+        }
+    }
+]

@@ -1,0 +1,8 @@
+HTTP/1.1 503 Service Unavailable
+date: Thu, 22 Oct 2026 14:57:46 GMT
+server: uvicorn
+content-length: 99
+content-type: application/json
+x-request-id: c91ff4790b004d4d8c9c7ffbcd0a79b7
+
+{"detail":"model unavailable: model.joblib sha256 d24c050e3631 differs from expected 000000000000"}

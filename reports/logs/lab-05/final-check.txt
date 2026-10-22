@@ -1,0 +1,15 @@
+Using CPython 3.12.14
+Creating virtual environment at: .venv
+   Building bike-demand @ file:///C:/Users/Gabrieli%20Andr%C3%A9a/lab5-final
+      Built bike-demand @ file:///C:/Users/Gabrieli%20Andr%C3%A9a/lab5-final
+Installed 99 packages in 8.31s
+claim                      expected                   observed                   result
+ready (/health)            200                        200                        ok
+model_version              baseline-68d00f8187dd      baseline-68d00f8187dd      ok
+model_sha256               d24c050e3631d5b4c2feb...   d24c050e3631d5b4c2feb...   ok
+service_revision           a970abba447d3dd2a25ea...   a970abba447d3dd2a25ea...   ok
+valid input -> 200         200, finite >= 0           200, 519.4906075228514     ok
+prediction model_version   baseline-68d00f8187dd      baseline-68d00f8187dd      ok
+request id echoed          check-5b81f831             check-5b81f831             ok
+invalid hr=24 -> 422       422                        422                        ok
+exit status 0

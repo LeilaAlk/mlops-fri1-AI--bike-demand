@@ -1,0 +1,10 @@
+claim                      expected                   observed                   result
+ready (/health)            200                        503                        FAIL
+model_version              baseline-68d00f8187dd      None                       FAIL
+model_sha256               d24c050e3631d5b4c2feb...   None                       FAIL
+service_revision           a970abba447d3dd2a25ea...   a970abba447d3dd2a25ea...   ok
+valid input -> 200         200, finite >= 0           503, None                  FAIL
+prediction model_version   baseline-68d00f8187dd      None                       FAIL
+request id echoed          check-aa44912b             check-aa44912b             ok
+invalid hr=24 -> 422       422                        422                        ok
+exit status 1 (failed: ['ready (/health)', 'model_version', 'model_sha256', 'valid input -> 200', 'prediction model_version'])
