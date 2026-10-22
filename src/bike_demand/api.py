@@ -14,20 +14,35 @@ from bike_demand.preflight import sha256
 from bike_demand.schemas import PredictRequest, PredictResponse
 from bike_demand.validate import FEATURES
 
+# Settings come from the environment at start-up, never from the image's code.
 # Folder holding model.joblib and model-metadata.json written by bike_demand.train.
 MODEL_DIR_ENV = "BIKE_DEMAND_MODEL_DIR"
 DEFAULT_MODEL_DIR = "artifacts"
+# Optional: SHA-256 of the model the operator expects; a mismatch keeps the
+# service not ready (503) instead of serving another model.
+EXPECTED_SHA_ENV = "BIKE_DEMAND_EXPECTED_MODEL_SHA256"
+# Code identity: the Git commit the image was built from (set by the Dockerfile).
+REVISION_ENV = "SERVICE_REVISION"
 
-# One shared model-availability state, read by both /health and /predict.
-state: dict = {"model": None, "version": None, "error": "not loaded yet"}
+# One shared model-availability state, read by /health, /version and /predict.
+state: dict = {
+    "model": None,
+    "version": None,
+    "sha256": None,
+    "error": "not loaded yet",
+}
 
 
 def model_dir() -> Path:
     return Path(os.environ.get(MODEL_DIR_ENV, DEFAULT_MODEL_DIR))
 
 
-def load_model(directory: Path) -> tuple[object, str]:
-    """Load a trusted local model and return it with its own metadata version."""
+def service_revision() -> str:
+    return os.environ.get(REVISION_ENV, "unknown")
+
+
+def load_model(directory: Path) -> tuple[object, str, str]:
+    """Load a trusted local model; return it with its metadata version and hash."""
     model_path = directory / "model.joblib"
     metadata_path = directory / "model-metadata.json"
     if not model_path.is_file() or not metadata_path.is_file():
@@ -35,26 +50,33 @@ def load_model(directory: Path) -> tuple[object, str]:
     metadata = json.loads(metadata_path.read_text())
     if list(metadata["features"]) != list(FEATURES):
         raise ValueError("model metadata: feature order differs from the contract")
-    if sha256(model_path) != metadata["model_sha256"]:
+    digest = sha256(model_path)
+    if digest != metadata["model_sha256"]:
         raise ValueError("model.joblib checksum differs from its metadata")
+    expected = os.environ.get(EXPECTED_SHA_ENV)
+    if expected and digest != expected:
+        raise ValueError(
+            f"model.joblib sha256 {digest[:12]} differs from expected {expected[:12]}"
+        )
     # Only load locally produced/trusted model files, never downloaded ones.
-    return joblib.load(model_path), str(metadata["model_version"])
+    return joblib.load(model_path), str(metadata["model_version"]), digest
 
 
 def refresh_state() -> None:
     try:
-        model, version = load_model(model_dir())
+        model, version, digest = load_model(model_dir())
     except (OSError, ValueError, KeyError) as error:
-        state.update(model=None, version=None, error=str(error))
+        state.update(model=None, version=None, sha256=None, error=str(error))
     else:
-        state.update(model=model, version=version, error=None)
+        state.update(model=model, version=version, sha256=digest, error=None)
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
+    # Start -> load -> check -> ready: requests are accepted only after this.
     refresh_state()
     yield
-    state.update(model=None, version=None, error="service stopped")
+    state.update(model=None, version=None, sha256=None, error="service stopped")
 
 
 app = FastAPI(title="Bike demand prediction", version="0.1.0", lifespan=lifespan)
@@ -72,6 +94,17 @@ def require_model():
 def health() -> dict:
     require_model()
     return {"status": "ok", "model_version": state["version"]}
+
+
+@app.get("/version")
+def version() -> dict:
+    """Which code and which model are answering. Always 200, even when not ready."""
+    return {
+        "service_revision": service_revision(),
+        "model_version": state["version"],
+        "model_sha256": state["sha256"],
+        "ready": state["model"] is not None,
+    }
 
 
 @app.post("/predict", response_model=PredictResponse)
