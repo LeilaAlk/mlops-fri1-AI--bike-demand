@@ -1,6 +1,7 @@
 """Prediction API: serve the saved, evaluated baseline model. Never trains."""
 
 import json
+import logging
 import os
 from contextlib import asynccontextmanager
 from pathlib import Path
@@ -10,6 +11,11 @@ import numpy as np
 import pandas as pd
 from fastapi import FastAPI, HTTPException
 
+from bike_demand.observability import (
+    configure_logging,
+    install_request_logging,
+    log_event,
+)
 from bike_demand.preflight import sha256
 from bike_demand.schemas import PredictRequest, PredictResponse
 from bike_demand.validate import FEATURES
@@ -71,15 +77,38 @@ def refresh_state() -> None:
         state.update(model=model, version=version, sha256=digest, error=None)
 
 
+def log_startup() -> None:
+    if state["model"] is None:
+        log_event(
+            "model_unavailable", logging.ERROR, reason=state["error"], **identity()
+        )
+    else:
+        log_event("model_loaded", **identity())
+
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     # Start -> load -> check -> ready: requests are accepted only after this.
+    configure_logging(os.environ.get("BIKE_DEMAND_LOG_LEVEL", "INFO"))
     refresh_state()
+    log_startup()
     yield
     state.update(model=None, version=None, sha256=None, error="service stopped")
 
 
 app = FastAPI(title="Bike demand prediction", version="0.1.0", lifespan=lifespan)
+
+
+def identity() -> dict:
+    """Fields added to every log line: which code and which model answered."""
+    return {
+        "service_revision": service_revision(),
+        "model_version": state["version"],
+        "model_sha256": state["sha256"],
+    }
+
+
+install_request_logging(app, identity)
 
 
 def require_model():

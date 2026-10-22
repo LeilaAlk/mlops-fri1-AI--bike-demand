@@ -71,4 +71,5 @@ ENV SERVICE_REVISION=$GIT_COMMIT \
 # Default: the prediction API. 0.0.0.0 inside the container; publish the port
 # to your own machine only (docker run -p 127.0.0.1:8000:8000 ...).
 EXPOSE 8000
-CMD ["uv", "run", "--locked", "uvicorn", "bike_demand.api:app", "--host", "0.0.0.0", "--port", "8000"]
+# --no-access-log: our JSON request line replaces uvicorn's plain access line.
+CMD ["uv", "run", "--locked", "uvicorn", "bike_demand.api:app", "--host", "0.0.0.0", "--port", "8000", "--no-access-log"]
