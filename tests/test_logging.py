@@ -3,11 +3,14 @@
 import json
 import logging
 
+import pytest
 from fastapi.testclient import TestClient
 from test_api import VALID, write_model
 
 from bike_demand import api
 from bike_demand.observability import JsonFormatter
+
+pytestmark = pytest.mark.api
 
 LOGGER = "bike_demand.service"
 

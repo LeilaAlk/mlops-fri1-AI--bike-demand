@@ -12,6 +12,8 @@ from bike_demand import api
 from bike_demand.preflight import sha256
 from bike_demand.validate import FEATURES
 
+pytestmark = pytest.mark.api
+
 VALID = {
     "season": 3,
     "yr": 1,

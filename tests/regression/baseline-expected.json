@@ -1,0 +1,11 @@
+{
+  "source": "Lab 2 recorded result (reports/metrics.json, training commit a7d0c77), reproduced unchanged in the Lab 3 container rerun and in the Lab 4/5 images",
+  "data_sha256": "e03de4ee4ef4dc376ac6e04bf829673c6269e8eba5c60fa121640fa2f829504f",
+  "partition_rows": {"train": 8645, "validation": 4358, "test": 4376},
+  "validation_mae": {
+    "naive_train_mean": 154.23179306864967,
+    "random_forest": 86.84685685591091
+  },
+  "tolerance_abs": 1e-06,
+  "tolerance_reason": "Measured spread: the same value to all printed digits on 5 runs (Windows laptop Lab 2, Linux container Lab 3, Linux images Lab 4 and Lab 5, Linux CI sandbox). 1e-6 rentals/hour leaves room for last-digit floating-point differences between machines while any real change (data, split, features, model settings, library version) moves the MAE by far more."
+}

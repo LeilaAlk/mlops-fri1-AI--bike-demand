@@ -4,6 +4,8 @@ from pydantic import ValidationError
 from bike_demand.schemas import PredictRequest
 from bike_demand.validate import FEATURES
 
+pytestmark = pytest.mark.api
+
 VALID = {
     "season": 3,
     "yr": 1,
