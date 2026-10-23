@@ -131,7 +131,7 @@ def version() -> dict:
     return {
         "service_revision": service_revision(),
         "model_version": state["version"],
-        "model_hash": state["sha256"],
+        "model_sha256": state["sha256"],
         "ready": state["model"] is not None,
     }
 
