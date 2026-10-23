@@ -233,7 +233,7 @@ baked into the image:
 | --- | --- | --- |
 | `BIKE_DEMAND_MODEL_DIR` | `artifacts` | Folder with `model.joblib` + `model-metadata.json` |
 | `BIKE_DEMAND_EXPECTED_MODEL_SHA256` | unset | If set and different from the loaded model, the service stays not ready (503) |
-| `BIKE_DEMAND_LOG_LEVEL` | `INFO` | Log level of the JSON service logs |
+| `BIKE_DEMAND_LOG_LEVEL` | `INFO` | Log level of the JSON service logs. Keep `INFO` for a deployment: at `WARNING` the `model_loaded` line and the request lines disappear, so the logs no longer show which model and code answer (found in the Lab 5 README review) |
 | `SERVICE_REVISION` | commit from `--build-arg GIT_COMMIT` | Code identity reported by `/version` and in every log line |
 
 ### Check it from outside
@@ -283,6 +283,70 @@ one line per request.
 | Expected: who knows the expected model, and when? | Whoever builds: the commit is known before `docker build`, the model record is copied out of the image (`docker cp`) before the service starts | Asking the running service what it expects | The expectation must come from outside the thing being checked |
 | Promise: what does "deployed" promise to others? | See the definition at the top of this section | "The container is up" | Running is not verified |
 | Failure: break it once, what does it leave behind? | See the team report (Lab 5): starting with a wrong `BIKE_DEMAND_EXPECTED_MODEL_SHA256` gives 503, a `model_unavailable` log line naming both hashes, and a failing check (exit 1) | — | A stranger can find the cause from the logs and the check output |
+
+## Lab 6: continuous integration
+
+Two workflows run on a clean GitHub runner for every pull request into `main` or
+`develop`, every push to those branches, and on demand (*Actions* -> *Run workflow*).
+Nothing from a laptop is on the runner: no `.venv`, no `artifacts/` or `tracking/`
+(ignored by Git), no secrets. Everything is installed from `uv.lock`.
+
+| Workflow / job | Runs | Why | Fails when |
+| --- | --- | --- | --- |
+| `CI` / `infrastructure` (first, cheapest) | `uv lock --check`, `uv sync --locked`, preflight, `ruff check`, `ruff format --check` | Stop early on a stale lock, a changed data snapshot or a style error | Lock out of date, snapshot checksum differs, lint/format error |
+| `CI` / `tests` (needs `infrastructure`) | Guard: every test has a registered marker; then `-m infra`, `-m lab1`, `-m exercise`, `-m api` | Code and contract defects, in groups with readable failures | A test fails, or a new test has no marker and would never run |
+| `CI` / `recompute` (needs `infrastructure`) | `-m recompute`: retrains the baseline on the frozen snapshot | Catches silent changes to data, split, features, model settings or libraries | Recomputed validation MAE differs from the recorded one by more than the tolerance |
+| `Container` / `container` (last, most expensive) | Build the image from this commit, `pytest` inside it, start it, `scripts/check_deployment.py` from outside | Prove the thing we would ship: identity, prediction, rejection | Build fails, a test fails in the image, or a deployment claim fails |
+
+Each run says what it checked: the job summary prints the commit, the image ID and
+the model version; the container job uploads `check.json`, the container logs and
+the expected model as an artifact (kept 30 days).
+
+**Required to merge (team agreement):** all four checks green. Branch protection on
+`main` requires a review and the `infrastructure` check; the team also waits for
+`tests`, `recompute` and `container` before clicking *Merge*.
+
+### Reproduce a failure locally (same locked commands)
+
+    uv sync --locked
+    uv run --locked pytest -q -m api          # or infra / lab1 / exercise / recompute
+    uv run --locked pytest -q -x --lf         # rerun only what failed last time
+    docker build --build-arg GIT_COMMIT=$(git rev-parse HEAD) -t bike-demand:ci .
+    docker run --rm --network none bike-demand:ci uv run --locked pytest -q -m "not recompute"
+
+Then follow "Lab 5: deploy and check the service" for the deployment check. Read a
+failing run from the first red step upwards, and save the raw log as text in
+`reports/logs/lab-06/` (run pages expire after 90 days).
+
+### Which defect each test catches
+
+| Defect (a believable mistake) | Caught by | Shown failing |
+| --- | --- | --- |
+| Lock not updated after a dependency change | `infrastructure`: `uv lock --check` | Lab 3 (`lock-stale.log`) |
+| Raw data snapshot edited | `infrastructure`: preflight; `infra` tests; `recompute::test_same_frozen_data` | `infra` test `test_snapshot_tampering_is_rejected` |
+| Split boundary moved (validation leaks into test) | `exercise` split tests; `recompute::test_same_chronological_split` and MAE tests | local mutation, 5 tests red |
+| Model trained on the wrong target (`registered` instead of `cnt`) | only `recompute::test_validation_mae_matches_recorded_result[random_forest]` | Lab 6 break-it PR |
+| Request contract loosened (extra field, wrong range, wrong type) | `api` tests (`test_api.py`, `test_schemas.py`) | Lab 4 review (`le=23` -> `le=24`, 2 tests red) |
+| Wrong or tampered model served | `api` tests (checksum, feature order, expected hash) | Lab 5 review (wrong expected hash -> 503) |
+| `/version` field renamed or removed | `api::test_startup.py`; container deployment check | Lab 6 break-it PR |
+| Request body leaked into logs | `api::test_logging.py::test_request_body_is_never_logged` | local mutation |
+| Image no longer reports its commit (`SERVICE_REVISION` lost) | only `Container` / deployment check (`service_revision`) | Lab 6 break-it PR |
+| New test added without a marker (silently never run) | `tests` guard step | Lab 6 break-it PR |
+
+### Decisions (our choice, the option we rejected, and why)
+
+| Question | Our answer | Rejected | Why |
+| --- | --- | --- | --- |
+| Coverage: what do the checks not cover yet? | Other operating systems (CI is Linux only), load and latency, model quality on the held-out test period, drift on new data, the Cloud Run deployment, pinning `actions/checkout` by commit SHA (it uses the `v6` tag; `setup-uv` is pinned by SHA) | Claiming "all green = correct" | Green means: this commit, this runner, these checks |
+| Machine: what does a clean runner not have? | No `.venv`, no `artifacts/` or `tracking/`, no secrets, no laptop files; the model is produced on the runner (recompute job, image build) | Committing a model file to make CI pass | CI evidence must be produced by the runner |
+| Trigger: which changes start which checks? | Every PR and push to `main`/`develop` starts both workflows; manual start for reruns | Path filters (docs-only changes skip CI) | Simple and safe; a README change can still break the documented commands |
+| Order: which check fails first, and why? | Lock and style first (seconds), then tests and recompute in parallel, container last (minutes) | One big job | A typo should not cost a container build; failures name their group |
+| Evidence: what can CI claim about the model? | That this commit, installed from the lock, retrains to the recorded validation MAE within 1e-6, and that the image built from it serves the model whose version and hash it reports | Citing laptop MLflow runs as CI evidence | Local and CI evidence are separate claims |
+| Defects: which bug does each test catch? | See the table above | Tests without a named defect | A test is worth what it can catch |
+| Failing: can you make each test fail? | Yes: the break-it PRs and local mutations listed above, with red logs saved | Trusting a test that has never failed | A test that cannot fail proves nothing |
+| Tolerance: where does the number come from? | `1e-6` rentals/hour: 5 runs on Windows and Linux gave the same MAE to all printed digits (`tests/regression/baseline-expected.json`) | A loose tolerance chosen to turn red green | Changing it is a reviewed change with a reason |
+| Repair: did you fix the cause or hide it? | Each red run was repaired by reverting or fixing the defect on the same PR; no `continue-on-error`, `|| true`, skip or loosened assertion | Rerunning until green | A green rerun without a repair is not a repair |
+| Records: what is still readable in 3 months? | Failing logs saved as text in `reports/logs/lab-06/`, the team report, the commits and PR conversations | Links to run pages only | Run logs and artifacts expire |
 
 ## Support and individual reports
 
