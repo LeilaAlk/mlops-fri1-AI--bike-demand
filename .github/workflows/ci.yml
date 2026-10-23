@@ -1,17 +1,52 @@
-name: Week 1 checks
+name: CI
 
+# Lab 6: every pull request and every push to an integration branch is checked
+# on a clean runner. Cheap checks first; each job says why it exists.
 on:
-  push:
-    branches: [main]
   pull_request:
-    branches: [main]
+    branches: [main, develop]
+  push:
+    branches: [main, develop]
   workflow_dispatch:
 
+# Least privilege: the jobs only read the repository.
 permissions:
   contents: read
 
+# A newer push to the same branch cancels the older, now stale, run.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
+  # Job id kept as "infrastructure" so the existing required status check
+  # (branch protection on main) still reports under the same name.
   infrastructure:
+    name: infrastructure
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@bec219d24cd3e171d82865faccec33120bb574f4
+        with:
+          version: "0.12.23"
+          python-version: "3.12"
+      - name: Lock is present and up to date (never regenerated here)
+        run: uv lock --check
+      - name: Install exactly the lock
+        run: uv sync --locked
+      - name: Preflight (snapshot checksum, imports)
+        run: uv run --locked python -m bike_demand.preflight
+      - name: Lint
+        run: uv run --locked ruff check .
+      - name: Format
+        run: uv run --locked ruff format --check .
+
+  tests:
+    name: tests
+    needs: infrastructure
     runs-on: ubuntu-24.04
     timeout-minutes: 15
     steps:
@@ -22,10 +57,47 @@ jobs:
         with:
           version: "0.12.23"
           python-version: "3.12"
-      - run: uv lock --check
       - run: uv sync --locked
-      - run: uv run --locked python -m bike_demand.preflight
-      - run: uv run --locked ruff check .
-      - run: uv run --locked ruff format --check .
-      - run: uv run --locked pytest -q -m infra
-      - run: uv run --locked pytest -q -m lab1
+      - name: Every test belongs to a group CI runs (pytest exit 5 = none left over)
+        run: |
+          set +e
+          uv run --locked pytest -q --collect-only -m "not (infra or lab1 or exercise or api or recompute)"
+          code=$?
+          set -e
+          if [ "$code" -ne 5 ]; then
+            echo "::error::Some tests have no registered marker and would never run in CI (pytest exit $code)."
+            exit 1
+          fi
+      - name: Infrastructure tests
+        run: uv run --locked pytest -q -m infra
+      - name: Lab 1 tests
+        run: uv run --locked pytest -q -m lab1
+      - name: Lab 2 data, split and baseline exercises
+        run: uv run --locked pytest -q -m exercise
+      - name: API contract, start-up and logging tests
+        run: uv run --locked pytest -q -m api
+
+  recompute:
+    name: recompute
+    needs: infrastructure
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@bec219d24cd3e171d82865faccec33120bb574f4
+        with:
+          version: "0.12.23"
+          python-version: "3.12"
+      - run: uv sync --locked
+      - name: Retrain the baseline and compare with the recorded MAE
+        run: uv run --locked pytest -q -m recompute
+      - name: Say what was checked
+        if: always()
+        run: |
+          {
+            echo "### Recompute"
+            echo "- Commit: \`${{ github.sha }}\`"
+            echo "- Recorded result: \`tests/regression/baseline-expected.json\`"
+          } >> "$GITHUB_STEP_SUMMARY"
