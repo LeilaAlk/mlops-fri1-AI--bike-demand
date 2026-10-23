@@ -1,0 +1,494 @@
+﻿2026-10-23T11:14:45.4013697Z Current runner version: '2.338.0'
+2026-10-23T11:14:45.4036854Z ##[group]Runner Image Provisioner
+2026-10-23T11:14:45.4037740Z Hosted Compute Agent
+2026-10-23T11:14:45.4038295Z Version: 20261012.601
+2026-10-23T11:14:45.4039019Z Commit: f3dc54e1fb89da6852db922499a0233137369e1d
+2026-10-23T11:14:45.4039764Z Build Date: 2026-10-12T17:48:21Z
+2026-10-23T11:14:45.4040428Z Worker ID: {408269cf-451b-4a1d-9c75-61b4c6385f56}
+2026-10-23T11:14:45.4041111Z Region: centralus
+2026-10-23T11:14:45.4041640Z Cloud: Azure
+2026-10-23T11:14:45.4042130Z ##[endgroup]
+2026-10-23T11:14:45.4043400Z ##[group]Operating System
+2026-10-23T11:14:45.4043981Z Ubuntu
+2026-10-23T11:14:45.4044480Z 24.04.5
+2026-10-23T11:14:45.4045211Z LTS
+2026-10-23T11:14:45.4045709Z ##[endgroup]
+2026-10-23T11:14:45.4046311Z ##[group]Runner Image
+2026-10-23T11:14:45.4046877Z Image: ubuntu-24.04
+2026-10-23T11:14:45.4047414Z Version: 20261012.334.1
+2026-10-23T11:14:45.4048610Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261012.334/images/ubuntu/Ubuntu2404-Readme.md
+2026-10-23T11:14:45.4050091Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261012.334
+2026-10-23T11:14:45.4050992Z ##[endgroup]
+2026-10-23T11:14:45.4052028Z ##[group]GITHUB_TOKEN Permissions
+2026-10-23T11:14:45.4054166Z Contents: read
+2026-10-23T11:14:45.4054936Z Metadata: read
+2026-10-23T11:14:45.4055495Z ##[endgroup]
+2026-10-23T11:14:45.4057386Z Secret source: Actions
+2026-10-23T11:14:45.4058287Z Cache mode: write
+2026-10-23T11:14:45.4059243Z Prepare workflow directory
+2026-10-23T11:14:45.4369354Z Prepare all required actions
+2026-10-23T11:14:45.4416462Z Getting action download info
+2026-10-23T11:14:45.7073177Z Download action repository 'actions/checkout@v6' (SHA:d23441a48e516b6c34aea4fa41551a30e30af803)
+2026-10-23T11:14:45.8197566Z Download action repository 'astral-sh/setup-uv@bec219d24cd3e171d82865faccec33120bb574f4' (SHA:bec219d24cd3e171d82865faccec33120bb574f4)
+2026-10-23T11:14:46.5671617Z Complete job name: tests
+2026-10-23T11:14:46.6515533Z ##[group]Run actions/checkout@v6
+2026-10-23T11:14:46.6516551Z with:
+2026-10-23T11:14:46.6517110Z   persist-credentials: false
+2026-10-23T11:14:46.6517889Z   repository: LeilaAlk/mlops-fri1-AI--bike-demand
+2026-10-23T11:14:46.6522837Z   token: ***
+2026-10-23T11:14:46.6523413Z   ssh-strict: true
+2026-10-23T11:14:46.6524069Z   ssh-user: git
+2026-10-23T11:14:46.6524623Z   clean: true
+2026-10-23T11:14:46.6525405Z   sparse-checkout-cone-mode: true
+2026-10-23T11:14:46.6526084Z   fetch-depth: 1
+2026-10-23T11:14:46.6526662Z   fetch-tags: false
+2026-10-23T11:14:46.6527289Z   show-progress: true
+2026-10-23T11:14:46.6527876Z   lfs: false
+2026-10-23T11:14:46.6528447Z   submodules: false
+2026-10-23T11:14:46.6529068Z   set-safe-directory: true
+2026-10-23T11:14:46.6529723Z   allow-unsafe-pr-checkout: false
+2026-10-23T11:14:46.6530682Z ##[endgroup]
+2026-10-23T11:14:46.7588520Z Syncing repository: LeilaAlk/mlops-fri1-AI--bike-demand
+2026-10-23T11:14:46.7590888Z ##[group]Getting Git version info
+2026-10-23T11:14:46.7592812Z Working directory is '/home/runner/work/mlops-fri1-AI--bike-demand/mlops-fri1-AI--bike-demand'
+2026-10-23T11:14:46.7595635Z [command]/usr/bin/git version
+2026-10-23T11:14:46.7678955Z git version 2.55.0
+2026-10-23T11:14:46.7708322Z ##[endgroup]
+2026-10-23T11:14:46.7725878Z Temporarily overriding HOME='/home/runner/work/_temp/d7dafdce-ca6f-4cad-a0c3-00d80a26ec2d' before making global git config changes
+2026-10-23T11:14:46.7727650Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-23T11:14:46.7732937Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/mlops-fri1-AI--bike-demand/mlops-fri1-AI--bike-demand
+2026-10-23T11:14:46.7789136Z Deleting the contents of '/home/runner/work/mlops-fri1-AI--bike-demand/mlops-fri1-AI--bike-demand'
+2026-10-23T11:14:46.7796652Z ##[group]Determining repository object format
+2026-10-23T11:14:46.7797920Z ##[endgroup]
+2026-10-23T11:14:46.7798962Z ##[group]Initializing the repository
+2026-10-23T11:14:46.7801044Z [command]/usr/bin/git init /home/runner/work/mlops-fri1-AI--bike-demand/mlops-fri1-AI--bike-demand
+2026-10-23T11:14:46.7902851Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-10-23T11:14:46.7904315Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-10-23T11:14:46.7905956Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-10-23T11:14:46.7906952Z hint: call:
+2026-10-23T11:14:46.7907825Z hint:
+2026-10-23T11:14:46.7908816Z hint: 	git config --global init.defaultBranch <name>
+2026-10-23T11:14:46.7909957Z hint:
+2026-10-23T11:14:46.7911006Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-10-23T11:14:46.7912533Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-10-23T11:14:46.7913860Z hint:
+2026-10-23T11:14:46.7914670Z hint: 	git branch -m <name>
+2026-10-23T11:14:46.7915827Z hint:
+2026-10-23T11:14:46.7917060Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-10-23T11:14:46.7919326Z Initialized empty Git repository in /home/runner/work/mlops-fri1-AI--bike-demand/mlops-fri1-AI--bike-demand/.git/
+2026-10-23T11:14:46.7922284Z [command]/usr/bin/git remote add origin https://github.com/LeilaAlk/mlops-fri1-AI--bike-demand
+2026-10-23T11:14:46.7972257Z ##[endgroup]
+2026-10-23T11:14:46.7973259Z ##[group]Disabling automatic garbage collection
+2026-10-23T11:14:46.7976227Z [command]/usr/bin/git config --local gc.auto 0
+2026-10-23T11:14:46.8009049Z ##[endgroup]
+2026-10-23T11:14:46.8010324Z ##[group]Setting up auth
+2026-10-23T11:14:46.8011037Z Removing SSH command configuration
+2026-10-23T11:14:46.8016768Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-23T11:14:46.8052889Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-23T11:14:46.8419694Z Removing HTTP extra header
+2026-10-23T11:14:46.8428021Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-23T11:14:46.8461884Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-23T11:14:46.8647144Z Removing includeIf entries pointing to credentials config files
+2026-10-23T11:14:46.8652811Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-23T11:14:46.8685402Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-23T11:14:46.8875614Z [command]/usr/bin/git config --file /home/runner/work/_temp/git-credentials-122d08b3-5d0c-4480-bf66-d6c02b8d74a8.config http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-10-23T11:14:46.8910947Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/mlops-fri1-AI--bike-demand/mlops-fri1-AI--bike-demand/.git.path /home/runner/work/_temp/git-credentials-122d08b3-5d0c-4480-bf66-d6c02b8d74a8.config
+2026-10-23T11:14:46.8943195Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/mlops-fri1-AI--bike-demand/mlops-fri1-AI--bike-demand/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-122d08b3-5d0c-4480-bf66-d6c02b8d74a8.config
+2026-10-23T11:14:46.8977030Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-122d08b3-5d0c-4480-bf66-d6c02b8d74a8.config
+2026-10-23T11:14:46.9013494Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-122d08b3-5d0c-4480-bf66-d6c02b8d74a8.config
+2026-10-23T11:14:46.9040707Z ##[endgroup]
+2026-10-23T11:14:46.9041778Z ##[group]Fetching the repository
+2026-10-23T11:14:46.9049125Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +1ddb2eec776e06e3c14a725593f50f3f1fbac880:refs/remotes/pull/30/merge
+2026-10-23T11:14:47.5368917Z From https://github.com/LeilaAlk/mlops-fri1-AI--bike-demand
+2026-10-23T11:14:47.5371829Z  * [new ref]         1ddb2eec776e06e3c14a725593f50f3f1fbac880 -> pull/30/merge
+2026-10-23T11:14:47.5377057Z ##[endgroup]
+2026-10-23T11:14:47.5378820Z ##[group]Determining the checkout info
+2026-10-23T11:14:47.5381168Z ##[endgroup]
+2026-10-23T11:14:47.5382336Z [command]/usr/bin/git sparse-checkout disable
+2026-10-23T11:14:47.5436897Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-10-23T11:14:47.5468019Z ##[group]Checking out the ref
+2026-10-23T11:14:47.5470623Z [command]/usr/bin/git checkout --progress --force refs/remotes/pull/30/merge
+2026-10-23T11:14:47.5752966Z Note: switching to 'refs/remotes/pull/30/merge'.
+2026-10-23T11:14:47.5755497Z 
+2026-10-23T11:14:47.5757156Z You are in 'detached HEAD' state. You can look around, make experimental
+2026-10-23T11:14:47.5760607Z changes and commit them, and you can discard any commits you make in this
+2026-10-23T11:14:47.5763641Z state without impacting any branches by switching back to a branch.
+2026-10-23T11:14:47.5765606Z 
+2026-10-23T11:14:47.5766748Z If you want to create a new branch to retain commits you create, you may
+2026-10-23T11:14:47.5769140Z do so (now or later) by using -c with the switch command. Example:
+2026-10-23T11:14:47.5770708Z 
+2026-10-23T11:14:47.5771515Z   git switch -c <new-branch-name>
+2026-10-23T11:14:47.5772552Z 
+2026-10-23T11:14:47.5773244Z Or undo this operation with:
+2026-10-23T11:14:47.5774174Z 
+2026-10-23T11:14:47.5774866Z   git switch -
+2026-10-23T11:14:47.5775729Z 
+2026-10-23T11:14:47.5777171Z Turn off this advice by setting config variable advice.detachedHead to false
+2026-10-23T11:14:47.5779270Z 
+2026-10-23T11:14:47.5782132Z HEAD is now at 1ddb2ee Merge 7c735e59c9cee5028eb29458f2386a8902de0abb into 67b48aa621c7161832d0c602394ebdefa484a7ea
+2026-10-23T11:14:47.5789507Z ##[endgroup]
+2026-10-23T11:14:47.5802210Z [command]/usr/bin/git log -1 --format=%H
+2026-10-23T11:14:47.5824869Z 1ddb2eec776e06e3c14a725593f50f3f1fbac880
+2026-10-23T11:14:47.5838957Z ##[group]Removing auth
+2026-10-23T11:14:47.5840460Z Removing SSH command configuration
+2026-10-23T11:14:47.5842497Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-23T11:14:47.5874451Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-23T11:14:47.6054158Z Removing HTTP extra header
+2026-10-23T11:14:47.6058440Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-23T11:14:47.6090398Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-23T11:14:47.6438100Z Removing includeIf entries pointing to credentials config files
+2026-10-23T11:14:47.6443711Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-23T11:14:47.6449672Z includeif.gitdir:/home/runner/work/mlops-fri1-AI--bike-demand/mlops-fri1-AI--bike-demand/.git.path
+2026-10-23T11:14:47.6454194Z includeif.gitdir:/home/runner/work/mlops-fri1-AI--bike-demand/mlops-fri1-AI--bike-demand/.git/worktrees/*.path
+2026-10-23T11:14:47.6457089Z includeif.gitdir:/github/workspace/.git.path
+2026-10-23T11:14:47.6458715Z includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-10-23T11:14:47.6463231Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/mlops-fri1-AI--bike-demand/mlops-fri1-AI--bike-demand/.git.path
+2026-10-23T11:14:47.6467628Z /home/runner/work/_temp/git-credentials-122d08b3-5d0c-4480-bf66-d6c02b8d74a8.config
+2026-10-23T11:14:47.6474182Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/mlops-fri1-AI--bike-demand/mlops-fri1-AI--bike-demand/.git.path /home/runner/work/_temp/git-credentials-122d08b3-5d0c-4480-bf66-d6c02b8d74a8.config
+2026-10-23T11:14:47.6483346Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/mlops-fri1-AI--bike-demand/mlops-fri1-AI--bike-demand/.git/worktrees/*.path
+2026-10-23T11:14:47.6487958Z /home/runner/work/_temp/git-credentials-122d08b3-5d0c-4480-bf66-d6c02b8d74a8.config
+2026-10-23T11:14:47.6495352Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/mlops-fri1-AI--bike-demand/mlops-fri1-AI--bike-demand/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-122d08b3-5d0c-4480-bf66-d6c02b8d74a8.config
+2026-10-23T11:14:47.6502210Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git.path
+2026-10-23T11:14:47.6505656Z /github/runner_temp/git-credentials-122d08b3-5d0c-4480-bf66-d6c02b8d74a8.config
+2026-10-23T11:14:47.6515737Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-122d08b3-5d0c-4480-bf66-d6c02b8d74a8.config
+2026-10-23T11:14:47.6552010Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-10-23T11:14:47.6571673Z /github/runner_temp/git-credentials-122d08b3-5d0c-4480-bf66-d6c02b8d74a8.config
+2026-10-23T11:14:47.6584311Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-122d08b3-5d0c-4480-bf66-d6c02b8d74a8.config
+2026-10-23T11:14:47.6617526Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-23T11:14:47.6795322Z Removing credentials config '/home/runner/work/_temp/git-credentials-122d08b3-5d0c-4480-bf66-d6c02b8d74a8.config'
+2026-10-23T11:14:47.6803595Z ##[endgroup]
+2026-10-23T11:14:47.7224340Z ##[group]Run astral-sh/setup-uv@bec219d24cd3e171d82865faccec33120bb574f4
+2026-10-23T11:14:47.7225940Z with:
+2026-10-23T11:14:47.7226743Z   version: 0.12.23
+2026-10-23T11:14:47.7227630Z   python-version: 3.12
+2026-10-23T11:14:47.7228577Z   activate-environment: false
+2026-10-23T11:14:47.7229585Z   no-project: false
+2026-10-23T11:14:47.7231144Z   working-directory: /home/runner/work/mlops-fri1-AI--bike-demand/mlops-fri1-AI--bike-demand
+2026-10-23T11:14:47.7241142Z   github-token: ***
+2026-10-23T11:14:47.7242064Z   enable-cache: auto
+2026-10-23T11:14:47.7244218Z   cache-dependency-glob: **/*requirements*.txt
+**/*requirements*.in
+**/*constraints*.txt
+**/*constraints*.in
+**/pyproject.toml
+**/uv.lock
+**/*.py.lock
+
+2026-10-23T11:14:47.7246622Z   restore-cache: true
+2026-10-23T11:14:47.7247543Z   save-cache: true
+2026-10-23T11:14:47.7248415Z   prune-cache: false
+2026-10-23T11:14:47.7249311Z   cache-python: false
+2026-10-23T11:14:47.7250253Z   ignore-nothing-to-cache: false
+2026-10-23T11:14:47.7251376Z   ignore-empty-workdir: false
+2026-10-23T11:14:47.7252443Z   download-from-astral-mirror: true
+2026-10-23T11:14:47.7253549Z   add-problem-matchers: true
+2026-10-23T11:14:47.7254519Z   quiet: false
+2026-10-23T11:14:47.7255536Z   resolution-strategy: highest
+2026-10-23T11:14:47.7256543Z ##[endgroup]
+2026-10-23T11:14:47.9044038Z Fetching manifest data from https://raw.githubusercontent.com/astral-sh/versions/main/v1/uv.ndjson ...
+2026-10-23T11:14:47.9753809Z Downloading uv from "https://releases.astral.sh/github/uv/releases/download/0.12.23/uv-x86_64-unknown-linux-gnu.tar.gz" ...
+2026-10-23T11:14:48.1999122Z [command]/usr/bin/tar xz --warning=no-unknown-keyword --overwrite -C /home/runner/work/_temp/0c3a6ecf-2469-46c2-83ca-4813bdae2b7d -f /home/runner/work/_temp/2c4784b9-227b-4837-a2fe-592982555039
+2026-10-23T11:14:48.7619345Z Added /home/runner/.local/bin to the path
+2026-10-23T11:14:48.7622057Z Added /opt/hostedtoolcache/uv/0.12.23/x86_64 to the path
+2026-10-23T11:14:48.7623552Z Set UV_PYTHON_INSTALL_DIR to /home/runner/work/_temp/uv-python-dir
+2026-10-23T11:14:48.7624578Z Added /home/runner/work/_temp/uv-python-dir to the path
+2026-10-23T11:14:48.7625303Z Set UV_PYTHON to 3.12
+2026-10-23T11:14:48.7648266Z Set UV_CACHE_DIR to /home/runner/work/_temp/setup-uv-cache
+2026-10-23T11:14:48.7648762Z Successfully installed uv version 0.12.23
+2026-10-23T11:14:48.7651058Z Searching files using cache dependency glob: /home/runner/work/mlops-fri1-AI--bike-demand/mlops-fri1-AI--bike-demand/**/*requirements*.txt,/home/runner/work/mlops-fri1-AI--bike-demand/mlops-fri1-AI--bike-demand/**/*requirements*.in,/home/runner/work/mlops-fri1-AI--bike-demand/mlops-fri1-AI--bike-demand/**/*constraints*.txt,/home/runner/work/mlops-fri1-AI--bike-demand/mlops-fri1-AI--bike-demand/**/*constraints*.in,/home/runner/work/mlops-fri1-AI--bike-demand/mlops-fri1-AI--bike-demand/**/pyproject.toml,/home/runner/work/mlops-fri1-AI--bike-demand/mlops-fri1-AI--bike-demand/**/uv.lock,/home/runner/work/mlops-fri1-AI--bike-demand/mlops-fri1-AI--bike-demand/**/*.py.lock
+2026-10-23T11:14:48.7804663Z /home/runner/work/mlops-fri1-AI--bike-demand/mlops-fri1-AI--bike-demand/pyproject.toml
+2026-10-23T11:14:48.7968929Z /home/runner/work/mlops-fri1-AI--bike-demand/mlops-fri1-AI--bike-demand/uv.lock
+2026-10-23T11:14:48.7978722Z Found 2 files to hash.
+2026-10-23T11:14:48.8034603Z Trying to restore cache from GitHub Actions cache with key: setup-uv-2-x86_64-unknown-linux-gnu-ubuntu-24.04-3.12-94ef5b9a60cdf03142be5acdeabdab77fa1721386e6ae4883fcdfdd145035823
+2026-10-23T11:14:48.9620337Z Cache hit for: setup-uv-2-x86_64-unknown-linux-gnu-ubuntu-24.04-3.12-94ef5b9a60cdf03142be5acdeabdab77fa1721386e6ae4883fcdfdd145035823
+2026-10-23T11:14:50.1283140Z Received 79691776 of 186734466 (42.7%), 76.1 MBs/sec
+2026-10-23T11:14:51.0560037Z Received 186734466 of 186734466 (100.0%), 92.4 MBs/sec
+2026-10-23T11:14:51.0561784Z Cache Size: ~178 MB (186734466 B)
+2026-10-23T11:14:51.0599680Z [command]/usr/bin/tar -xf /home/runner/work/_temp/f7038571-044a-47c7-8eba-da6dc91483f4/cache.tzst -P -C /home/runner/work/mlops-fri1-AI--bike-demand/mlops-fri1-AI--bike-demand --use-compress-program unzstd
+2026-10-23T11:14:52.0541477Z Cache restored successfully
+2026-10-23T11:14:52.0619365Z cache restored from GitHub Actions cache with key: setup-uv-2-x86_64-unknown-linux-gnu-ubuntu-24.04-3.12-94ef5b9a60cdf03142be5acdeabdab77fa1721386e6ae4883fcdfdd145035823
+2026-10-23T11:14:52.1752557Z ##[group]Run uv sync --locked
+2026-10-23T11:14:52.1752957Z [36;1muv sync --locked[0m
+2026-10-23T11:14:52.2112711Z shell: /usr/bin/bash -e {0}
+2026-10-23T11:14:52.2113051Z env:
+2026-10-23T11:14:52.2113387Z   UV_PYTHON_INSTALL_DIR: /home/runner/work/_temp/uv-python-dir
+2026-10-23T11:14:52.2113748Z   UV_PYTHON: 3.12
+2026-10-23T11:14:52.2114031Z   UV_CACHE_DIR: /home/runner/work/_temp/setup-uv-cache
+2026-10-23T11:14:52.2114349Z ##[endgroup]
+2026-10-23T11:14:52.2294828Z Using CPython 3.12.3 interpreter at: /usr/bin/python3.12
+2026-10-23T11:14:52.2295424Z Creating virtual environment at: .venv
+2026-10-23T11:14:52.2316625Z Resolved 100 packages in 0.90ms
+2026-10-23T11:14:52.2350577Z    Building bike-demand @ file:///home/runner/work/mlops-fri1-AI--bike-demand/mlops-fri1-AI--bike-demand
+2026-10-23T11:14:52.2357087Z       Built bike-demand @ file:///home/runner/work/mlops-fri1-AI--bike-demand/mlops-fri1-AI--bike-demand
+2026-10-23T11:14:52.2390470Z Prepared 1 package in 4ms
+2026-10-23T11:14:52.7614223Z Installed 97 packages in 522ms
+2026-10-23T11:14:52.7614877Z  + aiohappyeyeballs==2.7.1
+2026-10-23T11:14:52.7615241Z  + aiohttp==3.14.4
+2026-10-23T11:14:52.7615549Z  + aiosignal==1.4.0
+2026-10-23T11:14:52.7615846Z  + alembic==1.20.0
+2026-10-23T11:14:52.7616154Z  + annotated-doc==0.0.5
+2026-10-23T11:14:52.7616488Z  + annotated-types==0.8.0
+2026-10-23T11:14:52.7616804Z  + anyio==4.15.1
+2026-10-23T11:14:52.7617079Z  + attrs==26.1.0
+2026-10-23T11:14:52.7617757Z  + bike-demand==0.1.0 (from file:///home/runner/work/mlops-fri1-AI--bike-demand/mlops-fri1-AI--bike-demand)
+2026-10-23T11:14:52.7618421Z  + blinker==1.9.0
+2026-10-23T11:14:52.7618710Z  + cachetools==7.2.1
+2026-10-23T11:14:52.7619007Z  + certifi==2026.7.22
+2026-10-23T11:14:52.7619541Z  + cffi==2.1.1
+2026-10-23T11:14:52.7619842Z  + charset-normalizer==3.5.2
+2026-10-23T11:14:52.7620169Z  + click==8.5.0
+2026-10-23T11:14:52.7620452Z  + cloudpickle==3.1.2
+2026-10-23T11:14:52.7620754Z  + contourpy==1.4.0
+2026-10-23T11:14:52.7621069Z  + cryptography==50.0.2
+2026-10-23T11:14:52.7621369Z  + cycler==0.12.1
+2026-10-23T11:14:52.7621658Z  + databricks-sdk==0.148.0
+2026-10-23T11:14:52.7621981Z  + docker==7.2.0
+2026-10-23T11:14:52.7622254Z  + fastapi==0.142.2
+2026-10-23T11:14:52.7622529Z  + flask==3.1.3
+2026-10-23T11:14:52.7622798Z  + flask-cors==6.0.5
+2026-10-23T11:14:52.7623099Z  + fonttools==4.66.1
+2026-10-23T11:14:52.7623386Z  + frozenlist==1.8.0
+2026-10-23T11:14:52.7623665Z  + gitdb==4.0.12
+2026-10-23T11:14:52.7623943Z  + gitpython==3.2.0
+2026-10-23T11:14:52.7624229Z  + google-auth==2.60.0
+2026-10-23T11:14:52.7624527Z  + graphene==3.4.3
+2026-10-23T11:14:52.7624922Z  + graphql-core==3.2.13
+2026-10-23T11:14:52.7625242Z  + graphql-relay==3.2.0
+2026-10-23T11:14:52.7625536Z  + gunicorn==26.2.0
+2026-10-23T11:14:52.7625828Z  + h11==0.16.0
+2026-10-23T11:14:52.7626092Z  + httpcore==1.0.9
+2026-10-23T11:14:52.7626370Z  + httpx==0.28.1
+2026-10-23T11:14:52.7626650Z  + huey==3.4.0
+2026-10-23T11:14:52.7626933Z  + idna==3.20
+2026-10-23T11:14:52.7627257Z  + importlib-metadata==9.0.1
+2026-10-23T11:14:52.7627583Z  + iniconfig==2.3.1
+2026-10-23T11:14:52.7627871Z  + itsdangerous==2.2.0
+2026-10-23T11:14:52.7628171Z  + jinja2==3.1.6
+2026-10-23T11:14:52.7628438Z  + joblib==1.6.0
+2026-10-23T11:14:52.7628709Z  + kiwisolver==1.5.1
+2026-10-23T11:14:52.7628985Z  + mako==1.4.3
+2026-10-23T11:14:52.7629256Z  + markupsafe==3.0.4
+2026-10-23T11:14:52.7629550Z  + matplotlib==3.11.2
+2026-10-23T11:14:52.7629830Z  + mlflow==3.17.0
+2026-10-23T11:14:52.7630113Z  + mlflow-skinny==3.17.0
+2026-10-23T11:14:52.7630428Z  + mlflow-tracing==3.17.0
+2026-10-23T11:14:52.7630754Z  + multidict==6.9.1
+2026-10-23T11:14:52.7631030Z  + narwhals==2.26.0
+2026-10-23T11:14:52.7631303Z  + numpy==2.5.3
+2026-10-23T11:14:52.7631598Z  + opentelemetry-api==1.45.1
+2026-10-23T11:14:52.7631962Z  + opentelemetry-proto==1.45.1
+2026-10-23T11:14:52.7632319Z  + opentelemetry-sdk==1.45.1
+2026-10-23T11:14:52.7632692Z  + opentelemetry-semantic-conventions==0.66b1
+2026-10-23T11:14:52.7633087Z  + packaging==26.3
+2026-10-23T11:14:52.7633531Z  + pandas==2.3.3
+2026-10-23T11:14:52.7633805Z  + pillow==12.3.0
+2026-10-23T11:14:52.7634075Z  + pluggy==1.6.0
+2026-10-23T11:14:52.7634351Z  + prettytable==3.18.0
+2026-10-23T11:14:52.7634644Z  + propcache==0.5.4
+2026-10-23T11:14:52.7635045Z  + protobuf==6.33.6
+2026-10-23T11:14:52.7635372Z  + pyarrow==25.0.1
+2026-10-23T11:14:52.7635798Z  + pyasn1==0.6.4
+2026-10-23T11:14:52.7636090Z  + pyasn1-modules==0.4.2
+2026-10-23T11:14:52.7636386Z  + pycparser==3.0
+2026-10-23T11:14:52.7636656Z  + pydantic==2.13.5
+2026-10-23T11:14:52.7636943Z  + pydantic-core==2.46.5
+2026-10-23T11:14:52.7637253Z  + pygments==2.21.0
+2026-10-23T11:14:52.7637529Z  + pyparsing==3.3.3
+2026-10-23T11:14:52.7637801Z  + pytest==9.1.1
+2026-10-23T11:14:52.7638086Z  + python-dateutil==2.9.0.post0
+2026-10-23T11:14:52.7638426Z  + python-dotenv==1.2.4
+2026-10-23T11:14:52.7638724Z  + pytz==2026.5
+2026-10-23T11:14:52.7638983Z  + pyyaml==6.0.3
+2026-10-23T11:14:52.7639234Z  + requests==2.34.2
+2026-10-23T11:14:52.7639438Z  + ruff==0.15.7
+2026-10-23T11:14:52.7639675Z  + scikit-learn==1.9.1
+2026-10-23T11:14:52.7639897Z  + scipy==1.18.1
+2026-10-23T11:14:52.7640099Z  + six==1.17.0
+2026-10-23T11:14:52.7640299Z  + skops==0.16.0
+2026-10-23T11:14:52.7640514Z  + smmap==5.0.3
+2026-10-23T11:14:52.7640722Z  + sqlalchemy==2.1.3
+2026-10-23T11:14:52.7640941Z  + sqlparse==0.6.0
+2026-10-23T11:14:52.7641144Z  + starlette==1.7.0
+2026-10-23T11:14:52.7641364Z  + threadpoolctl==3.7.0
+2026-10-23T11:14:52.7641622Z  + typing-extensions==4.16.0
+2026-10-23T11:14:52.7641870Z  + typing-inspection==0.4.4
+2026-10-23T11:14:52.7642105Z  + tzdata==2026.5
+2026-10-23T11:14:52.7642464Z  + urllib3==2.8.0
+2026-10-23T11:14:52.7642849Z  + uvicorn==0.54.0
+2026-10-23T11:14:52.7643245Z  + wcwidth==0.9.2
+2026-10-23T11:14:52.7643769Z  + werkzeug==3.1.9
+2026-10-23T11:14:52.7644033Z  + yarl==1.25.1
+2026-10-23T11:14:52.7644948Z  + zipp==4.1.1
+2026-10-23T11:14:52.7822163Z ##[group]Run set +e
+2026-10-23T11:14:52.7822448Z [36;1mset +e[0m
+2026-10-23T11:14:52.7822922Z [36;1muv run --locked pytest -q --collect-only -m "not (infra or lab1 or exercise or api or recompute)"[0m
+2026-10-23T11:14:52.7823377Z [36;1mcode=$?[0m
+2026-10-23T11:14:52.7823593Z [36;1mset -e[0m
+2026-10-23T11:14:52.7823824Z [36;1mif [ "$code" -ne 5 ]; then[0m
+2026-10-23T11:14:52.7824530Z [36;1m  echo "::error::Some tests have no registered marker and would never run in CI (pytest exit $code)."[0m
+2026-10-23T11:14:52.7825178Z [36;1m  exit 1[0m
+2026-10-23T11:14:52.7825405Z [36;1mfi[0m
+2026-10-23T11:14:52.7865797Z shell: /usr/bin/bash -e {0}
+2026-10-23T11:14:52.7866082Z env:
+2026-10-23T11:14:52.7866375Z   UV_PYTHON_INSTALL_DIR: /home/runner/work/_temp/uv-python-dir
+2026-10-23T11:14:52.7866717Z   UV_PYTHON: 3.12
+2026-10-23T11:14:52.7866975Z   UV_CACHE_DIR: /home/runner/work/_temp/setup-uv-cache
+2026-10-23T11:14:52.7867302Z ##[endgroup]
+2026-10-23T11:15:00.0417323Z 
+2026-10-23T11:15:00.0418141Z =============================== warnings summary ===============================
+2026-10-23T11:15:00.0418738Z .venv/lib/python3.12/site-packages/fastapi/testclient.py:1
+2026-10-23T11:15:00.0420341Z   /home/runner/work/mlops-fri1-AI--bike-demand/mlops-fri1-AI--bike-demand/.venv/lib/python3.12/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+2026-10-23T11:15:00.0422089Z     from starlette.testclient import TestClient as TestClient  # noqa
+2026-10-23T11:15:00.0422552Z 
+2026-10-23T11:15:00.0423143Z -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+2026-10-23T11:15:00.0423779Z no tests collected (96 deselected) in 6.19s
+2026-10-23T11:15:00.3688519Z ##[group]Run uv run --locked pytest -q -m infra
+2026-10-23T11:15:00.3688908Z [36;1muv run --locked pytest -q -m infra[0m
+2026-10-23T11:15:00.3728829Z shell: /usr/bin/bash -e {0}
+2026-10-23T11:15:00.3729136Z env:
+2026-10-23T11:15:00.3729444Z   UV_PYTHON_INSTALL_DIR: /home/runner/work/_temp/uv-python-dir
+2026-10-23T11:15:00.3729803Z   UV_PYTHON: 3.12
+2026-10-23T11:15:00.3730109Z   UV_CACHE_DIR: /home/runner/work/_temp/setup-uv-cache
+2026-10-23T11:15:00.3730428Z ##[endgroup]
+2026-10-23T11:15:07.6967708Z .........                                                                [100%]
+2026-10-23T11:15:07.6968459Z =============================== warnings summary ===============================
+2026-10-23T11:15:07.6969351Z .venv/lib/python3.12/site-packages/fastapi/testclient.py:1
+2026-10-23T11:15:07.6971974Z   /home/runner/work/mlops-fri1-AI--bike-demand/mlops-fri1-AI--bike-demand/.venv/lib/python3.12/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+2026-10-23T11:15:07.6974581Z     from starlette.testclient import TestClient as TestClient  # noqa
+2026-10-23T11:15:07.6975495Z 
+2026-10-23T11:15:07.6975981Z tests/infra/test_infrastructure.py::test_tracking_readback_and_history
+2026-10-23T11:15:07.6979569Z   /home/runner/work/mlops-fri1-AI--bike-demand/mlops-fri1-AI--bike-demand/.venv/lib/python3.12/site-packages/mlflow/store/tracking/sqlalchemy_store.py:327: SADeprecationWarning: The ``noload`` loader strategy is deprecated and will be removed in a future release.  This option produces incorrect results by returning ``None`` for related items. (deprecated since: 2.1)
+2026-10-23T11:15:07.6982963Z     sqlalchemy.orm.configure_mappers()
+2026-10-23T11:15:07.6983389Z 
+2026-10-23T11:15:07.6983851Z -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+2026-10-23T11:15:07.6984901Z 9 passed, 87 deselected, 2 warnings in 6.85s
+2026-10-23T11:15:08.3030364Z ##[group]Run uv run --locked pytest -q -m lab1
+2026-10-23T11:15:08.3030744Z [36;1muv run --locked pytest -q -m lab1[0m
+2026-10-23T11:15:08.3072762Z shell: /usr/bin/bash -e {0}
+2026-10-23T11:15:08.3073251Z env:
+2026-10-23T11:15:08.3073572Z   UV_PYTHON_INSTALL_DIR: /home/runner/work/_temp/uv-python-dir
+2026-10-23T11:15:08.3073933Z   UV_PYTHON: 3.12
+2026-10-23T11:15:08.3074218Z   UV_CACHE_DIR: /home/runner/work/_temp/setup-uv-cache
+2026-10-23T11:15:08.3074535Z ##[endgroup]
+2026-10-23T11:15:10.5047132Z .....                                                                    [100%]
+2026-10-23T11:15:10.5048068Z =============================== warnings summary ===============================
+2026-10-23T11:15:10.5048974Z .venv/lib/python3.12/site-packages/fastapi/testclient.py:1
+2026-10-23T11:15:10.5051485Z   /home/runner/work/mlops-fri1-AI--bike-demand/mlops-fri1-AI--bike-demand/.venv/lib/python3.12/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+2026-10-23T11:15:10.5054024Z     from starlette.testclient import TestClient as TestClient  # noqa
+2026-10-23T11:15:10.5054654Z 
+2026-10-23T11:15:10.5057066Z -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+2026-10-23T11:15:10.5058016Z 5 passed, 91 deselected, 1 warning in 1.88s
+2026-10-23T11:15:10.7791878Z ##[group]Run uv run --locked pytest -q -m exercise
+2026-10-23T11:15:10.7792277Z [36;1muv run --locked pytest -q -m exercise[0m
+2026-10-23T11:15:10.7833615Z shell: /usr/bin/bash -e {0}
+2026-10-23T11:15:10.7833911Z env:
+2026-10-23T11:15:10.7834211Z   UV_PYTHON_INSTALL_DIR: /home/runner/work/_temp/uv-python-dir
+2026-10-23T11:15:10.7834561Z   UV_PYTHON: 3.12
+2026-10-23T11:15:10.7835046Z   UV_CACHE_DIR: /home/runner/work/_temp/setup-uv-cache
+2026-10-23T11:15:10.7835425Z ##[endgroup]
+2026-10-23T11:15:16.2775667Z .....................................                                    [100%]
+2026-10-23T11:15:16.2776485Z =============================== warnings summary ===============================
+2026-10-23T11:15:16.2777350Z .venv/lib/python3.12/site-packages/fastapi/testclient.py:1
+2026-10-23T11:15:16.2779903Z   /home/runner/work/mlops-fri1-AI--bike-demand/mlops-fri1-AI--bike-demand/.venv/lib/python3.12/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+2026-10-23T11:15:16.2782465Z     from starlette.testclient import TestClient as TestClient  # noqa
+2026-10-23T11:15:16.2783086Z 
+2026-10-23T11:15:16.2783628Z tests/exercise/test_baseline.py::test_saved_model_readback_rerun_and_held_test
+2026-10-23T11:15:16.2787368Z   /home/runner/work/mlops-fri1-AI--bike-demand/mlops-fri1-AI--bike-demand/.venv/lib/python3.12/site-packages/mlflow/store/tracking/sqlalchemy_store.py:327: SADeprecationWarning: The ``noload`` loader strategy is deprecated and will be removed in a future release.  This option produces incorrect results by returning ``None`` for related items. (deprecated since: 2.1)
+2026-10-23T11:15:16.2790729Z     sqlalchemy.orm.configure_mappers()
+2026-10-23T11:15:16.2791149Z 
+2026-10-23T11:15:16.2791596Z -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+2026-10-23T11:15:16.2792523Z 37 passed, 59 deselected, 2 warnings in 5.02s
+2026-10-23T11:15:16.8814083Z ##[group]Run uv run --locked pytest -q -m api
+2026-10-23T11:15:16.8814457Z [36;1muv run --locked pytest -q -m api[0m
+2026-10-23T11:15:16.8855739Z shell: /usr/bin/bash -e {0}
+2026-10-23T11:15:16.8856046Z env:
+2026-10-23T11:15:16.8856348Z   UV_PYTHON_INSTALL_DIR: /home/runner/work/_temp/uv-python-dir
+2026-10-23T11:15:16.8856700Z   UV_PYTHON: 3.12
+2026-10-23T11:15:16.8856968Z   UV_CACHE_DIR: /home/runner/work/_temp/setup-uv-cache
+2026-10-23T11:15:16.8857279Z ##[endgroup]
+2026-10-23T11:15:19.4046063Z ....................................F...                                 [100%]
+2026-10-23T11:15:19.4046739Z =================================== FAILURES ===================================
+2026-10-23T11:15:19.4047352Z _________________ test_version_reports_code_and_model_identity _________________
+2026-10-23T11:15:19.4047760Z 
+2026-10-23T11:15:19.4048081Z monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f1ac1edc140>
+2026-10-23T11:15:19.4049349Z tmp_path = PosixPath('/tmp/pytest-of-runner/pytest-2/test_version_reports_code_and_0')
+2026-10-23T11:15:19.4049819Z 
+2026-10-23T11:15:19.4050119Z     def test_version_reports_code_and_model_identity(monkeypatch, tmp_path):
+2026-10-23T11:15:19.4050781Z         directory = write_model(tmp_path / "model")
+2026-10-23T11:15:19.4051389Z         with start(monkeypatch, directory, SERVICE_REVISION="abc123") as client:
+2026-10-23T11:15:19.4051975Z             body = client.get("/version").json()
+2026-10-23T11:15:19.4052376Z >       assert body == {
+2026-10-23T11:15:19.4052756Z             "service_revision": "abc123",
+2026-10-23T11:15:19.4053050Z             "model_version": "test-v1",
+2026-10-23T11:15:19.4053366Z             "model_sha256": sha256(directory / "model.joblib"),
+2026-10-23T11:15:19.4053680Z             "ready": True,
+2026-10-23T11:15:19.4053912Z         }
+2026-10-23T11:15:19.4054270Z E       AssertionError: assert {'service_rev...'ready': True} == {'service_rev...'ready': True}
+2026-10-23T11:15:19.4054681Z E         
+2026-10-23T11:15:19.4055134Z E         Omitting 3 identical items, use -vv to show
+2026-10-23T11:15:19.4055460Z E         Left contains 1 more item:
+2026-10-23T11:15:19.4055869Z E         {'model_hash': '398c67f9cf0b508594ac251597c40370067b26aa872e50a497a0cd638dead411'}
+2026-10-23T11:15:19.4056280Z E         Right contains 1 more item:
+2026-10-23T11:15:19.4056675Z E         {'model_sha256': '398c67f9cf0b508594ac251597c40370067b26aa872e50a497a0cd638dead411'}
+2026-10-23T11:15:19.4057057Z E         
+2026-10-23T11:15:19.4057269Z E         Full diff:
+2026-10-23T11:15:19.4057486Z E           {
+2026-10-23T11:15:19.4057711Z E               'service_revision': 'abc123',
+2026-10-23T11:15:19.4057997Z E               'model_version': 'test-v1',
+2026-10-23T11:15:19.4058416Z E         -     'model_sha256': '398c67f9cf0b508594ac251597c40370067b26aa872e50a497a0cd638dead411',
+2026-10-23T11:15:19.4058855Z E         ?              ----
+2026-10-23T11:15:19.4059237Z E         +     'model_hash': '398c67f9cf0b508594ac251597c40370067b26aa872e50a497a0cd638dead411',
+2026-10-23T11:15:19.4059629Z E         ?            ++
+2026-10-23T11:15:19.4059868Z E               'ready': True,
+2026-10-23T11:15:19.4060102Z E           }
+2026-10-23T11:15:19.4060220Z 
+2026-10-23T11:15:19.4060342Z tests/test_startup.py:24: AssertionError
+2026-10-23T11:15:19.4060708Z ----------------------------- Captured stdout call -----------------------------
+2026-10-23T11:15:19.4061734Z {"ts": "2026-10-23T11:15:19.165771+00:00", "level": "INFO", "event": "model_loaded", "service_revision": "abc123", "model_version": "test-v1", "model_sha256": "398c67f9cf0b508594ac251597c40370067b26aa872e50a497a0cd638dead411"}
+2026-10-23T11:15:19.4063871Z {"ts": "2026-10-23T11:15:19.167804+00:00", "level": "INFO", "event": "request", "request_id": "f0508154e3874f29bceaaee858e5df3d", "method": "GET", "path": "/version", "status": 200, "outcome": "ok", "duration_ms": 1.4, "service_revision": "abc123", "model_version": "test-v1", "model_sha256": "398c67f9cf0b508594ac251597c40370067b26aa872e50a497a0cd638dead411"}
+2026-10-23T11:15:19.4065074Z ------------------------------ Captured log call -------------------------------
+2026-10-23T11:15:19.4065500Z INFO     bike_demand.service:observability.py:44 model_loaded
+2026-10-23T11:15:19.4065897Z INFO     bike_demand.service:observability.py:44 request
+2026-10-23T11:15:19.4066246Z =============================== warnings summary ===============================
+2026-10-23T11:15:19.4066628Z .venv/lib/python3.12/site-packages/fastapi/testclient.py:1
+2026-10-23T11:15:19.4067559Z   /home/runner/work/mlops-fri1-AI--bike-demand/mlops-fri1-AI--bike-demand/.venv/lib/python3.12/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+2026-10-23T11:15:19.4068487Z     from starlette.testclient import TestClient as TestClient  # noqa
+2026-10-23T11:15:19.4068839Z 
+2026-10-23T11:15:19.4069056Z -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+2026-10-23T11:15:19.4069469Z =========================== short test summary info ============================
+2026-10-23T11:15:19.4070156Z FAILED tests/test_startup.py::test_version_reports_code_and_model_identity - AssertionError: assert {'service_rev...'ready': True} == {'service_rev...'ready': True}
+2026-10-23T11:15:19.4070748Z   
+2026-10-23T11:15:19.4070988Z   Omitting 3 identical items, use -vv to show
+2026-10-23T11:15:19.4071292Z   Left contains 1 more item:
+2026-10-23T11:15:19.4071656Z   {'model_hash': '398c67f9cf0b508594ac251597c40370067b26aa872e50a497a0cd638dead411'}
+2026-10-23T11:15:19.4072045Z   Right contains 1 more item:
+2026-10-23T11:15:19.4072416Z   {'model_sha256': '398c67f9cf0b508594ac251597c40370067b26aa872e50a497a0cd638dead411'}
+2026-10-23T11:15:19.4072787Z   
+2026-10-23T11:15:19.4072979Z   Full diff:
+2026-10-23T11:15:19.4073178Z     {
+2026-10-23T11:15:19.4073400Z         'service_revision': 'abc123',
+2026-10-23T11:15:19.4073677Z         'model_version': 'test-v1',
+2026-10-23T11:15:19.4074072Z   -     'model_sha256': '398c67f9cf0b508594ac251597c40370067b26aa872e50a497a0cd638dead411',
+2026-10-23T11:15:19.4074462Z   ?              ----
+2026-10-23T11:15:19.4074898Z   +     'model_hash': '398c67f9cf0b508594ac251597c40370067b26aa872e50a497a0cd638dead411',
+2026-10-23T11:15:19.4075279Z   ?            ++
+2026-10-23T11:15:19.4075492Z         'ready': True,
+2026-10-23T11:15:19.4075704Z     }
+2026-10-23T11:15:19.4075949Z 1 failed, 39 passed, 56 deselected, 1 warning in 2.19s
+2026-10-23T11:15:19.6796409Z ##[error]Process completed with exit code 1.
+2026-10-23T11:15:19.7048976Z Post job cleanup.
+2026-10-23T11:15:19.7879233Z [command]/usr/bin/git version
+2026-10-23T11:15:19.7923238Z git version 2.55.0
+2026-10-23T11:15:19.7966132Z Temporarily overriding HOME='/home/runner/work/_temp/b719c808-79a8-41ac-bab3-6e79955671ff' before making global git config changes
+2026-10-23T11:15:19.7967601Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-23T11:15:19.7972890Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/mlops-fri1-AI--bike-demand/mlops-fri1-AI--bike-demand
+2026-10-23T11:15:19.8333434Z Removing SSH command configuration
+2026-10-23T11:15:19.8342096Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-23T11:15:19.8387346Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-23T11:15:19.8604078Z Removing HTTP extra header
+2026-10-23T11:15:19.8610604Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-23T11:15:19.8650940Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-23T11:15:19.8850004Z Removing includeIf entries pointing to credentials config files
+2026-10-23T11:15:19.8851374Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-23T11:15:19.8880903Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-23T11:15:20.0048917Z Cleaning up orphan processes
