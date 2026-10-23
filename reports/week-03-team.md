@@ -65,3 +65,69 @@ None.
 The image build, the container runs, the HTTP checks and the logs above were
 produced locally with Docker Desktop. GitHub Actions does not build the image or
 run the deployment check yet (Lab 6 will add this).
+
+## Lab 6: continuous integration and regression tests
+
+### Team and roles
+
+| Part | Author | Reviewer (break-it PR) | PR | Break-it PR |
+| --- | --- | --- | --- | --- |
+| Regression tests: recompute + pytest markers | Talia | Andrea | #22 | #26 |
+| CI workflow: ordered jobs, marker guard | Leila | Julia | #25 | #27 |
+| Container job: build, test inside, check from outside | Julia | Talia | #24 | #28 |
+| README "Lab 6: continuous integration" + defect map | Andrea | Leila | #29 | #30 |
+| This section | Andrea | Julia | this PR | – |
+
+Checks required to merge (team agreement): `infrastructure`, `tests`, `recompute`,
+`container`, all green, plus one approving review. In branch protection, `infrastructure`,
+`tests` and `recompute` are marked required; Leila adds `container` before tagging `m3`.
+
+### What runs (from the README)
+
+`CI` workflow: `infrastructure` (lock, preflight, ruff) -> `tests` (marker guard,
+infra, lab1, exercise, api) and `recompute` (retrain, compare with the recorded MAE
+within 1e-6). `Container` workflow: build the image from the commit, pytest inside,
+start it, `scripts/check_deployment.py` from outside.
+
+Both workflows ran green on every PR above after its repair (Checks tab of each PR), and on `main`
+after the last merge, commit `8ae8494` (PR #30): https://github.com/LeilaAlk/mlops-fri1-AI--bike-demand/commit/8ae8494.
+
+### Red -> cause -> green (break-it PRs)
+
+| Break-it PR | Defect (chosen by the reviewer) | First red check / step | Cause found in the log | Repair commit | Green run |
+| --- | --- | --- | --- | --- | --- |
+| #26 (Andrea -> Talia) | `train.py` fitted the model on `registered` instead of `cnt` (`d72f189`) | CI / `recompute`, step "Retrain the baseline and compare with the recorded MAE"; `tests` and `container` stayed green | `random_forest: recomputed MAE 113.93061096197528 differs from recorded 86.84685685591091` (1 failed, 4 passed: same data and split, only training changed) | `ac90ed7` (revert) | [checks](https://github.com/LeilaAlk/mlops-fri1-AI--bike-demand/pull/26/checks) |
+| #27 (Julia -> Leila) | new test `tests/test_capacity.py` with no pytest marker (`a3a4596`): it would never run in CI | CI / `tests`, step "Every test belongs to a group" | `Some tests have no registered marker and would never run in CI`; unmarked test listed: `tests/test_capacity.py::test_prediction_is_rounded_to_whole_bikes` | `cf718ca` (revert) | [checks](https://github.com/LeilaAlk/mlops-fri1-AI--bike-demand/pull/27/checks) |
+| #28 (Talia -> Julia) | Dockerfile no longer set `ENV SERVICE_REVISION=$GIT_COMMIT` (`946a3b1`) | Container / `container`, step "Deployment check from outside" | `service_revision  ad44bf11fd76…  unknown  FAIL`, `exit status 1 (failed: ['service_revision'])`: right model, but the service no longer knows its commit | `c6d6d0c` (revert) | [checks](https://github.com/LeilaAlk/mlops-fri1-AI--bike-demand/pull/28/checks) |
+| #30 (Leila -> Andrea) | `/version` field `model_sha256` renamed to `model_hash` (`7c735e5`) | CI / `tests`, step "API contract, start-up and logging tests"; Container / `container` red too (tests inside the image) | `FAILED tests/test_startup.py::test_version_reports_code_and_model_identity`: diff `- 'model_sha256'` / `+ 'model_hash'`, same value (1 failed, 39 passed) | `0c11819` (revert) | [checks](https://github.com/LeilaAlk/mlops-fri1-AI--bike-demand/pull/30/checks) |
+
+Raw logs of the failing runs, saved as text: [reports/logs/lab-06/](logs/lab-06/).
+No check was muted: no `continue-on-error`, `|| true`, skipped test or loosened
+assertion; each repair reverted or fixed the defect on the same PR.
+
+Gaps found (a defect no check caught): none. Each of the four defects turned at least one required
+check red, and only the checks that cover that part (the tests and the container job both protect the
+`/version` contract, which is why #30 turned two checks red).
+
+![A red run on a break-it PR](images/lab-06-team-red.png)
+
+![The first red step and the cause in the log](images/lab-06-team-cause.png)
+
+![The same PR green after the repair](images/lab-06-team-green.png)
+
+### Blocked steps
+
+No step stayed blocked. One process note: on #28 and #30 the merge needed one approving review and the
+PR author cannot approve their own PR; #30 was approved by Andrea, who had also written the repair,
+after all four checks were green. A stricter rule would ask a third member to approve repairs.
+
+### Local runs vs CI
+
+The checks above were run by GitHub Actions on `ubuntu-24.04` runners from the
+commit and `uv.lock` only. Local runs (laptops, Docker Desktop) are cited
+separately in each personal report and are not CI evidence.
+
+### Checkpoint
+
+Annotated tag `m3` on `main`, created by Leila on the merge commit of this PR, after all Lab 5 and
+Lab 6 PRs were reviewed and merged.
