@@ -62,7 +62,7 @@ def compare_mean(
 def fit_evaluate(train: pd.DataFrame, validation: pd.DataFrame, config: dict):
     features = config["features"]
     model = RandomForestRegressor(**config["model"])
-    model.fit(select_features(train, features), train["registered"])
+    model.fit(select_features(train, features), train["cnt"])
     predictions = model.predict(select_features(validation, features))
     mae = float(mean_absolute_error(validation["cnt"], predictions))
     return model, predictions, mae
