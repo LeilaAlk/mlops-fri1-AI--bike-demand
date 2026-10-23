@@ -1,0 +1,79 @@
+name: Container
+
+# Lab 6: prove it where it will run. Build the image from this commit, run the
+# tests inside it, start it as the README does, and check it from outside.
+on:
+  pull_request:
+    branches: [main, develop]
+  push:
+    branches: [main, develop]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: container-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  container:
+    name: container
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    env:
+      IMAGE: bike-demand:ci
+      REVISION: ${{ github.sha }}
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - name: Build the image from this commit
+        run: docker build --build-arg GIT_COMMIT="$REVISION" -t "$IMAGE" .
+      - name: Tests inside the image (no network)
+        run: docker run --rm --network none "$IMAGE" uv run --locked pytest -q -m "not recompute"
+      - name: Expected model, copied out of the image before start-up
+        run: |
+          docker create --name expect "$IMAGE"
+          docker cp expect:/app/artifacts/model-metadata.json expected-model.json
+          docker rm expect
+      - name: Start the service as the README does
+        run: docker run -d --name api -p 127.0.0.1:8000:8000 "$IMAGE"
+      - name: Wait until the service answers /version (max 60 s)
+        run: |
+          for i in $(seq 1 30); do
+            if curl -fsS http://127.0.0.1:8000/version; then exit 0; fi
+            sleep 2
+          done
+          echo "::error::The service did not answer /version within 60 seconds."
+          exit 1
+      - name: Deployment check from outside (identity, prediction, rejection)
+        run: >
+          python3 scripts/check_deployment.py
+          --url http://127.0.0.1:8000
+          --expected-metadata expected-model.json
+          --expected-revision "$REVISION"
+          --report check.json
+      - name: Container logs
+        if: always()
+        run: docker logs api > container-logs.txt 2>&1; cat container-logs.txt
+      - name: Say what was checked
+        if: always()
+        run: |
+          {
+            echo "### Container check"
+            echo "- Commit: \`$REVISION\`"
+            echo "- Image: \`$(docker image inspect "$IMAGE" --format '{{.Id}}' 2>/dev/null || echo 'not built')\`"
+            echo "- Model: \`$(python3 -c "import json;m=json.load(open('expected-model.json'));print(m['model_version'], m['model_sha256'][:12])" 2>/dev/null || echo 'unknown')\`"
+          } >> "$GITHUB_STEP_SUMMARY"
+      - name: Keep the evidence (expires with the run; copy what matters into reports/)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: container-evidence
+          path: |
+            check.json
+            container-logs.txt
+            expected-model.json
+          if-no-files-found: ignore
+          retention-days: 30
