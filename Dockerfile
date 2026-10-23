@@ -65,7 +65,8 @@ LABEL org.opencontainers.image.revision=$GIT_COMMIT \
 
 # Lab 5: the running service reports the same commit (GET /version) and every
 # log line carries it. Logs are written straight to stdout (docker logs).
-ENV PYTHONUNBUFFERED=1
+ENV SERVICE_REVISION=$GIT_COMMIT \
+    PYTHONUNBUFFERED=1
 
 # Default: the prediction API. 0.0.0.0 inside the container; publish the port
 # to your own machine only (docker run -p 127.0.0.1:8000:8000 ...).
