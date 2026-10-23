@@ -1,10 +1,13 @@
 """Lab 5 start-up: settings from the environment, identity, fail-closed check."""
 
+import pytest
 from fastapi.testclient import TestClient
 from test_api import VALID, write_model
 
 from bike_demand import api
 from bike_demand.preflight import sha256
+
+pytestmark = pytest.mark.api
 
 
 def start(monkeypatch, directory, **env):
