@@ -86,6 +86,9 @@ def main() -> int:
         )
 
     status, health, _ = call(f"{base}/health")
+    if status == 0:
+        # Say why every claim will fail, instead of a table of silent FAILs.
+        print(f"cannot reach {base}: {health.get('error')}")
     claim("ready (/health)", 200, status)
 
     status, info, _ = call(f"{base}/version")
