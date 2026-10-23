@@ -1,0 +1,363 @@
+﻿2026-10-23T10:26:36.0258099Z Current runner version: '2.338.0'
+2026-10-23T10:26:36.0283439Z ##[group]Runner Image Provisioner
+2026-10-23T10:26:36.0284576Z Hosted Compute Agent
+2026-10-23T10:26:36.0285297Z Version: 20261012.601
+2026-10-23T10:26:36.0285966Z Commit: f3dc54e1fb89da6852db922499a0233137369e1d
+2026-10-23T10:26:36.0286806Z Build Date: 2026-10-12T17:48:21Z
+2026-10-23T10:26:36.0287540Z Worker ID: {a07056d6-b3ee-4c5f-a210-fee1109123c0}
+2026-10-23T10:26:36.0288284Z Region: northcentralus
+2026-10-23T10:26:36.0288970Z Cloud: Azure
+2026-10-23T10:26:36.0289541Z ##[endgroup]
+2026-10-23T10:26:36.0291008Z ##[group]Operating System
+2026-10-23T10:26:36.0291795Z Ubuntu
+2026-10-23T10:26:36.0292635Z 24.04.5
+2026-10-23T10:26:36.0293237Z LTS
+2026-10-23T10:26:36.0293783Z ##[endgroup]
+2026-10-23T10:26:36.0294600Z ##[group]Runner Image
+2026-10-23T10:26:36.0295308Z Image: ubuntu-24.04
+2026-10-23T10:26:36.0295905Z Version: 20261012.334.1
+2026-10-23T10:26:36.0297277Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261012.334/images/ubuntu/Ubuntu2404-Readme.md
+2026-10-23T10:26:36.0298871Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261012.334
+2026-10-23T10:26:36.0299962Z ##[endgroup]
+2026-10-23T10:26:36.0301107Z ##[group]GITHUB_TOKEN Permissions
+2026-10-23T10:26:36.0303109Z Contents: read
+2026-10-23T10:26:36.0303772Z Metadata: read
+2026-10-23T10:26:36.0304666Z ##[endgroup]
+2026-10-23T10:26:36.0306978Z Secret source: Actions
+2026-10-23T10:26:36.0308001Z Cache mode: write
+2026-10-23T10:26:36.0308793Z Prepare workflow directory
+2026-10-23T10:26:36.0728071Z Prepare all required actions
+2026-10-23T10:26:36.0796623Z Getting action download info
+2026-10-23T10:26:36.3265962Z Download action repository 'actions/checkout@v6' (SHA:d23441a48e516b6c34aea4fa41551a30e30af803)
+2026-10-23T10:26:36.4131477Z Download action repository 'astral-sh/setup-uv@bec219d24cd3e171d82865faccec33120bb574f4' (SHA:bec219d24cd3e171d82865faccec33120bb574f4)
+2026-10-23T10:26:36.9703599Z Complete job name: tests
+2026-10-23T10:26:37.0595619Z ##[group]Run actions/checkout@v6
+2026-10-23T10:26:37.0596448Z with:
+2026-10-23T10:26:37.0596899Z   persist-credentials: false
+2026-10-23T10:26:37.0597492Z   repository: LeilaAlk/mlops-fri1-AI--bike-demand
+2026-10-23T10:26:37.0601476Z   token: ***
+2026-10-23T10:26:37.0601915Z   ssh-strict: true
+2026-10-23T10:26:37.0602360Z   ssh-user: git
+2026-10-23T10:26:37.0602775Z   clean: true
+2026-10-23T10:26:37.0603219Z   sparse-checkout-cone-mode: true
+2026-10-23T10:26:37.0603754Z   fetch-depth: 1
+2026-10-23T10:26:37.0604338Z   fetch-tags: false
+2026-10-23T10:26:37.0604779Z   show-progress: true
+2026-10-23T10:26:37.0605225Z   lfs: false
+2026-10-23T10:26:37.0605636Z   submodules: false
+2026-10-23T10:26:37.0606079Z   set-safe-directory: true
+2026-10-23T10:26:37.0606579Z   allow-unsafe-pr-checkout: false
+2026-10-23T10:26:37.0607276Z ##[endgroup]
+2026-10-23T10:26:37.1708667Z Syncing repository: LeilaAlk/mlops-fri1-AI--bike-demand
+2026-10-23T10:26:37.1711963Z ##[group]Getting Git version info
+2026-10-23T10:26:37.1714077Z Working directory is '/home/runner/work/mlops-fri1-AI--bike-demand/mlops-fri1-AI--bike-demand'
+2026-10-23T10:26:37.1716226Z [command]/usr/bin/git version
+2026-10-23T10:26:37.1765544Z git version 2.55.0
+2026-10-23T10:26:37.1793065Z ##[endgroup]
+2026-10-23T10:26:37.1820713Z Temporarily overriding HOME='/home/runner/work/_temp/6cd4947f-a225-494b-8413-5b51f8f73a10' before making global git config changes
+2026-10-23T10:26:37.1835609Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-23T10:26:37.1839241Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/mlops-fri1-AI--bike-demand/mlops-fri1-AI--bike-demand
+2026-10-23T10:26:37.1892678Z Deleting the contents of '/home/runner/work/mlops-fri1-AI--bike-demand/mlops-fri1-AI--bike-demand'
+2026-10-23T10:26:37.1901844Z ##[group]Determining repository object format
+2026-10-23T10:26:37.1905083Z ##[endgroup]
+2026-10-23T10:26:37.1906740Z ##[group]Initializing the repository
+2026-10-23T10:26:37.1912659Z [command]/usr/bin/git init /home/runner/work/mlops-fri1-AI--bike-demand/mlops-fri1-AI--bike-demand
+2026-10-23T10:26:37.2030777Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-10-23T10:26:37.2033076Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-10-23T10:26:37.2035960Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-10-23T10:26:37.2037459Z hint: call:
+2026-10-23T10:26:37.2038441Z hint:
+2026-10-23T10:26:37.2039625Z hint: 	git config --global init.defaultBranch <name>
+2026-10-23T10:26:37.2040902Z hint:
+2026-10-23T10:26:37.2042216Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-10-23T10:26:37.2044161Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-10-23T10:26:37.2045816Z hint:
+2026-10-23T10:26:37.2046829Z hint: 	git branch -m <name>
+2026-10-23T10:26:37.2047850Z hint:
+2026-10-23T10:26:37.2049271Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-10-23T10:26:37.2052164Z Initialized empty Git repository in /home/runner/work/mlops-fri1-AI--bike-demand/mlops-fri1-AI--bike-demand/.git/
+2026-10-23T10:26:37.2056465Z [command]/usr/bin/git remote add origin https://github.com/LeilaAlk/mlops-fri1-AI--bike-demand
+2026-10-23T10:26:37.2095962Z ##[endgroup]
+2026-10-23T10:26:37.2097471Z ##[group]Disabling automatic garbage collection
+2026-10-23T10:26:37.2100970Z [command]/usr/bin/git config --local gc.auto 0
+2026-10-23T10:26:37.2138137Z ##[endgroup]
+2026-10-23T10:26:37.2139683Z ##[group]Setting up auth
+2026-10-23T10:26:37.2140993Z Removing SSH command configuration
+2026-10-23T10:26:37.2147331Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-23T10:26:37.2187065Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-23T10:26:37.2563782Z Removing HTTP extra header
+2026-10-23T10:26:37.2572073Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-23T10:26:37.2614871Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-23T10:26:37.2865865Z Removing includeIf entries pointing to credentials config files
+2026-10-23T10:26:37.2867947Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-23T10:26:37.2908445Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-23T10:26:37.3156505Z [command]/usr/bin/git config --file /home/runner/work/_temp/git-credentials-db38d6a5-7244-461b-986e-d1c95f3b71b9.config http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-10-23T10:26:37.3201450Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/mlops-fri1-AI--bike-demand/mlops-fri1-AI--bike-demand/.git.path /home/runner/work/_temp/git-credentials-db38d6a5-7244-461b-986e-d1c95f3b71b9.config
+2026-10-23T10:26:37.3238780Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/mlops-fri1-AI--bike-demand/mlops-fri1-AI--bike-demand/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-db38d6a5-7244-461b-986e-d1c95f3b71b9.config
+2026-10-23T10:26:37.3278421Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-db38d6a5-7244-461b-986e-d1c95f3b71b9.config
+2026-10-23T10:26:37.3316052Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-db38d6a5-7244-461b-986e-d1c95f3b71b9.config
+2026-10-23T10:26:37.3349219Z ##[endgroup]
+2026-10-23T10:26:37.3350301Z ##[group]Fetching the repository
+2026-10-23T10:26:37.3357502Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +55c33eb99e4262018a19df9ff66b4c3451d9f464:refs/remotes/pull/27/merge
+2026-10-23T10:26:37.8932179Z From https://github.com/LeilaAlk/mlops-fri1-AI--bike-demand
+2026-10-23T10:26:37.8934067Z  * [new ref]         55c33eb99e4262018a19df9ff66b4c3451d9f464 -> pull/27/merge
+2026-10-23T10:26:37.8939222Z ##[endgroup]
+2026-10-23T10:26:37.8941158Z ##[group]Determining the checkout info
+2026-10-23T10:26:37.8943144Z ##[endgroup]
+2026-10-23T10:26:37.8945004Z [command]/usr/bin/git sparse-checkout disable
+2026-10-23T10:26:37.9003729Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-10-23T10:26:37.9040701Z ##[group]Checking out the ref
+2026-10-23T10:26:37.9043499Z [command]/usr/bin/git checkout --progress --force refs/remotes/pull/27/merge
+2026-10-23T10:26:37.9316784Z Note: switching to 'refs/remotes/pull/27/merge'.
+2026-10-23T10:26:37.9317860Z 
+2026-10-23T10:26:37.9318732Z You are in 'detached HEAD' state. You can look around, make experimental
+2026-10-23T10:26:37.9320547Z changes and commit them, and you can discard any commits you make in this
+2026-10-23T10:26:37.9322892Z state without impacting any branches by switching back to a branch.
+2026-10-23T10:26:37.9324661Z 
+2026-10-23T10:26:37.9325793Z If you want to create a new branch to retain commits you create, you may
+2026-10-23T10:26:37.9328195Z do so (now or later) by using -c with the switch command. Example:
+2026-10-23T10:26:37.9329566Z 
+2026-10-23T10:26:37.9330220Z   git switch -c <new-branch-name>
+2026-10-23T10:26:37.9331221Z 
+2026-10-23T10:26:37.9331807Z Or undo this operation with:
+2026-10-23T10:26:37.9333084Z 
+2026-10-23T10:26:37.9333738Z   git switch -
+2026-10-23T10:26:37.9334848Z 
+2026-10-23T10:26:37.9335986Z Turn off this advice by setting config variable advice.detachedHead to false
+2026-10-23T10:26:37.9337787Z 
+2026-10-23T10:26:37.9340333Z HEAD is now at 55c33eb Merge a3a4596f1f1983e25e2ebe66216deaea9df3c61c into c9af1c45ee2ebc68d42660d42df48fc4a414983c
+2026-10-23T10:26:37.9346438Z ##[endgroup]
+2026-10-23T10:26:37.9380033Z [command]/usr/bin/git log -1 --format=%H
+2026-10-23T10:26:37.9409819Z 55c33eb99e4262018a19df9ff66b4c3451d9f464
+2026-10-23T10:26:37.9419756Z ##[group]Removing auth
+2026-10-23T10:26:37.9421076Z Removing SSH command configuration
+2026-10-23T10:26:37.9423653Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-23T10:26:37.9459398Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-23T10:26:37.9699854Z Removing HTTP extra header
+2026-10-23T10:26:37.9705633Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-23T10:26:37.9744452Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-23T10:26:37.9991445Z Removing includeIf entries pointing to credentials config files
+2026-10-23T10:26:37.9994538Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-23T10:26:38.0028868Z includeif.gitdir:/home/runner/work/mlops-fri1-AI--bike-demand/mlops-fri1-AI--bike-demand/.git.path
+2026-10-23T10:26:38.0034161Z includeif.gitdir:/home/runner/work/mlops-fri1-AI--bike-demand/mlops-fri1-AI--bike-demand/.git/worktrees/*.path
+2026-10-23T10:26:38.0038317Z includeif.gitdir:/github/workspace/.git.path
+2026-10-23T10:26:38.0041102Z includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-10-23T10:26:38.0047989Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/mlops-fri1-AI--bike-demand/mlops-fri1-AI--bike-demand/.git.path
+2026-10-23T10:26:38.0070468Z /home/runner/work/_temp/git-credentials-db38d6a5-7244-461b-986e-d1c95f3b71b9.config
+2026-10-23T10:26:38.0086905Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/mlops-fri1-AI--bike-demand/mlops-fri1-AI--bike-demand/.git.path /home/runner/work/_temp/git-credentials-db38d6a5-7244-461b-986e-d1c95f3b71b9.config
+2026-10-23T10:26:38.0134973Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/mlops-fri1-AI--bike-demand/mlops-fri1-AI--bike-demand/.git/worktrees/*.path
+2026-10-23T10:26:38.0162599Z /home/runner/work/_temp/git-credentials-db38d6a5-7244-461b-986e-d1c95f3b71b9.config
+2026-10-23T10:26:38.0176554Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/mlops-fri1-AI--bike-demand/mlops-fri1-AI--bike-demand/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-db38d6a5-7244-461b-986e-d1c95f3b71b9.config
+2026-10-23T10:26:38.0215296Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git.path
+2026-10-23T10:26:38.0243458Z /github/runner_temp/git-credentials-db38d6a5-7244-461b-986e-d1c95f3b71b9.config
+2026-10-23T10:26:38.0277481Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-db38d6a5-7244-461b-986e-d1c95f3b71b9.config
+2026-10-23T10:26:38.0400788Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-10-23T10:26:38.0406492Z /github/runner_temp/git-credentials-db38d6a5-7244-461b-986e-d1c95f3b71b9.config
+2026-10-23T10:26:38.0414718Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-db38d6a5-7244-461b-986e-d1c95f3b71b9.config
+2026-10-23T10:26:38.0423741Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-23T10:26:38.0675923Z Removing credentials config '/home/runner/work/_temp/git-credentials-db38d6a5-7244-461b-986e-d1c95f3b71b9.config'
+2026-10-23T10:26:38.0686590Z ##[endgroup]
+2026-10-23T10:26:38.1167919Z ##[group]Run astral-sh/setup-uv@bec219d24cd3e171d82865faccec33120bb574f4
+2026-10-23T10:26:38.1169467Z with:
+2026-10-23T10:26:38.1170238Z   version: 0.12.23
+2026-10-23T10:26:38.1171102Z   python-version: 3.12
+2026-10-23T10:26:38.1172013Z   activate-environment: false
+2026-10-23T10:26:38.1172977Z   no-project: false
+2026-10-23T10:26:38.1174681Z   working-directory: /home/runner/work/mlops-fri1-AI--bike-demand/mlops-fri1-AI--bike-demand
+2026-10-23T10:26:38.1185142Z   github-token: ***
+2026-10-23T10:26:38.1185999Z   enable-cache: auto
+2026-10-23T10:26:38.1188105Z   cache-dependency-glob: **/*requirements*.txt
+**/*requirements*.in
+**/*constraints*.txt
+**/*constraints*.in
+**/pyproject.toml
+**/uv.lock
+**/*.py.lock
+
+2026-10-23T10:26:38.1190441Z   restore-cache: true
+2026-10-23T10:26:38.1191291Z   save-cache: true
+2026-10-23T10:26:38.1192117Z   prune-cache: false
+2026-10-23T10:26:38.1192955Z   cache-python: false
+2026-10-23T10:26:38.1194078Z   ignore-nothing-to-cache: false
+2026-10-23T10:26:38.1195418Z   ignore-empty-workdir: false
+2026-10-23T10:26:38.1196445Z   download-from-astral-mirror: true
+2026-10-23T10:26:38.1197494Z   add-problem-matchers: true
+2026-10-23T10:26:38.1198420Z   quiet: false
+2026-10-23T10:26:38.1199230Z   resolution-strategy: highest
+2026-10-23T10:26:38.1200174Z ##[endgroup]
+2026-10-23T10:26:38.3122241Z Fetching manifest data from https://raw.githubusercontent.com/astral-sh/versions/main/v1/uv.ndjson ...
+2026-10-23T10:26:38.3594625Z Downloading uv from "https://releases.astral.sh/github/uv/releases/download/0.12.23/uv-x86_64-unknown-linux-gnu.tar.gz" ...
+2026-10-23T10:26:38.5783511Z [command]/usr/bin/tar xz --warning=no-unknown-keyword --overwrite -C /home/runner/work/_temp/03f0e816-71c8-4e49-ac88-941d3220fbd8 -f /home/runner/work/_temp/f4f9e3e3-cdf3-4eee-8bb9-2546190cf8cf
+2026-10-23T10:26:38.9815137Z Added /home/runner/.local/bin to the path
+2026-10-23T10:26:38.9820851Z Added /opt/hostedtoolcache/uv/0.12.23/x86_64 to the path
+2026-10-23T10:26:38.9822562Z Set UV_PYTHON_INSTALL_DIR to /home/runner/work/_temp/uv-python-dir
+2026-10-23T10:26:38.9824089Z Added /home/runner/work/_temp/uv-python-dir to the path
+2026-10-23T10:26:38.9824877Z Set UV_PYTHON to 3.12
+2026-10-23T10:26:38.9846172Z Set UV_CACHE_DIR to /home/runner/work/_temp/setup-uv-cache
+2026-10-23T10:26:38.9846986Z Successfully installed uv version 0.12.23
+2026-10-23T10:26:38.9850102Z Searching files using cache dependency glob: /home/runner/work/mlops-fri1-AI--bike-demand/mlops-fri1-AI--bike-demand/**/*requirements*.txt,/home/runner/work/mlops-fri1-AI--bike-demand/mlops-fri1-AI--bike-demand/**/*requirements*.in,/home/runner/work/mlops-fri1-AI--bike-demand/mlops-fri1-AI--bike-demand/**/*constraints*.txt,/home/runner/work/mlops-fri1-AI--bike-demand/mlops-fri1-AI--bike-demand/**/*constraints*.in,/home/runner/work/mlops-fri1-AI--bike-demand/mlops-fri1-AI--bike-demand/**/pyproject.toml,/home/runner/work/mlops-fri1-AI--bike-demand/mlops-fri1-AI--bike-demand/**/uv.lock,/home/runner/work/mlops-fri1-AI--bike-demand/mlops-fri1-AI--bike-demand/**/*.py.lock
+2026-10-23T10:26:39.0026668Z /home/runner/work/mlops-fri1-AI--bike-demand/mlops-fri1-AI--bike-demand/pyproject.toml
+2026-10-23T10:26:39.0204487Z /home/runner/work/mlops-fri1-AI--bike-demand/mlops-fri1-AI--bike-demand/uv.lock
+2026-10-23T10:26:39.0215834Z Found 2 files to hash.
+2026-10-23T10:26:39.0287515Z Trying to restore cache from GitHub Actions cache with key: setup-uv-2-x86_64-unknown-linux-gnu-ubuntu-24.04-3.12-94ef5b9a60cdf03142be5acdeabdab77fa1721386e6ae4883fcdfdd145035823
+2026-10-23T10:26:39.1469572Z Cache hit for: setup-uv-2-x86_64-unknown-linux-gnu-ubuntu-24.04-3.12-94ef5b9a60cdf03142be5acdeabdab77fa1721386e6ae4883fcdfdd145035823
+2026-10-23T10:26:40.2752993Z Received 134217728 of 186734466 (71.9%), 127.9 MBs/sec
+2026-10-23T10:26:40.5264742Z Received 186734466 of 186734466 (100.0%), 142.2 MBs/sec
+2026-10-23T10:26:40.5266638Z Cache Size: ~178 MB (186734466 B)
+2026-10-23T10:26:40.5300813Z [command]/usr/bin/tar -xf /home/runner/work/_temp/bb6d309f-e178-4afd-b281-a5c07c611606/cache.tzst -P -C /home/runner/work/mlops-fri1-AI--bike-demand/mlops-fri1-AI--bike-demand --use-compress-program unzstd
+2026-10-23T10:26:42.0248585Z Cache restored successfully
+2026-10-23T10:26:42.0341446Z cache restored from GitHub Actions cache with key: setup-uv-2-x86_64-unknown-linux-gnu-ubuntu-24.04-3.12-94ef5b9a60cdf03142be5acdeabdab77fa1721386e6ae4883fcdfdd145035823
+2026-10-23T10:26:42.1532566Z ##[group]Run uv sync --locked
+2026-10-23T10:26:42.1532935Z [36;1muv sync --locked[0m
+2026-10-23T10:26:42.1786864Z shell: /usr/bin/bash -e {0}
+2026-10-23T10:26:42.1787198Z env:
+2026-10-23T10:26:42.1787521Z   UV_PYTHON_INSTALL_DIR: /home/runner/work/_temp/uv-python-dir
+2026-10-23T10:26:42.1787899Z   UV_PYTHON: 3.12
+2026-10-23T10:26:42.1788185Z   UV_CACHE_DIR: /home/runner/work/_temp/setup-uv-cache
+2026-10-23T10:26:42.1788498Z ##[endgroup]
+2026-10-23T10:26:42.1979359Z Using CPython 3.12.3 interpreter at: /usr/bin/python3.12
+2026-10-23T10:26:42.1979845Z Creating virtual environment at: .venv
+2026-10-23T10:26:42.2004887Z Resolved 100 packages in 0.93ms
+2026-10-23T10:26:42.2054511Z    Building bike-demand @ file:///home/runner/work/mlops-fri1-AI--bike-demand/mlops-fri1-AI--bike-demand
+2026-10-23T10:26:42.2061752Z       Built bike-demand @ file:///home/runner/work/mlops-fri1-AI--bike-demand/mlops-fri1-AI--bike-demand
+2026-10-23T10:26:42.2084396Z Prepared 1 package in 3ms
+2026-10-23T10:26:42.4363234Z Installed 97 packages in 227ms
+2026-10-23T10:26:42.4364239Z  + aiohappyeyeballs==2.7.1
+2026-10-23T10:26:42.4364758Z  + aiohttp==3.14.4
+2026-10-23T10:26:42.4365122Z  + aiosignal==1.4.0
+2026-10-23T10:26:42.4365475Z  + alembic==1.20.0
+2026-10-23T10:26:42.4365838Z  + annotated-doc==0.0.5
+2026-10-23T10:26:42.4366245Z  + annotated-types==0.8.0
+2026-10-23T10:26:42.4366634Z  + anyio==4.15.1
+2026-10-23T10:26:42.4367938Z  + attrs==26.1.0
+2026-10-23T10:26:42.4368781Z  + bike-demand==0.1.0 (from file:///home/runner/work/mlops-fri1-AI--bike-demand/mlops-fri1-AI--bike-demand)
+2026-10-23T10:26:42.4369317Z  + blinker==1.9.0
+2026-10-23T10:26:42.4369737Z  + cachetools==7.2.1
+2026-10-23T10:26:42.4370213Z  + certifi==2026.7.22
+2026-10-23T10:26:42.4370877Z  + cffi==2.1.1
+2026-10-23T10:26:42.4371305Z  + charset-normalizer==3.5.2
+2026-10-23T10:26:42.4371797Z  + click==8.5.0
+2026-10-23T10:26:42.4372223Z  + cloudpickle==3.1.2
+2026-10-23T10:26:42.4372660Z  + contourpy==1.4.0
+2026-10-23T10:26:42.4373098Z  + cryptography==50.0.2
+2026-10-23T10:26:42.4373524Z  + cycler==0.12.1
+2026-10-23T10:26:42.4374071Z  + databricks-sdk==0.148.0
+2026-10-23T10:26:42.4374439Z  + docker==7.2.0
+2026-10-23T10:26:42.4375010Z  + fastapi==0.142.2
+2026-10-23T10:26:42.4375392Z  + flask==3.1.3
+2026-10-23T10:26:42.4375721Z  + flask-cors==6.0.5
+2026-10-23T10:26:42.4376144Z  + fonttools==4.66.1
+2026-10-23T10:26:42.4376508Z  + frozenlist==1.8.0
+2026-10-23T10:26:42.4376870Z  + gitdb==4.0.12
+2026-10-23T10:26:42.4377231Z  + gitpython==3.2.0
+2026-10-23T10:26:42.4377682Z  + google-auth==2.60.0
+2026-10-23T10:26:42.4378114Z  + graphene==3.4.3
+2026-10-23T10:26:42.4378490Z  + graphql-core==3.2.13
+2026-10-23T10:26:42.4378935Z  + graphql-relay==3.2.0
+2026-10-23T10:26:42.4379376Z  + gunicorn==26.2.0
+2026-10-23T10:26:42.4379727Z  + h11==0.16.0
+2026-10-23T10:26:42.4380076Z  + httpcore==1.0.9
+2026-10-23T10:26:42.4380481Z  + httpx==0.28.1
+2026-10-23T10:26:42.4380823Z  + huey==3.4.0
+2026-10-23T10:26:42.4381217Z  + idna==3.20
+2026-10-23T10:26:42.4381589Z  + importlib-metadata==9.0.1
+2026-10-23T10:26:42.4382050Z  + iniconfig==2.3.1
+2026-10-23T10:26:42.4382449Z  + itsdangerous==2.2.0
+2026-10-23T10:26:42.4382842Z  + jinja2==3.1.6
+2026-10-23T10:26:42.4383205Z  + joblib==1.6.0
+2026-10-23T10:26:42.4383547Z  + kiwisolver==1.5.1
+2026-10-23T10:26:42.4384223Z  + mako==1.4.3
+2026-10-23T10:26:42.4384650Z  + markupsafe==3.0.4
+2026-10-23T10:26:42.4385083Z  + matplotlib==3.11.2
+2026-10-23T10:26:42.4387940Z  + mlflow==3.17.0
+2026-10-23T10:26:42.4388329Z  + mlflow-skinny==3.17.0
+2026-10-23T10:26:42.4388720Z  + mlflow-tracing==3.17.0
+2026-10-23T10:26:42.4389085Z  + multidict==6.9.1
+2026-10-23T10:26:42.4389423Z  + narwhals==2.26.0
+2026-10-23T10:26:42.4389761Z  + numpy==2.5.3
+2026-10-23T10:26:42.4390120Z  + opentelemetry-api==1.45.1
+2026-10-23T10:26:42.4390537Z  + opentelemetry-proto==1.45.1
+2026-10-23T10:26:42.4390974Z  + opentelemetry-sdk==1.45.1
+2026-10-23T10:26:42.4391437Z  + opentelemetry-semantic-conventions==0.66b1
+2026-10-23T10:26:42.4391932Z  + packaging==26.3
+2026-10-23T10:26:42.4392549Z  + pandas==2.3.3
+2026-10-23T10:26:42.4392872Z  + pillow==12.3.0
+2026-10-23T10:26:42.4393200Z  + pluggy==1.6.0
+2026-10-23T10:26:42.4393525Z  + prettytable==3.18.0
+2026-10-23T10:26:42.4394060Z  + propcache==0.5.4
+2026-10-23T10:26:42.4394383Z  + protobuf==6.33.6
+2026-10-23T10:26:42.4394747Z  + pyarrow==25.0.1
+2026-10-23T10:26:42.4395149Z  + pyasn1==0.6.4
+2026-10-23T10:26:42.4395473Z  + pyasn1-modules==0.4.2
+2026-10-23T10:26:42.4395828Z  + pycparser==3.0
+2026-10-23T10:26:42.4396149Z  + pydantic==2.13.5
+2026-10-23T10:26:42.4396478Z  + pydantic-core==2.46.5
+2026-10-23T10:26:42.4396821Z  + pygments==2.21.0
+2026-10-23T10:26:42.4397135Z  + pyparsing==3.3.3
+2026-10-23T10:26:42.4397458Z  + pytest==9.1.1
+2026-10-23T10:26:42.4397794Z  + python-dateutil==2.9.0.post0
+2026-10-23T10:26:42.4398198Z  + python-dotenv==1.2.4
+2026-10-23T10:26:42.4398543Z  + pytz==2026.5
+2026-10-23T10:26:42.4398855Z  + pyyaml==6.0.3
+2026-10-23T10:26:42.4399198Z  + requests==2.34.2
+2026-10-23T10:26:42.4399519Z  + ruff==0.15.7
+2026-10-23T10:26:42.4399863Z  + scikit-learn==1.9.1
+2026-10-23T10:26:42.4400207Z  + scipy==1.18.1
+2026-10-23T10:26:42.4400537Z  + six==1.17.0
+2026-10-23T10:26:42.4400849Z  + skops==0.16.0
+2026-10-23T10:26:42.4401159Z  + smmap==5.0.3
+2026-10-23T10:26:42.4401473Z  + sqlalchemy==2.1.3
+2026-10-23T10:26:42.4401813Z  + sqlparse==0.6.0
+2026-10-23T10:26:42.4402141Z  + starlette==1.7.0
+2026-10-23T10:26:42.4402470Z  + threadpoolctl==3.7.0
+2026-10-23T10:26:42.4402836Z  + typing-extensions==4.16.0
+2026-10-23T10:26:42.4403245Z  + typing-inspection==0.4.4
+2026-10-23T10:26:42.4403616Z  + tzdata==2026.5
+2026-10-23T10:26:42.4404199Z  + urllib3==2.8.0
+2026-10-23T10:26:42.4404629Z  + uvicorn==0.54.0
+2026-10-23T10:26:42.4405196Z  + wcwidth==0.9.2
+2026-10-23T10:26:42.4405945Z  + werkzeug==3.1.9
+2026-10-23T10:26:42.4406459Z  + yarl==1.25.1
+2026-10-23T10:26:42.4406769Z  + zipp==4.1.1
+2026-10-23T10:26:42.4462530Z ##[group]Run set +e
+2026-10-23T10:26:42.4462812Z [36;1mset +e[0m
+2026-10-23T10:26:42.4463312Z [36;1muv run --locked pytest -q --collect-only -m "not (infra or lab1 or exercise or api or recompute)"[0m
+2026-10-23T10:26:42.4463815Z [36;1mcode=$?[0m
+2026-10-23T10:26:42.4464273Z [36;1mset -e[0m
+2026-10-23T10:26:42.4464499Z [36;1mif [ "$code" -ne 5 ]; then[0m
+2026-10-23T10:26:42.4464996Z [36;1m  echo "::error::Some tests have no registered marker and would never run in CI (pytest exit $code)."[0m
+2026-10-23T10:26:42.4465474Z [36;1m  exit 1[0m
+2026-10-23T10:26:42.4465682Z [36;1mfi[0m
+2026-10-23T10:26:42.4536888Z shell: /usr/bin/bash -e {0}
+2026-10-23T10:26:42.4537176Z env:
+2026-10-23T10:26:42.4537477Z   UV_PYTHON_INSTALL_DIR: /home/runner/work/_temp/uv-python-dir
+2026-10-23T10:26:42.4537846Z   UV_PYTHON: 3.12
+2026-10-23T10:26:42.4538124Z   UV_CACHE_DIR: /home/runner/work/_temp/setup-uv-cache
+2026-10-23T10:26:42.4538466Z ##[endgroup]
+2026-10-23T10:26:50.1037267Z tests/test_capacity.py::test_prediction_is_rounded_to_whole_bikes
+2026-10-23T10:26:50.1037635Z 
+2026-10-23T10:26:50.1037817Z =============================== warnings summary ===============================
+2026-10-23T10:26:50.1038266Z .venv/lib/python3.12/site-packages/fastapi/testclient.py:1
+2026-10-23T10:26:50.1039383Z   /home/runner/work/mlops-fri1-AI--bike-demand/mlops-fri1-AI--bike-demand/.venv/lib/python3.12/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+2026-10-23T10:26:50.1040503Z     from starlette.testclient import TestClient as TestClient  # noqa
+2026-10-23T10:26:50.1040791Z 
+2026-10-23T10:26:50.1041028Z -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+2026-10-23T10:26:50.1041783Z 1/97 tests collected (96 deselected) in 6.64s
+2026-10-23T10:26:50.5566476Z ##[error]Some tests have no registered marker and would never run in CI (pytest exit 0).
+2026-10-23T10:26:50.5575414Z ##[error]Process completed with exit code 1.
+2026-10-23T10:26:50.5754262Z Post job cleanup.
+2026-10-23T10:26:50.6641536Z [command]/usr/bin/git version
+2026-10-23T10:26:50.6687079Z git version 2.55.0
+2026-10-23T10:26:50.6731424Z Temporarily overriding HOME='/home/runner/work/_temp/59191be3-157d-411e-b487-6e7c563898bb' before making global git config changes
+2026-10-23T10:26:50.6732224Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-23T10:26:50.6738193Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/mlops-fri1-AI--bike-demand/mlops-fri1-AI--bike-demand
+2026-10-23T10:26:50.6773474Z Removing SSH command configuration
+2026-10-23T10:26:50.6781019Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-23T10:26:50.6818949Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-23T10:26:50.7094382Z Removing HTTP extra header
+2026-10-23T10:26:50.7095398Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-23T10:26:50.7135990Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-23T10:26:50.7392468Z Removing includeIf entries pointing to credentials config files
+2026-10-23T10:26:50.7415086Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-23T10:26:50.7469594Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-23T10:26:50.7897360Z Cleaning up orphan processes
