@@ -1,0 +1,51 @@
+# Lab 7 gate policy. Committed BEFORE any candidate is evaluated: the commit
+# order on main is the evidence. A rule may change only through a reviewed PR
+# that says why; the decision records keep the policy_version they used.
+policy_version: 1
+
+# Evaluation context shared by every comparison (project contract, unchanged).
+evaluation:
+  data_sha256: e03de4ee4ef4dc376ac6e04bf829673c6269e8eba5c60fa121640fa2f829504f
+  window: validation          # 2012-01-01..2012-06-30, 4,358 rows; held test never scored
+  metric: validation_mae      # mean absolute error, bikes per hour, lower is better
+
+# Quality: candidate, train-mean baseline and accepted model on the same rows.
+quality:
+  # A model must beat the train-mean baseline (154.2 bikes/hour) by at least
+  # 20 bikes/hour (13%): below that it has not learned useful structure.
+  min_gain_vs_naive: 20.0
+  # Training is deterministic on this protocol (Lab 6: same MAE to 1e-6 on 5
+  # runs, Windows and Linux), so a measured gain is not execution noise.
+  # 0.5 bikes/hour (about 0.6% of the accepted 86.85) is the smallest gain we
+  # consider worth a new release; a smaller gain keeps the accepted model.
+  # Limit: one validation window cannot show the gain holds in the future.
+  min_gain_vs_accepted: 0.5
+
+# Operation: the candidate must fit the service that will load it.
+operation:
+  # Cloud Run instance: 1 GiB memory, model loaded once at start-up. 100 MB
+  # keeps load time and memory far below the limit (accepted model: ~5 MB).
+  max_model_mb: 100
+  # Single-row predict time, p95 (nearest rank) over the first 200 validation
+  # rows, on the machine that runs the pipeline. The service answers one row
+  # per request; 50 ms leaves room for HTTP and JSON in the request path.
+  max_p95_predict_ms: 50
+  latency_rows: 200
+
+# Integrity checks are always required (see bike_demand.pipeline): frozen data
+# hash, contract features, allowed settings, exact candidate bytes re-read,
+# reload gives the same predictions, accepted model verified before loading.
+# A missing or invalid check BLOCKS the decision; it never counts as passed.
+
+# Settings guard: candidates vary model settings only, inside these bounds.
+candidate_settings:
+  n_estimators: [10, 300]
+  max_depth: [2, 40]          # null = unlimited is also allowed
+  min_samples_leaf: [1, 20]
+  fixed:
+    random_state: 42
+    n_jobs: 1
+
+# Budget: at most 3 candidates in Lab 7, every attempt kept in decisions/.
+budget:
+  max_candidates: 3
