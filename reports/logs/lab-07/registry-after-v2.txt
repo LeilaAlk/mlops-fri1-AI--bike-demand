@@ -1,0 +1,26 @@
+{
+  "current": {
+    "model_version": "deeper-trees-e024f62d651a",
+    "model_sha256": "94f4f4b8f3482d034c10cec68cd65e66fdb91b0aac4119c61979f8bd2de9f857",
+    "decision_id": "e024f62d651a4897aaec1e873a0379ed",
+    "decision_record": "decisions/20261108T215758Z-deeper-trees-eligible.json",
+    "promoted_at": "2026-11-08T22:28:02Z",
+    "approved_by": "Andrea180904",
+    "from_main_commit": "a9eda78d66c42d08b84a325cfcf5eac86bda4ebc",
+    "previous": {
+      "model_version": "baseline-51e768eff2cb",
+      "model_sha256": "fd98ceafc57a5babce61ce703cbf9cb8d1f83c6820b0b34fe30ad1a0fc49c304"
+    }
+  }
+}
+  baseline-51e768eff2cb  fd98ceafc57a  verified  
+  deeper-trees-e024f62d651a  94f4f4b8f348  verified  current
+registry files sha256:
+  7229c2ea0f354b5b315264a432451e21016252edc0e81b50121a424e1c42390d  current.json
+  76a134c2d2f619ccf1920d36f62bcf19c01164b1320be131fa94ed8359cb08ad  history.jsonl
+  b3ad964f63fe4b2415d652944e4c08f72a7a68e580634010138ea424f31ed133  versions/baseline-51e768eff2cb/decision.json
+  06467ed97fa5e9cdf021283719205c8f632e940c865f900cb42d8e6d8304ce3f  versions/baseline-51e768eff2cb/model-metadata.json
+  fd98ceafc57a5babce61ce703cbf9cb8d1f83c6820b0b34fe30ad1a0fc49c304  versions/baseline-51e768eff2cb/model.joblib
+  16a7b0f2ace2eb4717ea169753b319921b7b59db53957d470d2fd6bf15216e8b  versions/deeper-trees-e024f62d651a/decision.json
+  a65a893f31e95886ca44667ab7c648dffc86b7341f8970155963a74e118bcd61  versions/deeper-trees-e024f62d651a/model-metadata.json
+  94f4f4b8f3482d034c10cec68cd65e66fdb91b0aac4119c61979f8bd2de9f857  versions/deeper-trees-e024f62d651a/model.joblib

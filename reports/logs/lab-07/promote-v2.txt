@@ -1,0 +1,13 @@
+{
+  "model_version": "deeper-trees-e024f62d651a",
+  "model_sha256": "94f4f4b8f3482d034c10cec68cd65e66fdb91b0aac4119c61979f8bd2de9f857",
+  "decision_id": "e024f62d651a4897aaec1e873a0379ed",
+  "decision_record": "decisions/20261108T215758Z-deeper-trees-eligible.json",
+  "promoted_at": "2026-11-08T22:28:02Z",
+  "approved_by": "Andrea180904",
+  "from_main_commit": "a9eda78d66c42d08b84a325cfcf5eac86bda4ebc",
+  "previous": {
+    "model_version": "baseline-51e768eff2cb",
+    "model_sha256": "fd98ceafc57a5babce61ce703cbf9cb8d1f83c6820b0b34fe30ad1a0fc49c304"
+  }
+}
