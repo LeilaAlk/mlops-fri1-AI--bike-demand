@@ -44,4 +44,5 @@ markers = [
     "exercise: Week 1 Lab 2 data/split/baseline exercises",
     "api: Labs 4-5 prediction API contract, start-up and logging (no server needed)",
     "recompute: Lab 6 regression, retrains the baseline and compares with the recorded MAE",
+    "gate: Lab 7 pipeline, quality gate and promotion (throwaway registry, real data)",
 ]
