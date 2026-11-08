@@ -1,0 +1,2 @@
+decision: BLOCKED  record: decisions/20261108T200051Z-deeper-trees-blocked.json
+  reason: Blocked: candidate: random_state must stay 42
