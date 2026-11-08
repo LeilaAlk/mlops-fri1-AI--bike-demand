@@ -348,6 +348,139 @@ failing run from the first red step upwards, and save the raw log as text in
 | Repair: did you fix the cause or hide it? | Each red run was repaired by reverting or fixing the defect on the same PR; no `continue-on-error`, `|| true`, skip or loosened assertion | Rerunning until green | A green rerun without a repair is not a repair |
 | Records: what is still readable in 3 months? | Failing logs saved as text in `reports/logs/lab-06/`, the team report, the commits and PR conversations | Links to run pages only | Run logs and artifacts expire |
 
+## Lab 7: pipeline and gate
+
+One command turns one declared candidate into a **decided** candidate. A
+separate, reviewed command promotes it. Nothing a candidate run writes can be
+served until a person promotes it from reviewed `main`.
+
+| What | Where |
+| --- | --- |
+| Gate policy (committed before any candidate was evaluated) | [`configs/gate-policy.yaml`](configs/gate-policy.yaml) |
+| Declared candidates (budget: 3) | [`configs/candidates/`](configs/candidates/) |
+| Decision records, one per run, committed | [`decisions/`](decisions/) |
+| Raw run outputs, rejected-state proof | [`reports/logs/lab-07/`](reports/logs/lab-07/) |
+| Accepted versions, Cloud Run revisions, image digests | [`reports/releases.md`](reports/releases.md) |
+| Candidate bundles, accepted store (out of Git) | `runs/`, `registry/` on the release machine |
+
+### Run it (clean checkout)
+
+```powershell
+uv sync --locked
+uv run --locked python -m bike_demand.pipeline --candidate configs/candidates/deeper-trees.yaml
+uv run --locked python -m bike_demand.promote --show
+```
+
+The pipeline exits **0 eligible**, **3 rejected** (a measured rule failed),
+**4 blocked** (a required check is missing or invalid). A clean checkout has no
+`registry/`, so a candidate there is **blocked** (no accepted model to compare
+with): that is correct, not a bug. The first accepted model is registered once
+with `--bootstrap` (the Lab 2 baseline, which must reproduce its recorded MAE).
+
+Promotion, from `main` only, once the decision record is merged:
+
+```powershell
+uv run --locked python -m bike_demand.promote --decision decisions/<record>.json --approved-by <reviewer>
+```
+
+### What we found in the existing system
+
+- **Training boundary**: `bike_demand.train` fits on 2011 and scores the
+  2012-01..06 validation rows; it accepts only the Week 1 settings.
+- **Overwrite risk**: `train_baseline` writes `artifacts/model.joblib`
+  unconditionally, and the Lab 3-6 `Dockerfile` retrains during
+  `docker build`: in both cases a model reaches serving without any decision.
+  The pipeline never writes `artifacts/` or `registry/`, and the Cloud Run image
+  is built with `Dockerfile.release`, which copies one accepted version and never
+  trains.
+- **Settings guard**: `train.load_config` refuses any change. The pipeline has
+  its own guard, bounded by `candidate_settings` in the policy, so a settings
+  change is reviewed as a policy change. Data path, the twelve ordered features
+  and `random_state` cannot change.
+
+### Pipeline boundary (choice, alternative, reason)
+
+| Question | Our choice | Rejected alternative | Why |
+| --- | --- | --- | --- |
+| Stages | inputs -> train -> evaluate -> decide -> record, functions in one module | one container per stage | the data is small; separate functions already give each stage a contract, a container per stage adds hand-offs with no benefit here |
+| Entry point | `python -m bike_demand.pipeline --candidate <yaml>` | a notebook or a Makefile | the lock and `uv run --locked` are all a clean checkout needs; same command locally and in CI |
+| Failure | a failed stage still writes a **blocked** decision with the reason | stop with a traceback and no record | an incomplete evaluation must be visible, never confused with a pass |
+| Retry | the whole run is safe to rerun: new run id, new folder, nothing overwritten | resume a half-finished run | a rerun is cheap (seconds) and cannot mix two runs' outputs |
+| Partial output | written to `runs/<id>.partial/`, renamed only when the record is complete | write straight to `runs/<id>/` | a crashed run is visibly incomplete; `promote` never accepts it |
+| Identity | data sha256 + candidate config sha256 + code commit + policy sha256 + settings + model sha256 | the run id alone | the run id names a run; the hashes say which bytes it consumed and produced |
+
+### Fair comparison
+
+| Question | Answer |
+| --- | --- |
+| Reference | the version named in `registry/current.json`, loaded only after its sha256 matches the record |
+| Observations | candidate, train-mean baseline and accepted model predict the **same 4,358 validation rows**, same labels, in the same run |
+| Metric | validation MAE in bikes per hour (lower is better) |
+| Margin | 0.5 bikes/hour vs the accepted model, 20 vs the train mean; rationale in the policy file |
+| Provenance | an old score is never reused: the accepted model is re-scored on the same rows in every run |
+| Missing incumbent | `gain_vs_accepted` is **missing** -> decision **blocked**, never passed |
+
+### What failure means
+
+| Outcome | When | What to do |
+| --- | --- | --- |
+| eligible (0) | every quality, operation and integrity check passed | open a PR with the decision record; a reviewer approves; promote from `main` |
+| rejected (3) | evidence is complete and a measured rule failed | keep the record; the accepted model stays as it is |
+| blocked (4) | a check is missing or invalid (no accepted model, data hash differs, settings outside the guard, accepted bundle fails its checksum) | repair the cause, then rerun; never edit the record |
+
+### Accepted-state boundary
+
+| Question | Answer |
+| --- | --- |
+| What may a candidate write? | only `runs/<id>/` and one record in `decisions/` |
+| What is immutable? | `registry/versions/<model_version>/` once promoted (model, metadata, decision) |
+| Switch | copy to a staging folder, verify, rename to the final folder, then replace `current.json` in one step (`os.replace`) |
+| Promotion stops halfway | `current.json` still names the previous version; a leftover `.staging-*` folder is listed as incomplete by `--show` |
+| Incumbent changed meanwhile | promote refuses: the decision names the accepted model it was compared with |
+| Recovery without retraining | the previous version stays in `registry/versions/`, its image stays in Artifact Registry and its Cloud Run revision stays available ([`reports/releases.md`](reports/releases.md)) |
+
+Recovering a bundle on another machine, without retraining: pull the image by
+digest from [`reports/releases.md`](reports/releases.md), then
+`docker create` + `docker cp <container>:/app/artifacts ./recovered` and check
+the sha256 against the decision record before using it.
+
+### Serve the accepted version on Cloud Run
+
+The Cloud Run image is built with [`Dockerfile.release`](Dockerfile.release):
+it copies one promoted version from `registry/versions/` byte for byte and
+never trains. Every accepted version gets its own image (by digest) and its own
+Cloud Run revision; the previous revision is kept for rollback (Lab 8).
+[`reports/releases.md`](reports/releases.md) is the retained record of what
+each revision serves.
+
+```powershell
+$PROJECT = "<gcp project id>"; $REGION = "europe-west1"
+$IMG = "$REGION-docker.pkg.dev/$PROJECT/bike-demand/api"
+docker build -f Dockerfile.release --build-arg BUNDLE=registry/versions/$V --build-arg GIT_COMMIT=$SHA -t "${IMG}:$V" .
+docker push "${IMG}:$V"
+gcloud run deploy bike-demand --image "${IMG}@$DIGEST" --region $REGION --port 8000 --memory 1Gi --max-instances 2 --allow-unauthenticated --set-env-vars "BIKE_DEMAND_EXPECTED_MODEL_SHA256=$MSHA" --revision-suffix <label>
+python scripts/check_deployment.py --url $URL --expected-metadata expected-<label>.json --expected-revision $SHA
+```
+
+`BIKE_DEMAND_EXPECTED_MODEL_SHA256` comes from the merged decision record, not
+from the image: if the bytes in the image differ, the service stays not ready
+(503) instead of serving them.
+
+### Local and CI claims
+
+The gate tests (`pytest -m gate`) run in CI on every PR with a throwaway
+registry. The official decisions in `decisions/` were produced on the release
+machine (named in each record's `environment`), not in CI: a clean runner has
+no accepted model, so a candidate there would be blocked. Promotion and
+deployment are manual.
+
+### What the gate cannot know
+
+One validation window (Jan-Jun 2012) cannot show that a gain holds later in
+2012; the training year has `yr = 0` only, so no setting can learn the 2012
+growth. Latency is measured on the release machine, not on Cloud Run. The gate
+says nothing about drift after deployment: that is Lab 8.
+
 ## Support and individual reports
 
 If setup remains blocked after five minutes, contact the instructor using the
