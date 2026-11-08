@@ -1,0 +1,10 @@
+decision: ELIGIBLE  record: decisions/20261108T212133Z-baseline-eligible.json
+  [pass   ] integrity/frozen_data: e03de4ee4ef4  (rule = policy e03de4ee4ef4)
+  [pass   ] integrity/reload_same_predictions: max abs delta 0.0  (rule saved bytes reproduce the evaluated predictions)
+  [pass   ] integrity/finite_nonnegative_predictions: min 1.445  (rule finite and >= 0)
+  [pass   ] operation/model_size: 5.2 MB  (rule <= 100 MB)
+  [pass   ] operation/p95_single_row_predict: 7.54 ms over n=200  (rule <= 50 ms)
+  [pass   ] quality/gain_vs_naive: 67.385 bikes/h (naive 154.232, candidate 86.847)  (rule >= 20.0)
+  [pass   ] integrity/registry_empty_for_bootstrap: empty  (rule bootstrap only before the first accepted version)
+  [pass   ] quality/matches_recorded_lab2_model: 86.846857 vs recorded 86.846857  (rule within 1e-06 (tests/regression/baseline-expected.json))
+  reason: all quality, operation and integrity checks passed

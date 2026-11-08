@@ -1,0 +1,129 @@
+{
+  "decision_id": "51e768eff2cb4484a47fd59af673269b",
+  "created_at": "2026-11-08T21:21:33Z",
+  "kind": "bootstrap",
+  "code": {
+    "commit": "6d7f96ca3c6d507d260923deb8f32eec89b4237e",
+    "dirty": false
+  },
+  "policy": {
+    "path": "configs/gate-policy.yaml",
+    "sha256": "c595404bc548e13634ba97a304c64a2c70abd06d17e42c339c8d01a2e8f7ef0c",
+    "last_commit": "4799853bce7dee00c28ff07f9fec99516f6eddc5 2026-11-08T13:57:02+01:00",
+    "version": 1
+  },
+  "candidate": {
+    "config_path": "configs/baseline.yaml",
+    "name": "baseline",
+    "config_sha256": "88a909bd859977a82a032a99415ab03b4aa14d837aef7c9980090f110e8897d6",
+    "settings": {
+      "n_estimators": 50,
+      "max_depth": 10,
+      "random_state": 42,
+      "n_jobs": 1
+    },
+    "model_version": "baseline-51e768eff2cb",
+    "model_sha256": "fd98ceafc57a5babce61ce703cbf9cb8d1f83c6820b0b34fe30ad1a0fc49c304",
+    "model_bytes": 5243601,
+    "run_dir": "runs/51e768eff2cb4484a47fd59af673269b"
+  },
+  "environment": {
+    "python": "3.12.15",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "scikit_learn": "1.9.1"
+  },
+  "accepted_before": null,
+  "evaluation": {
+    "data_sha256": "e03de4ee4ef4dc376ac6e04bf829673c6269e8eba5c60fa121640fa2f829504f",
+    "window": "validation",
+    "metric": "validation_mae"
+  },
+  "results": {
+    "validation_rows": 4358,
+    "naive_train_mean_mae": 154.23179306864967,
+    "candidate_mae": 86.84685685591091,
+    "accepted_mae": null,
+    "model_mb": 5.244,
+    "p95_single_row_predict_ms": 7.543,
+    "latency_rows": 200,
+    "partitions": {
+      "train": {
+        "rows": 8645,
+        "date_min": "2011-01-01",
+        "date_max": "2011-12-31"
+      },
+      "validation": {
+        "rows": 4358,
+        "date_min": "2012-01-01",
+        "date_max": "2012-06-30"
+      },
+      "test": {
+        "rows": 4376,
+        "date_min": "2012-07-01",
+        "date_max": "2012-12-31"
+      }
+    }
+  },
+  "checks": [
+    {
+      "group": "integrity",
+      "name": "frozen_data",
+      "status": "pass",
+      "observed": "e03de4ee4ef4",
+      "rule": "= policy e03de4ee4ef4"
+    },
+    {
+      "group": "integrity",
+      "name": "reload_same_predictions",
+      "status": "pass",
+      "observed": "max abs delta 0.0",
+      "rule": "saved bytes reproduce the evaluated predictions"
+    },
+    {
+      "group": "integrity",
+      "name": "finite_nonnegative_predictions",
+      "status": "pass",
+      "observed": "min 1.445",
+      "rule": "finite and >= 0"
+    },
+    {
+      "group": "operation",
+      "name": "model_size",
+      "status": "pass",
+      "observed": "5.2 MB",
+      "rule": "<= 100 MB"
+    },
+    {
+      "group": "operation",
+      "name": "p95_single_row_predict",
+      "status": "pass",
+      "observed": "7.54 ms over n=200",
+      "rule": "<= 50 ms"
+    },
+    {
+      "group": "quality",
+      "name": "gain_vs_naive",
+      "status": "pass",
+      "observed": "67.385 bikes/h (naive 154.232, candidate 86.847)",
+      "rule": ">= 20.0"
+    },
+    {
+      "group": "integrity",
+      "name": "registry_empty_for_bootstrap",
+      "status": "pass",
+      "observed": "empty",
+      "rule": "bootstrap only before the first accepted version"
+    },
+    {
+      "group": "quality",
+      "name": "matches_recorded_lab2_model",
+      "status": "pass",
+      "observed": "86.846857 vs recorded 86.846857",
+      "rule": "within 1e-06 (tests/regression/baseline-expected.json)"
+    }
+  ],
+  "outcome": "eligible",
+  "reasons": [
+    "all quality, operation and integrity checks passed"
+  ]
+}
