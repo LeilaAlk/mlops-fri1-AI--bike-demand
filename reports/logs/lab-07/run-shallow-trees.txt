@@ -1,0 +1,10 @@
+decision: REJECTED  record: decisions/20261108T215541Z-shallow-trees-rejected.json
+  [pass   ] integrity/frozen_data: e03de4ee4ef4  (rule = policy e03de4ee4ef4)
+  [pass   ] integrity/reload_same_predictions: max abs delta 0.0  (rule saved bytes reproduce the evaluated predictions)
+  [pass   ] integrity/finite_nonnegative_predictions: min 4.496  (rule finite and >= 0)
+  [pass   ] operation/model_size: 0.1 MB  (rule <= 100 MB)
+  [pass   ] operation/p95_single_row_predict: 6.33 ms over n=200  (rule <= 50 ms)
+  [pass   ] quality/gain_vs_naive: 56.153 bikes/h (naive 154.232, candidate 98.079)  (rule >= 20.0)
+  [pass   ] integrity/accepted_bundle: fd98ceafc57a  (rule bytes match the registry record before loading)
+  [fail   ] quality/gain_vs_accepted: -11.232 bikes/h (accepted 86.847, candidate 98.079, same 4358 rows)  (rule >= 0.5)
+  reason: quality/gain_vs_accepted: fail (-11.232 bikes/h (accepted 86.847, candidate 98.079, same 4358 rows); rule >= 0.5)

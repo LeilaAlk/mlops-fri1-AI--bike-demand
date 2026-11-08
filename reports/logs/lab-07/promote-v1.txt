@@ -1,0 +1,10 @@
+{
+  "model_version": "baseline-51e768eff2cb",
+  "model_sha256": "fd98ceafc57a5babce61ce703cbf9cb8d1f83c6820b0b34fe30ad1a0fc49c304",
+  "decision_id": "51e768eff2cb4484a47fd59af673269b",
+  "decision_record": "decisions/20261108T212133Z-baseline-eligible.json",
+  "promoted_at": "2026-11-08T21:31:43Z",
+  "approved_by": "Andrea180904",
+  "from_main_commit": "230d46289f38fc80b1b5dceed64e0201cb303c62",
+  "previous": null
+}

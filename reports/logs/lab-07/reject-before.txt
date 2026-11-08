@@ -1,0 +1,19 @@
+{
+  "current": {
+    "model_version": "baseline-51e768eff2cb",
+    "model_sha256": "fd98ceafc57a5babce61ce703cbf9cb8d1f83c6820b0b34fe30ad1a0fc49c304",
+    "decision_id": "51e768eff2cb4484a47fd59af673269b",
+    "decision_record": "decisions/20261108T212133Z-baseline-eligible.json",
+    "promoted_at": "2026-11-08T21:31:43Z",
+    "approved_by": "Andrea180904",
+    "from_main_commit": "230d46289f38fc80b1b5dceed64e0201cb303c62",
+    "previous": null
+  }
+}
+  baseline-51e768eff2cb  fd98ceafc57a  verified  current
+registry files sha256:
+  65f98d1ee7892e8bbebe4d56d5cda1446fa708613c53cac2473ca679ec3f91e1  current.json
+  13753f2c4521aa993eb2d2ce8e1380ca75a10f9a20516d160f7a9d1103589957  history.jsonl
+  b3ad964f63fe4b2415d652944e4c08f72a7a68e580634010138ea424f31ed133  versions/baseline-51e768eff2cb/decision.json
+  06467ed97fa5e9cdf021283719205c8f632e940c865f900cb42d8e6d8304ce3f  versions/baseline-51e768eff2cb/model-metadata.json
+  fd98ceafc57a5babce61ce703cbf9cb8d1f83c6820b0b34fe30ad1a0fc49c304  versions/baseline-51e768eff2cb/model.joblib

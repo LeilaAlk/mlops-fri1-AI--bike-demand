@@ -1,0 +1,133 @@
+{
+  "decision_id": "e024f62d651a4897aaec1e873a0379ed",
+  "created_at": "2026-11-08T21:57:58Z",
+  "kind": "candidate",
+  "code": {
+    "commit": "230d46289f38fc80b1b5dceed64e0201cb303c62",
+    "dirty": false
+  },
+  "policy": {
+    "path": "configs/gate-policy.yaml",
+    "sha256": "c595404bc548e13634ba97a304c64a2c70abd06d17e42c339c8d01a2e8f7ef0c",
+    "last_commit": "4799853bce7dee00c28ff07f9fec99516f6eddc5 2026-11-08T13:57:02+01:00",
+    "version": 1
+  },
+  "candidate": {
+    "config_path": "configs/candidates/deeper-trees.yaml",
+    "name": "deeper-trees",
+    "config_sha256": "a5d8afa73283509c95320a61f2b6aea4be02bbe6a5dbfa253c479c1fbd733d32",
+    "settings": {
+      "n_estimators": 50,
+      "max_depth": null,
+      "random_state": 42,
+      "n_jobs": 1
+    },
+    "model_version": "deeper-trees-e024f62d651a",
+    "model_sha256": "94f4f4b8f3482d034c10cec68cd65e66fdb91b0aac4119c61979f8bd2de9f857",
+    "model_bytes": 37097697,
+    "run_dir": "runs/e024f62d651a4897aaec1e873a0379ed"
+  },
+  "environment": {
+    "python": "3.12.15",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "scikit_learn": "1.9.1"
+  },
+  "accepted_before": {
+    "model_version": "baseline-51e768eff2cb",
+    "model_sha256": "fd98ceafc57a5babce61ce703cbf9cb8d1f83c6820b0b34fe30ad1a0fc49c304",
+    "decision_id": "51e768eff2cb4484a47fd59af673269b"
+  },
+  "evaluation": {
+    "data_sha256": "e03de4ee4ef4dc376ac6e04bf829673c6269e8eba5c60fa121640fa2f829504f",
+    "window": "validation",
+    "metric": "validation_mae"
+  },
+  "results": {
+    "validation_rows": 4358,
+    "naive_train_mean_mae": 154.23179306864967,
+    "candidate_mae": 86.03943934526542,
+    "accepted_mae": 86.84685685591091,
+    "model_mb": 37.098,
+    "p95_single_row_predict_ms": 6.956,
+    "latency_rows": 200,
+    "partitions": {
+      "train": {
+        "rows": 8645,
+        "date_min": "2011-01-01",
+        "date_max": "2011-12-31"
+      },
+      "validation": {
+        "rows": 4358,
+        "date_min": "2012-01-01",
+        "date_max": "2012-06-30"
+      },
+      "test": {
+        "rows": 4376,
+        "date_min": "2012-07-01",
+        "date_max": "2012-12-31"
+      }
+    }
+  },
+  "checks": [
+    {
+      "group": "integrity",
+      "name": "frozen_data",
+      "status": "pass",
+      "observed": "e03de4ee4ef4",
+      "rule": "= policy e03de4ee4ef4"
+    },
+    {
+      "group": "integrity",
+      "name": "reload_same_predictions",
+      "status": "pass",
+      "observed": "max abs delta 0.0",
+      "rule": "saved bytes reproduce the evaluated predictions"
+    },
+    {
+      "group": "integrity",
+      "name": "finite_nonnegative_predictions",
+      "status": "pass",
+      "observed": "min 1.140",
+      "rule": "finite and >= 0"
+    },
+    {
+      "group": "operation",
+      "name": "model_size",
+      "status": "pass",
+      "observed": "37.1 MB",
+      "rule": "<= 100 MB"
+    },
+    {
+      "group": "operation",
+      "name": "p95_single_row_predict",
+      "status": "pass",
+      "observed": "6.96 ms over n=200",
+      "rule": "<= 50 ms"
+    },
+    {
+      "group": "quality",
+      "name": "gain_vs_naive",
+      "status": "pass",
+      "observed": "68.192 bikes/h (naive 154.232, candidate 86.039)",
+      "rule": ">= 20.0"
+    },
+    {
+      "group": "integrity",
+      "name": "accepted_bundle",
+      "status": "pass",
+      "observed": "fd98ceafc57a",
+      "rule": "bytes match the registry record before loading"
+    },
+    {
+      "group": "quality",
+      "name": "gain_vs_accepted",
+      "status": "pass",
+      "observed": "0.807 bikes/h (accepted 86.847, candidate 86.039, same 4358 rows)",
+      "rule": ">= 0.5"
+    }
+  ],
+  "outcome": "eligible",
+  "reasons": [
+    "all quality, operation and integrity checks passed"
+  ]
+}
