@@ -61,7 +61,7 @@ jobs:
       - name: Every test belongs to a group CI runs (pytest exit 5 = none left over)
         run: |
           set +e
-          uv run --locked pytest -q --collect-only -m "not (infra or lab1 or exercise or api or recompute)"
+          uv run --locked pytest -q --collect-only -m "not (infra or lab1 or exercise or api or recompute or gate)"
           code=$?
           set -e
           if [ "$code" -ne 5 ]; then
@@ -76,6 +76,8 @@ jobs:
         run: uv run --locked pytest -q -m exercise
       - name: API contract, start-up and logging tests
         run: uv run --locked pytest -q -m api
+      - name: Lab 7 pipeline, gate and promotion tests (throwaway registry)
+        run: uv run --locked pytest -q -m gate
 
   recompute:
     name: recompute
