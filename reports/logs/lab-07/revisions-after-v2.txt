@@ -1,0 +1,3 @@
+   REVISION                 ACTIVE  SERVICE      DEPLOYED                 DEPLOYED BY
++  bike-demand-v2-deeper    yes     bike-demand  2026-11-08 22:45:40 UTC  Leila.alkassoum@gmail.com
++  bike-demand-v1-baseline          bike-demand  2026-11-08 21:45:59 UTC  Leila.alkassoum@gmail.com
