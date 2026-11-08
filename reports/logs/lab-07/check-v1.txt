@@ -1,0 +1,14 @@
+   Building bike-demand @ file:///C:/Users/leila/mlops-fri1-AI--bike-demand
+      Built bike-demand @ file:///C:/Users/leila/mlops-fri1-AI--bike-demand
+Uninstalled 1 package in 18ms
+Installed 1 package in 61ms
+claim                      expected                   observed                   result
+ready (/health)            200                        200                        ok
+model_version              baseline-51e768eff2cb      baseline-51e768eff2cb      ok
+model_sha256               fd98ceafc57a5babce61c...   fd98ceafc57a5babce61c...   ok
+service_revision           230d46289f38fc80b1b5d...   230d46289f38fc80b1b5d...   ok
+valid input -> 200         200, finite >= 0           200, 519.4906075228514     ok
+prediction model_version   baseline-51e768eff2cb      baseline-51e768eff2cb      ok
+request id echoed          check-201f3964             check-201f3964             ok
+invalid hr=24 -> 422       422                        422                        ok
+exit status 0
