@@ -31,3 +31,8 @@
 **/.env
 **/.env.*
 **/.DS_Store
+
+# Lab 7: the release image copies one accepted version from the registry
+# (Dockerfile.release). Candidate runs never enter an image.
+!registry/versions/
+**/runs

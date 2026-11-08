@@ -1,0 +1,29 @@
+{
+  "decision_id": "0fe1d7d7259b41c0b993fa413a260238",
+  "created_at": "2026-11-08T20:00:51Z",
+  "kind": "candidate",
+  "code": {
+    "commit": "1ec1f724f3145bf11e1d52d2357f0dacfd16d0c9",
+    "dirty": true
+  },
+  "policy": {
+    "path": "configs/gate-policy.yaml",
+    "sha256": "c595404bc548e13634ba97a304c64a2c70abd06d17e42c339c8d01a2e8f7ef0c",
+    "last_commit": "4799853bce7dee00c28ff07f9fec99516f6eddc5 2026-11-08T13:57:02+01:00",
+    "version": 1
+  },
+  "candidate": {
+    "config_path": "configs/candidates/deeper-trees.yaml",
+    "run_dir": "runs/0fe1d7d7259b41c0b993fa413a260238"
+  },
+  "environment": {
+    "python": "3.12.15",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "scikit_learn": "1.9.1"
+  },
+  "checks": [],
+  "outcome": "blocked",
+  "reasons": [
+    "Blocked: candidate: random_state must stay 42"
+  ]
+}
