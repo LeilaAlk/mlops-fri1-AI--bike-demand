@@ -1,0 +1,5 @@
+   Building bike-demand @ file:///C:/ING%205%20ML/mlops-fri1-AI--bike-demand
+      Built bike-demand @ file:///C:/ING%205%20ML/mlops-fri1-AI--bike-demand
+Uninstalled 1 package in 22ms
+Installed 1 package in 11ms
+promotion refused, nothing changed: decision is 'rejected', only 'eligible' can be promoted
