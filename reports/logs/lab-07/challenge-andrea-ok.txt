@@ -1,0 +1,10 @@
+claim                      expected                   observed                   result
+ready (/health)            200                        200                        ok
+model_version              deeper-trees-e024f62d...   deeper-trees-e024f62d...   ok
+model_sha256               94f4f4b8f3482d034c10c...   94f4f4b8f3482d034c10c...   ok
+service_revision           a9eda78d66c42d08b84a3...   a9eda78d66c42d08b84a3...   ok
+valid input -> 200         200, finite >= 0           200, 582.62                ok
+prediction model_version   deeper-trees-e024f62d...   deeper-trees-e024f62d...   ok
+request id echoed          check-23894ab5             check-23894ab5             ok
+invalid hr=24 -> 422       422                        422                        ok
+exit status 0

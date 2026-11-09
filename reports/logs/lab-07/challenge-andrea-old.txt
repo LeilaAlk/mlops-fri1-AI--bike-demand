@@ -1,0 +1,10 @@
+claim                      expected                   observed                   result
+ready (/health)            200                        200                        ok
+model_version              baseline-51e768eff2cb      deeper-trees-e024f62d...   FAIL
+model_sha256               fd98ceafc57a5babce61c...   94f4f4b8f3482d034c10c...   FAIL
+service_revision           a9eda78d66c42d08b84a3...   a9eda78d66c42d08b84a3...   ok
+valid input -> 200         200, finite >= 0           200, 582.62                ok
+prediction model_version   baseline-51e768eff2cb      deeper-trees-e024f62d...   FAIL
+request id echoed          check-c5457d9b             check-c5457d9b             ok
+invalid hr=24 -> 422       422                        422                        ok
+exit status 1 (failed: ['model_version', 'model_sha256', 'prediction model_version'])
