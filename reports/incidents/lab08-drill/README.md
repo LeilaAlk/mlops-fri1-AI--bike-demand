@@ -14,25 +14,20 @@ region `europe-west1`. All times UTC. Raw evidence: [`evidence/`](evidence/).
 
 | | Value |
 | --- | --- |
-| Workload | `scripts/probe.py`, cohort `examples/replay-validation.jsonl` (200 valid validation-period hours) + 20 invalid requests, from `<who>`'s laptop |
+| Workload | `scripts/probe.py`, cohort `examples/replay-validation.jsonl` (200 valid validation-period hours) + 20 invalid requests, from Leila's laptop |
 | Environment | Cloud Run `bike-demand`, `europe-west1`, 1 GiB, max 2 instances |
-| Identity | revision `<...>`, model `<...>`, sha256 `<...>`, code `<...>` (= `reports/releases.md`) |
-| Window, n | `<start>` -> `<end>`, 200 valid + 20 invalid |
-| Signals | valid success `<g>/<n>`, invalid 4xx `<r>/20`, p50/p95 `<..>/<..>` ms, MAE `<..>` bikes/h (coverage 200/200) |
-| Evidence | [`evidence/baseline-summary.json`](evidence/baseline-summary.json), [`evidence/baseline-attempts.jsonl`](evidence/baseline-attempts.jsonl) |
+| Identity | revision `bike-demand-v2-deeper`, model `deeper-trees-e024f62d651a`, sha256 `94f4f4b8f348…`, code `a9eda78` (= `reports/releases.md`, line `serving 100%`) |
+| Window, n | `19:04:15` -> `19:04:38` UTC, 200 valid + 20 invalid |
+| Signals | valid success `200/200`, invalid 4xx `20/20`, p50/p95 `91.76/203.73` ms (n=200), MAE `95.519` bikes/h (coverage 200/200) |
+| Evidence | [`evidence/baseline-summary.json`](evidence/baseline-summary.json), [`evidence/baseline-attempts.jsonl`](evidence/baseline-attempts.jsonl), [`evidence/traffic-baseline.txt`](evidence/traffic-baseline.txt) |
 
 ## 2. Timeline (written as it happened, never rewritten)
 
 | UTC | Who | What was observed or done | Evidence |
 | --- | --- | --- | --- |
-| `<...>` | Leila | baseline probe done | `evidence/baseline-summary.json` |
-| `<...>` | Andrea | watch loop started (one probe every 2 min) | `evidence/watch-*-summary.json` |
-| `<...>` | Andrea | **first signal**: `<ALERT line>` | `evidence/watch-<n>-summary.json` |
-| `<...>` | Andrea | `<check>` -> `<result>` | `<file>` |
-| `<...>` | Andrea | diagnosis written (section 4) | this file |
-| `<...>` | Andrea | traffic -> `<revision>`=100 | `evidence/update-traffic.txt` |
-| `<...>` | Andrea | verification done | `evidence/after-summary.json`, `evidence/check-after.txt` |
-| `<...>` | Julia | fault revealed | section 6 |
+| 19:01 | Talia | incident branch `lab08/incident` opened (commit `c820fcd`) | this file |
+| 19:03:45 | Leila | baseline started (traffic recorded first) | `evidence/traffic-baseline.txt` |
+| 19:04:52 | Leila | baseline probe done: 200/200, 20/20, MAE 95.519, model deeper-trees-e024f62d651a | `evidence/baseline-summary.json` |
 
 ## 3. First signal
 
@@ -42,9 +37,9 @@ revision observed `<...>`, model_version observed `<...>`. Raw:
 
 ## 4. Hypotheses (written BEFORE the fault was revealed)
 
-| | Hypothesis A: <a release changed the model or its configuration> | Hypothesis B: <inputs or demand changed, the service is the same> |
+| | Hypothesis A: a release changed the model or its configuration | Hypothesis B: inputs or demand changed, the service is the same |
 | --- | --- | --- |
-| Predicted observation | `<identity differs from releases.md; same inputs give different outputs>` | `<identity unchanged; same inputs give the same outputs>` |
+| Predicted observation | identity differs from `releases.md`; a new revision has the traffic; same inputs give different outputs (or 503) | identity unchanged, same revisions; same inputs give the same outputs |
 | Discriminating check | `<...>` | `<...>` |
 | Actual result | `<...>` | `<...>` |
 | Conclusion | `<supported / rejected>` | `<supported / rejected>` |
@@ -68,13 +63,13 @@ Did the diagnosis match? `<yes / partly / no, and why>`.
 
 | | Baseline | Incident | After rollback |
 | --- | --- | --- | --- |
-| Window (UTC) | | | |
-| Revision / model_version | | | |
-| Valid success | | | |
-| Invalid 4xx | | | |
-| p50 / p95 ms (n) | | | |
-| MAE bikes/h (coverage) | | | |
-| Evidence | | | |
+| Window (UTC) | 19:04:15 -> 19:04:38 | | |
+| Revision / model_version | `bike-demand-v2-deeper` / `deeper-trees-e024f62d651a` | | |
+| Valid success | 200/200 | | |
+| Invalid 4xx | 20/20 | | |
+| p50 / p95 ms (n) | 91.76 / 203.73 (200) | | |
+| MAE bikes/h (coverage) | 95.519 (200/200) | | |
+| Evidence | `baseline-summary.json` | | |
 
 What improved: `<...>`. What remains unknown: `<...>`. What would falsify the
 recovery claim: `<...>`.
