@@ -1,0 +1,6 @@
+Updating traffic...
+Routing traffic.....................................................done
+Done.
+URL: https://bike-demand-6zxggmsv2a-ew.a.run.app
+Traffic:
+  100% bike-demand-v2-deeper

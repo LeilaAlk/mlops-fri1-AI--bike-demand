@@ -1,0 +1,7 @@
+Updating traffic...
+failed
+Updating traffic failed
+URL: https://bike-demand-6zxggmsv2a-ew.a.run.app
+Traffic:
+  100% LATEST (currently bike-demand-drill-1)
+ERROR: (gcloud.run.services.update-traffic) PERMISSION_DENIED: Permission 'artifactregistry.repositories.downloadArtifacts' denied on resource '//artifactregistry.googleapis.com/projects/bike-demand-ai/locations/europe-west1/repositories/bike-demand' (or it may not exist). Remediate access with this Troubleshooter URL or share it with your administrator - https://console.cloud.google.com/iam-admin/troubleshooter/summary;errorId=CiQwMWExYzZlZS1jNGZhLTdhNzEtYjZkZi02ZTQwMzNlYTUyMmUSR3Byb2plY3RzL2Jpa2UtZGVtYW5kLWFpL2xvY2F0aW9ucy9ldXJvcGUtd2VzdDEvcmVwb3NpdG9yaWVzL2Jpa2UtZGVtYW5k . This command is authenticated as gabrieliandrea1809@gmail.com which is the active account specified by the [core/account] property.
