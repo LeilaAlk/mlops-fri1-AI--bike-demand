@@ -1,6 +1,7 @@
 # Incident record: rejected model served on Cloud Run (Lab 8 drill)
 
-Status: <resolved / mitigated, monitoring>. Service `bike-demand` on Cloud Run,
+Status: **resolved**. Traffic back on the accepted revision `bike-demand-v2-deeper`,
+verified from three sources at 19:36:42 UTC. Service `bike-demand` on Cloud Run,
 region `europe-west1`. All times UTC. Raw evidence: [`evidence/`](evidence/).
 
 | Role | Person |
@@ -34,6 +35,12 @@ region `europe-west1`. All times UTC. Raw evidence: [`evidence/`](evidence/).
 | 19:23 | Andrea | diagnosis written (section 4): A supported, B rejected, before any reveal (pushed in commit `8acbc3e`) | this file |
 | 19:27 | Julia | fault revealed (section 6): rejected model deployed at 19:15:29 -> 19:16:19 | section 6 |
 | 19:30 | Talia | precision after reading the raw files: the watch-4 window (19:15:53 -> 19:16:22) straddled the switch; 170 answers came from `deeper-trees-e024f62d651a`, 30 from `shallow-trees-77df9d597f48`. The 30 different outputs are exactly the 30 answered by the rejected model; the incident MAE 102.236 mixes both models | `evidence/watch-4-summary.json` (`predict_model_versions`), `evidence/compare-incident.txt` |
+| `<T1>` | Andrea | rollback attempt 1 **refused**: `PERMISSION_DENIED`, permission `artifactregistry.repositories.downloadArtifacts` missing for the operator account; traffic stayed 100% on `bike-demand-drill-1` (recorded after the fact from Andrea's report) | `evidence/update-traffic.txt` |
+| `<T2>` | Andrea | rollback retry after `<how unblocked>`: `Routing traffic... done`, 100% `bike-demand-v2-deeper` | `evidence/update-traffic-retry.txt`, `evidence/traffic-after.txt` |
+| `<T3>` | Andrea | identity check 1 **failed**: `cannot reach … read operation timed out`, 7/8 FAIL (only hr=24 -> 422 ok) | `evidence/check-after.txt` |
+| `<T4>` | Andrea | identity check 2: 8/8 ok, exit 0 (deeper-trees-e024f62d651a, sha 94f4f4b8f348, commit a9eda78) | `evidence/check-after-2.txt` |
+| 19:32:47 -> 19:33:11 | Andrea | after probe: no ALERT, 200/200, 20/20, MAE 95.519, p95 135.59 ms; 200/200 predictions identical to baseline | `evidence/after-summary.json`, `evidence/compare-after.txt` |
+| 19:36:42 | Andrea | verification done: Cloud Run logs show the `probe-after` requests with the expected model; observation window 19:32:47 -> 19:36:42 | `evidence/cloud-run-logs-after.json` |
 
 ## 3. First signal
 
@@ -67,9 +74,29 @@ labelled).
 
 ## 5. Response
 
-Why rollback fits: `<...>`. Target: revision `<...>`, model `<...>`, sha256
-`<...>`, image `<digest>`, decision `<record>`. Compatibility checked: `<...>`.
-Command and output: [`evidence/update-traffic.txt`](evidence/update-traffic.txt).
+Why rollback fits: hypothesis A was supported (a release changed the model) and
+the accepted revision is still listed and retained; a traffic switch restores the
+accepted model in one controlled change, with no retraining and no registry change.
+A rollback could not fix hypothesis B, which was rejected.
+
+Target (from the `serving 100%` line of [`reports/releases.md`](../../releases.md)):
+revision `bike-demand-v2-deeper`, model `deeper-trees-e024f62d651a`, sha256
+`94f4f4b8f3482d034c10cec68cd65e66fdb91b0aac4119c61979f8bd2de9f857`, image
+`sha256:0f643f971c168b85b1007789b598dffe721ab00122dfcaabef44c25b980fc59b`,
+decision `decisions/20261108T215758Z-deeper-trees-eligible.json`.
+Compatibility: same code commit (`a9eda78`) and same API contract as the drill
+revision and the last verified release.
+
+Command: `gcloud run services update-traffic bike-demand --region europe-west1 --to-revisions bike-demand-v2-deeper=100`.
+
+- Attempt 1 (`<T1>`): **refused**, `PERMISSION_DENIED` on
+  `artifactregistry.repositories.downloadArtifacts` for the operator account;
+  nothing changed (traffic still 100% on `drill-1`):
+  [`evidence/update-traffic.txt`](evidence/update-traffic.txt).
+- Attempt 2 (`<T2>`), after `<how unblocked>`: done, 100% on
+  `bike-demand-v2-deeper`:
+  [`evidence/update-traffic-retry.txt`](evidence/update-traffic-retry.txt),
+  [`evidence/traffic-after.txt`](evidence/traffic-after.txt).
 
 ## 6. Fault revealed by the injector (after section 4)
 
@@ -93,7 +120,8 @@ Why it was reversible: the accepted revision `bike-demand-v2-deeper` stayed
 available (as did `bike-demand-v1-baseline`). One traffic rollback
 (`gcloud run services update-traffic --to-revisions bike-demand-v2-deeper=100`)
 is enough, with no retraining and no registry change. Revision
-`bike-demand-drill-1` is kept as evidence.
+`bike-demand-drill-1` is kept as evidence and recorded as `rehearsal only` in
+`reports/releases.md`.
 
 Did the diagnosis match? **Yes.** Hypothesis A (a new model was deployed) was
 supported and B rejected before the reveal; the operator identified the exact
@@ -106,21 +134,38 @@ that was running during the switch.
 
 | | Baseline | Incident | After rollback |
 | --- | --- | --- | --- |
-| Window (UTC) | 19:04:15 -> 19:04:38 | 19:15:53 -> 19:16:22 (watch-4, straddles the switch at 19:16:19) | |
-| Revision / model_version | `bike-demand-v2-deeper` / `deeper-trees-e024f62d651a` (200) | `bike-demand-drill-1` / `shallow-trees-77df9d597f48` (30) + `deeper-trees-e024f62d651a` (170) | |
-| Valid success | 200/200 | 200/200 | |
-| Invalid 4xx | 20/20 | 20/20 | |
-| p50 / p95 ms (n) | 91.76 / 203.73 (200) | 110.84 / 255.40 (200) | |
-| MAE bikes/h (coverage) | 95.519 (200/200) | 102.236 (200/200), mixed: 30 answers from the rejected model | |
-| Same inputs vs baseline | - | 170 identical, 30 different, max abs diff 217.401 bikes/h | |
-| Evidence | `baseline-summary.json` | `watch-4-summary.json`, `compare-incident.txt` | |
+| Window (UTC) | 19:04:15 -> 19:04:38 | 19:15:53 -> 19:16:22 (watch-4, straddles the switch at 19:16:19) | 19:32:47 -> 19:33:11 |
+| Revision / model_version | `bike-demand-v2-deeper` / `deeper-trees-e024f62d651a` (200) | `bike-demand-drill-1` / `shallow-trees-77df9d597f48` (30) + `deeper-trees-e024f62d651a` (170) | `bike-demand-v2-deeper` / `deeper-trees-e024f62d651a` (200) |
+| Valid success | 200/200 | 200/200 | 200/200 |
+| Invalid 4xx | 20/20 | 20/20 | 20/20 |
+| p50 / p95 ms (n) | 91.76 / 203.73 (200) | 110.84 / 255.40 (200) | 105.51 / 135.59 (200) |
+| MAE bikes/h (coverage) | 95.519 (200/200) | 102.236 (200/200), mixed: 30 answers from the rejected model | 95.519 (200/200) |
+| Same inputs vs baseline | - | 170 identical, 30 different, max abs diff 217.401 bikes/h | 200 identical, 0 different, max abs diff 0.000 |
+| Alerts | - | MAE, unknown model_version | none |
+| Evidence | `baseline-summary.json` | `watch-4-summary.json`, `compare-incident.txt` | `after-summary.json`, `compare-after.txt`, `check-after-2.txt`, `cloud-run-logs-after.json` |
 
-What improved: `<...>`. What remains unknown: the MAE of the rejected model on
-the full 200-row cohort (the incident window mixes both models; only 30 answers
-came from it). `<...>`. What would falsify the recovery claim: `<...>`.
+What improved: the accepted model answers again (identity 8/8 against the decision
+record), the MAE is back to the baseline value exactly (95.519), and all 200
+predictions are identical to the baseline key by key. Health was green in all
+three periods: the incident was a quality and identity problem, not an
+availability problem.
+
+What remains unknown: the MAE of the rejected model on the full 200-row cohort
+(the incident window mixes both models; only 30 answers came from it); behaviour
+on real user traffic (only the replay cohort is labelled); who authorised the
+deployment (no approval is required by Cloud Run itself); long-term reliability
+(the after window is a few minutes).
+
+What would falsify the recovery claim: a later probe or `/version` showing a
+`model_version` other than `deeper-trees-e024f62d651a`; any key with a different
+output than the baseline for the same input; traffic not at 100% on
+`bike-demand-v2-deeper`.
 
 ## 8. Follow-up
 
 | Action | Owner | Verified by |
 | --- | --- | --- |
-| `<e.g. alert also on /version vs releases.md>` | `<name>` | `<how>` |
+| Give the operator role the Artifact Registry read permission needed by `update-traffic` (`artifactregistry.repositories.downloadArtifacts`), and write it in the runbook | Leila (project owner) | Andrea reruns a traffic change in the next drill without `PERMISSION_DENIED` |
+| Runbook: after a traffic change, wait and retry `check_deployment.py` before concluding (first check timed out right after routing) | Andrea (`RUNBOOK.md`) | Julia's peer attempt on the runbook |
+| Alert also when `/version` differs from the `serving 100%` line of `releases.md`, not only on MAE | Leila (`scripts/probe.py`) | a probe against the retained drill revision raises the identity alert |
+| Restrict who can deploy to `bike-demand` (any deploy goes live at 100% immediately) | Leila | IAM policy reviewed in a PR |
