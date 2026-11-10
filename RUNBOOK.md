@@ -1,7 +1,7 @@
 # Runbook: bike-demand on Cloud Run
 
 Last verified: 2026-11-10 19:32-19:36 UTC by Andrea, after the Lab 8 drill
-rollback, on revision `bike-demand-v2-deeper` (model `deeper-trees-e024f62d651a`,
+rollback; sections 2 and 5 re-run by Julia alone at 19:49 UTC (peer attempt), on revision `bike-demand-v2-deeper` (model `deeper-trees-e024f62d651a`,
 sha256 `94f4f4b8f3482d034c10cec68cd65e66fdb91b0aac4119c61979f8bd2de9f857`,
 code `a9eda78d66c42d08b84a325cfcf5eac86bda4ebc`). Revise after every drill or
 incident; a step nobody has verified is marked UNVERIFIED.
@@ -12,9 +12,17 @@ Andrea. Escalate to: Leila (project owner: IAM, billing, quotas).
 
 ```powershell
 $URL = "https://bike-demand-6zxggmsv2a-ew.a.run.app"; $REGION = "europe-west1"; $SVC = "bike-demand"
-$E = "reports\incidents\<new-record>\evidence"   # one folder per incident
-New-Item -ItemType Directory -Force $E
 gcloud config set project bike-demand-ai
+# Where outputs go:
+# - a real incident: one folder per incident, committed, named <UTC date>-<short name>
+$E = "reports\incidents\2026-11-20-wrong-model\evidence"   # example: change date and name
+# - a routine check that is not an incident: a temp folder, not committed
+# $E = "$env:TEMP\bike-check"
+New-Item -ItemType Directory -Force $E
+# Reference "normal" (fixed replay cohort, measured before the Lab 8 drill).
+# On main once the incident PR is merged; before that: git checkout lab08/incident
+$B = "reports\incidents\lab08-drill\evidence\baseline"
+Test-Path "$B-summary.json"
 ```
 
 ## 0. Access you need before an incident (checked in the Lab 8 drill)
@@ -51,7 +59,8 @@ observed, path to the `-summary.json` file.
 3. What differs between the serving revision and the expected one (save both,
    then compare; in the drill only the image digest and
    `BIKE_DEMAND_EXPECTED_MODEL_SHA256` differed):
-   `cmd /c "gcloud run revisions describe <serving revision> --region $REGION --format=yaml(spec) > $E\revision-new.txt 2>&1"`
+   `$NEW = "<revision with percent: 100 in the output of step 2.2>"`
+   `cmd /c "gcloud run revisions describe $NEW --region $REGION --format=yaml(spec) > $E\revision-new.txt 2>&1"`
    `cmd /c "gcloud run revisions describe bike-demand-v2-deeper --region $REGION --format=yaml(spec) > $E\revision-old.txt 2>&1"`
    `fc.exe $E\revision-old.txt $E\revision-new.txt`
 4. Is the served model a known one? Search `decisions/` for the
@@ -59,8 +68,8 @@ observed, path to the `-summary.json` file.
    candidate `shallow-trees-77df9d597f48`).
 5. Same inputs, different outputs? Replay the fixed cohort and compare with
    the baseline attempts key by key:
-   `uv run --locked python scripts/probe.py --url $URL --period check --baseline <baseline-summary.json> --out $E\check`
-   `uv run --locked python scripts/compare_attempts.py <baseline-attempts.jsonl> $E\check-attempts.jsonl`
+   `uv run --locked python scripts/probe.py --url $URL --period check --baseline "$B-summary.json" --out $E\check`
+   `uv run --locked python scripts/compare_attempts.py "$B-attempts.jsonl" $E\check-attempts.jsonl`
    Same key, different prediction = the model changed, not the inputs.
 6. What the service logged (save the raw output):
    `gcloud logging read 'resource.type=cloud_run_revision AND resource.labels.service_name=bike-demand' --freshness=2h --limit 300 --format=json | Out-File -Encoding utf8 $E\cloud-run-logs.json`
@@ -78,10 +87,20 @@ observed, path to the `-summary.json` file.
 
 1. Name the target from `releases.md` before acting. Today:
    `bike-demand-v2-deeper`, model `deeper-trees-e024f62d651a`, sha256
-   `94f4f4b8f348...`, image `sha256:59c317ef019e3fee5b6354890c2671ed73e087f163c4bf4d7da28018c6689b59`,
-   decision `decisions/20261108T215758Z-deeper-trees-eligible.json`.
-2. Compatibility: the target's image digest must equal `releases.md`:
+   `94f4f4b8f348...`, decision `decisions/20261108T215758Z-deeper-trees-eligible.json`.
+   The image has **two digests** for the same image (found by Julia's peer attempt):
+   - `releases.md` records the **index** digest given by `docker push`:
+     `sha256:0f643f971c168b85b1007789b598dffe721ab00122dfcaabef44c25b980fc59b`
+   - Cloud Run shows the **linux/amd64 manifest** inside that index, which is
+     what it actually runs: `sha256:59c317ef019e3fee5b6354890c2671ed73e087f163c4bf4d7da28018c6689b59`
+2. Compatibility: the image of the target revision must be that manifest:
    `gcloud run revisions describe bike-demand-v2-deeper --region $REGION --format="value(spec.containers[0].image)"`
+   -> must end with `@sha256:59c317ef...` (manifest above). For another
+   version, check that the manifest belongs to the index recorded in
+   `releases.md` (needs Docker):
+   `docker buildx imagetools inspect europe-west1-docker.pkg.dev/bike-demand-ai/bike-demand/api@<index digest from releases.md>`
+   -> the `linux/amd64` line must show the digest Cloud Run shows. A different
+   digest means a different image: do not route traffic, escalate.
 3. One controlled change (keep the output):
    `cmd /c "gcloud run services update-traffic $SVC --region $REGION --to-revisions bike-demand-v2-deeper=100 > $E\update-traffic.txt 2>&1"`
 4. Check that the routing changed:
@@ -108,8 +127,9 @@ Wait 30 seconds and run the check again into a new file before concluding.
    uv run --locked python scripts/check_deployment.py --url $URL --expected-metadata $E\expected-accepted.json --expected-revision a9eda78d66c42d08b84a325cfcf5eac86bda4ebc
    ```
    Expected: 8/8 ok, exit 0.
-2. Behaviour: `uv run --locked python scripts/probe.py --url $URL --period after --baseline <baseline-summary.json> --out $E\after`
-   (no ALERT, same MAE as baseline) and `compare_attempts.py` -> 200 identical.
+2. Behaviour: `uv run --locked python scripts/probe.py --url $URL --period after --baseline "$B-summary.json" --out $E\after`
+   (no ALERT, same MAE as baseline) and
+   `uv run --locked python scripts/compare_attempts.py "$B-attempts.jsonl" $E\after-attempts.jsonl` -> 200 identical.
 3. Signals: Cloud Run logs after the change (step 2.6 query, new file) show
    request lines `probe-after-...` with the expected `model_version`.
 
@@ -120,6 +140,13 @@ Keep observing for 10 minutes before closing.
 - the retained target is missing, its digest differs, or it fails step 5;
 - `gcloud` reports a permission or quota error you cannot fix with section 0 (owner: Leila);
 - the symptom continues after rollback (the cause is not the release).
+
+## Revision history
+
+| Date (UTC) | Who | Change |
+| --- | --- | --- |
+| 2026-11-10 | Andrea | first version, written from the Lab 8 drill (access, cold start) |
+| 2026-11-10 | Andrea | after Julia's peer attempt: two image digests (index vs manifest) and how to check them, where outputs go (`$E`), baseline path (`$B`), how to name the serving revision |
 
 ## Known limits
 
