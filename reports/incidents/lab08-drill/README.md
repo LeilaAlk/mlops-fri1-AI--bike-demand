@@ -34,12 +34,13 @@ region `europe-west1`. All times UTC. Raw evidence: [`evidence/`](evidence/).
 | by 19:23 | Andrea | checks: `/version` = `shallow-trees-77df9d597f48` (not in `releases.md`, the Lab 7 rejected candidate); 100% traffic on `bike-demand-drill-1`, created 19:15:38; same code `a9eda78`; 30/200 different outputs for identical inputs; `fc`: image and expected hash differ | `evidence/version-incident.json`, `evidence/traffic-incident.txt`, `evidence/revisions-incident.txt`, `evidence/compare-incident.txt`, `evidence/revision-old.txt`, `evidence/revision-new.txt` |
 | 19:23 | Andrea | diagnosis written (section 4): A supported, B rejected, before any reveal (pushed in commit `8acbc3e`) | this file |
 | 19:27 | Julia | fault revealed (section 6): rejected model deployed at 19:15:29 -> 19:16:19 | section 6 |
+| 19:28:17 | Andrea | rollback attempt 1 **refused**: `PERMISSION_DENIED`, permission `artifactregistry.repositories.downloadArtifacts` missing on Artifact Registry repository `bike-demand` for the operator account; traffic stayed 100% on `bike-demand-drill-1` (recorded after the fact from Andrea's report) | `evidence/update-traffic.txt` |
+| ~19:29 | Leila | granted `roles/artifactregistry.reader` on project `bike-demand-ai` to Andrea's account; Andrea waited about 1 min | Andrea's report |
 | 19:30 | Talia | precision after reading the raw files: the watch-4 window (19:15:53 -> 19:16:22) straddled the switch; 170 answers came from `deeper-trees-e024f62d651a`, 30 from `shallow-trees-77df9d597f48`. The 30 different outputs are exactly the 30 answered by the rejected model; the incident MAE 102.236 mixes both models | `evidence/watch-4-summary.json` (`predict_model_versions`), `evidence/compare-incident.txt` |
-| `<T1>` | Andrea | rollback attempt 1 **refused**: `PERMISSION_DENIED`, permission `artifactregistry.repositories.downloadArtifacts` missing for the operator account; traffic stayed 100% on `bike-demand-drill-1` (recorded after the fact from Andrea's report) | `evidence/update-traffic.txt` |
-| `<T2>` | Andrea | rollback retry after `<how unblocked>`: `Routing traffic... done`, 100% `bike-demand-v2-deeper` | `evidence/update-traffic-retry.txt`, `evidence/traffic-after.txt` |
-| `<T3>` | Andrea | identity check 1 **failed**: `cannot reach … read operation timed out`, 7/8 FAIL (only hr=24 -> 422 ok) | `evidence/check-after.txt` |
-| `<T4>` | Andrea | identity check 2: 8/8 ok, exit 0 (deeper-trees-e024f62d651a, sha 94f4f4b8f348, commit a9eda78) | `evidence/check-after-2.txt` |
+| 19:30:57 | Andrea | rollback retry: `Routing traffic... done`, 100% `bike-demand-v2-deeper` | `evidence/update-traffic-retry.txt`, `evidence/traffic-after.txt` |
+| 19:32:47 | Andrea | identity check 1 **failed** for the script (`read operation timed out`, 7/8 FAIL): Cloud Run received request `check-ec5e5760` and answered 200, but too late (cold start of `bike-demand-v2-deeper`) | `evidence/check-after.txt`, `evidence/cloud-run-logs-checks.json` |
 | 19:32:47 -> 19:33:11 | Andrea | after probe: no ALERT, 200/200, 20/20, MAE 95.519, p95 135.59 ms; 200/200 predictions identical to baseline | `evidence/after-summary.json`, `evidence/compare-after.txt` |
+| 19:34:46 | Andrea | identity check 2: 8/8 ok, exit 0 (request `check-6a55c62a`; deeper-trees-e024f62d651a, sha 94f4f4b8f348, commit a9eda78) | `evidence/check-after-2.txt`, `evidence/cloud-run-logs-checks.json` |
 | 19:36:42 | Andrea | verification done: Cloud Run logs show the `probe-after` requests with the expected model; observation window 19:32:47 -> 19:36:42 | `evidence/cloud-run-logs-after.json` |
 
 ## 3. First signal
@@ -89,14 +90,17 @@ revision and the last verified release.
 
 Command: `gcloud run services update-traffic bike-demand --region europe-west1 --to-revisions bike-demand-v2-deeper=100`.
 
-- Attempt 1 (`<T1>`): **refused**, `PERMISSION_DENIED` on
-  `artifactregistry.repositories.downloadArtifacts` for the operator account;
-  nothing changed (traffic still 100% on `drill-1`):
+- Attempt 1 (19:28:17): **refused**, `PERMISSION_DENIED` on
+  `artifactregistry.repositories.downloadArtifacts` (repository `bike-demand`)
+  for the operator account; nothing changed (traffic still 100% on `drill-1`):
   [`evidence/update-traffic.txt`](evidence/update-traffic.txt).
-- Attempt 2 (`<T2>`), after `<how unblocked>`: done, 100% on
-  `bike-demand-v2-deeper`:
+- Unblocked by Leila (project owner): `roles/artifactregistry.reader` on project
+  `bike-demand-ai` granted to Andrea's account; about 1 minute wait.
+- Attempt 2 (19:30:57): done, 100% on `bike-demand-v2-deeper`:
   [`evidence/update-traffic-retry.txt`](evidence/update-traffic-retry.txt),
   [`evidence/traffic-after.txt`](evidence/traffic-after.txt).
+- Time from first signal (19:16:22) to traffic restored (19:30:57): about 15 minutes,
+  of which about 3 minutes lost on the missing permission.
 
 ## 6. Fault revealed by the injector (after section 4)
 
@@ -165,7 +169,7 @@ output than the baseline for the same input; traffic not at 100% on
 
 | Action | Owner | Verified by |
 | --- | --- | --- |
-| Give the operator role the Artifact Registry read permission needed by `update-traffic` (`artifactregistry.repositories.downloadArtifacts`), and write it in the runbook | Leila (project owner) | Andrea reruns a traffic change in the next drill without `PERMISSION_DENIED` |
-| Runbook: after a traffic change, wait and retry `check_deployment.py` before concluding (first check timed out right after routing) | Andrea (`RUNBOOK.md`) | Julia's peer attempt on the runbook |
+| Keep `roles/artifactregistry.reader` for the operator (needed by `update-traffic`), and write it in the runbook prerequisites | Leila (project owner) | Andrea reruns a traffic change in the next drill without `PERMISSION_DENIED` |
+| Runbook: after a traffic change, expect a cold start; wait and retry `check_deployment.py` before concluding (first check at 19:32:47 timed out although Cloud Run answered 200) | Andrea (`RUNBOOK.md`) | Julia's peer attempt on the runbook |
 | Alert also when `/version` differs from the `serving 100%` line of `releases.md`, not only on MAE | Leila (`scripts/probe.py`) | a probe against the retained drill revision raises the identity alert |
 | Restrict who can deploy to `bike-demand` (any deploy goes live at 100% immediately) | Leila | IAM policy reviewed in a PR |
