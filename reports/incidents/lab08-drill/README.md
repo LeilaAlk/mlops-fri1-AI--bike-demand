@@ -28,6 +28,7 @@ region `europe-west1`. All times UTC. Raw evidence: [`evidence/`](evidence/).
 | 19:01 | Talia | incident branch `lab08/incident` opened (commit `c820fcd`) | this file |
 | 19:03:45 | Leila | baseline started (traffic recorded first) | `evidence/traffic-baseline.txt` |
 | 19:04:52 | Leila | baseline probe done: 200/200, 20/20, MAE 95.519, model deeper-trees-e024f62d651a | `evidence/baseline-summary.json` |
+| 19:08 | Andrea | watch loop started (one probe every 2 min, alert vs baseline) | `evidence/watch-*-summary.json` |
 
 ## 3. First signal
 
