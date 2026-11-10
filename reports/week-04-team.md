@@ -107,7 +107,11 @@ logs).
 Julia followed `RUNBOOK.md` without help on `<date>`: `<what worked, what was
 missing>`; revised in `<sha>`.
 
-![<what>](images/lab-08-team-<...>.png)
+![First signal: ALERT MAE 102.236 > baseline 95.519 + 5 and unknown model_version at 19:16:22 UTC (watch-4)](images/lab-08-team-signal.jpeg)
+
+![After rollback, first identity check: timeout on the cold start of bike-demand-v2-deeper (19:32:47 UTC), then probe "after" without alert, MAE 95.519, 200/200 predictions identical to the baseline](images/lab-08-team-recovered-1.jpeg)
+
+![After rollback, second identity check: 8/8 ok, exit status 0 (19:34:46 UTC)](images/lab-08-team-recovered-2.jpeg)
 
 ### Limits and blockers
 
