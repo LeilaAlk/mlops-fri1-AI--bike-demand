@@ -70,3 +70,47 @@ with `gcloud` from Leila's laptop: they are local evidence, kept as raw text.
 Blockers: none. The gate cannot know whether the gain holds after June 2012,
 nor Cloud Run latency: p95 is measured on the machine that runs the pipeline
 (6.96 ms on the release machine, 22.12 ms for the same model on Leila's laptop).
+## Lab 8: monitoring, incident diagnosis and rollback
+
+| Role | Person | Also |
+| --- | --- | --- |
+| Operator | Andrea | `RUNBOOK.md` (PR #...) |
+| Injector | Julia | peer attempt on the runbook |
+| Recorder | Talia | incident record (PR #...) |
+| Coordinator, monitoring | Leila | `scripts/probe.py` + signal definitions (PR #...), this section, tag `m4` |
+
+Incident record: [`reports/incidents/<record>/`](incidents/) with raw evidence.
+Runbook: [`RUNBOOK.md`](../RUNBOOK.md). Rollback target and retained versions:
+[`reports/releases.md`](releases.md).
+
+### Three periods (copied from the incident record)
+
+| | Baseline | Incident | After rollback |
+| --- | --- | --- | --- |
+| Revision / model_version | | | |
+| Valid success | | | |
+| MAE bikes/h (coverage) | | | |
+| p95 ms (n) | | | |
+
+First signal `<alert>` at `<UTC>`, `<x>` minutes after the injection. Diagnosis
+`<A supported, B rejected>` before the reveal: `<matched / partly>`.
+
+### Chain from Lab 7 to Lab 8
+
+Gate decision `<record>` -> promoted `<model_version>` -> revision
+`bike-demand-v2-deeper` -> drill revision `bike-demand-drill-1` -> traffic back
+to `bike-demand-v2-deeper` -> verified `<time>` (identity 8/8, probe no alert,
+logs).
+
+### Peer use of the runbook
+
+Julia followed `RUNBOOK.md` without help on `<date>`: `<what worked, what was
+missing>`; revised in `<sha>`.
+
+![<what>](images/lab-08-team-<...>.png)
+
+### Limits and blockers
+
+Service health and prediction quality are separate claims; quality is known
+only for the replay cohort. `<blockers: none / step, message, owner>`.
+Checkpoint: annotated tag `m4` on `<sha>`.
