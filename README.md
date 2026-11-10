@@ -481,6 +481,42 @@ One validation window (Jan-Jun 2012) cannot show that a gain holds later in
 growth. Latency is measured on the release machine, not on Cloud Run. The gate
 says nothing about drift after deployment: that is Lab 8.
 
+## Lab 8: monitoring, incident and rollback
+
+| What | Where |
+| --- | --- |
+| How to respond (symptom, first checks, safe action, verification) | [`RUNBOOK.md`](RUNBOOK.md) |
+| What happened in the drill | [`reports/incidents/`](reports/incidents/) |
+| Raw evidence (probe attempts and summaries, gcloud outputs, Cloud Run logs) | `reports/incidents/<record>/evidence/` |
+| Rollback targets | [`reports/releases.md`](reports/releases.md) |
+
+The API is unchanged: `GET /health` (200 when a verified model is loaded,
+otherwise 503), `POST /predict` (prediction + `model_version`; invalid input
+4xx; no usable model 503). The service never trains.
+
+### Signals (same definitions in every period)
+
+[`scripts/probe.py`](scripts/probe.py) replays a fixed cohort,
+[`examples/replay-validation.jsonl`](examples/replay-validation.jsonl): 200
+validation-period hours (every 21st hour of Jan-Jun 2012, made by
+`scripts/make_replay.py`), plus 20 deliberately invalid requests. Labels stay
+in the file; only the twelve features are sent.
+
+| Signal | Eligible / population | Good | Unit, window | Missing data |
+| --- | --- | --- | --- | --- |
+| Valid prediction success | every attempt of the 200 valid replay requests, timeouts and connection errors included | HTTP 200, finite prediction >= 0, `model_version` present | ratio, one probe run | 0 eligible attempts = no evidence (null), never 100% |
+| Invalid rejection | the 20 invalid requests (hr=24, temp=1.5, weathersit=5, missing field) | 4xx | ratio, same run | reported apart: a correct 422 is not a failure |
+| Latency | successful valid attempts | | ms, caller side, p50 / p95 nearest rank, with n | failed attempts listed apart |
+| Quality | good valid predictions matched to their label | | MAE bikes/hour + coverage matched/eligible | unmatched = unknown, never zero error |
+| Identity | `/version` before and after the window, `model_version` counts in responses | | | |
+
+Alert rules (`--baseline`, exit status 1): valid success < 0.99; MAE above the
+baseline MAE + 5 bikes/hour (the model is deterministic and the cohort fixed,
+so the same model gives the same MAE: +5 is far above any rounding); p95 above
+3 x baseline (network jitter to Cloud Run is large); a `model_version` not
+seen in the baseline. A short drill tests the loop; it does not establish a
+long-term objective.
+
 ## Support and individual reports
 
 If setup remains blocked after five minutes, contact the instructor using the
