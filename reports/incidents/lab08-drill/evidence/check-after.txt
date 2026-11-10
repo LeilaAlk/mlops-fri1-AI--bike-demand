@@ -1,0 +1,11 @@
+cannot reach https://bike-demand-6zxggmsv2a-ew.a.run.app: The read operation timed out
+claim                      expected                   observed                   result
+ready (/health)            200                        0                          FAIL
+model_version              deeper-trees-e024f62d...   None                       FAIL
+model_sha256               94f4f4b8f3482d034c10c...   None                       FAIL
+service_revision           a9eda78d66c42d08b84a3...   None                       FAIL
+valid input -> 200         200, finite >= 0           0, None                    FAIL
+prediction model_version   deeper-trees-e024f62d...   None                       FAIL
+request id echoed          check-ec5e5760             None                       FAIL
+invalid hr=24 -> 422       422                        422                        ok
+exit status 1 (failed: ['ready (/health)', 'model_version', 'model_sha256', 'service_revision', 'valid input -> 200', 'prediction model_version', 'request id echoed'])

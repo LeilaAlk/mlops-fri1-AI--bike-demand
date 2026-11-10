@@ -1,0 +1,5 @@
+baseline-attempts.jsonl: 200 good predictions, versions ['deeper-trees-e024f62d651a']
+watch-4-attempts.jsonl: 200 good predictions, versions ['deeper-trees-e024f62d651a', 'shallow-trees-77df9d597f48']
+same keys compared: 200
+identical predictions: 170   different: 30
+max abs difference: 217.401 bikes/hour

@@ -1,0 +1,67 @@
+{
+  "period": "watch-1",
+  "url": "https://bike-demand-6zxggmsv2a-ew.a.run.app",
+  "window_utc": [
+    "2026-11-10T19:08:29.881Z",
+    "2026-11-10T19:08:58.695Z"
+  ],
+  "cohort": "examples/replay-validation.jsonl (first 200 validation hours)",
+  "valid_success": {
+    "good": 200,
+    "eligible": 200,
+    "ratio": 1.0,
+    "status_counts": {
+      "200": 200
+    }
+  },
+  "invalid_rejected": {
+    "rejected_4xx": 20,
+    "invalid": 20
+  },
+  "latency_ms_successful": {
+    "n": 200,
+    "p50": 99.32,
+    "p95": 269.22,
+    "method": "nearest rank, caller-side"
+  },
+  "latency_ms_failed": [],
+  "quality": {
+    "mae_bikes_per_hour": 95.519,
+    "matched": 200,
+    "eligible": 200,
+    "coverage": 1.0
+  },
+  "identity": {
+    "version_before": {
+      "status": 200,
+      "body": {
+        "service_revision": "a9eda78d66c42d08b84a325cfcf5eac86bda4ebc",
+        "model_version": "deeper-trees-e024f62d651a",
+        "model_sha256": "94f4f4b8f3482d034c10cec68cd65e66fdb91b0aac4119c61979f8bd2de9f857",
+        "ready": true
+      }
+    },
+    "health_before": {
+      "status": 200,
+      "body": {
+        "status": "ok",
+        "model_version": "deeper-trees-e024f62d651a"
+      }
+    },
+    "version_after": {
+      "status": 200,
+      "body": {
+        "service_revision": "a9eda78d66c42d08b84a325cfcf5eac86bda4ebc",
+        "model_version": "deeper-trees-e024f62d651a",
+        "model_sha256": "94f4f4b8f3482d034c10cec68cd65e66fdb91b0aac4119c61979f8bd2de9f857",
+        "ready": true
+      }
+    },
+    "predict_model_versions": {
+      "deeper-trees-e024f62d651a": 200
+    }
+  },
+  "raw_attempts": "reports/incidents/lab08-drill/evidence/watch-1-attempts.jsonl",
+  "compared_with": "reports/incidents/lab08-drill/evidence/baseline-summary.json",
+  "alerts": []
+}
