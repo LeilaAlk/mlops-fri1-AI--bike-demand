@@ -1,4 +1,4 @@
-# Incident record: <short name> (Lab 8 drill)
+# Incident record: rejected model served on Cloud Run (Lab 8 drill)
 
 Status: <resolved / mitigated, monitoring>. Service `bike-demand` on Cloud Run,
 region `europe-west1`. All times UTC. Raw evidence: [`evidence/`](evidence/).
@@ -31,7 +31,8 @@ region `europe-west1`. All times UTC. Raw evidence: [`evidence/`](evidence/).
 | 19:08 | Andrea | watch loop started (one probe every 2 min, alert vs baseline) | `evidence/watch-*-summary.json` |
 | 19:16:22 | Andrea | **first signal** (watch-4): `ALERT MAE 102.236 > baseline 95.519 + 5` and `ALERT model_version not seen in baseline: shallow-trees-77df9d597f48`; valid statuses 200/200 (service answers, model changed) | `evidence/watch-4-summary.json` |
 | by 19:23 | Andrea | checks: `/version` = `shallow-trees-77df9d597f48` (not in `releases.md`, the Lab 7 rejected candidate); 100% traffic on `bike-demand-drill-1`, created 19:15:38; same code `a9eda78`; 30/200 different outputs for identical inputs; `fc`: image and expected hash differ | `evidence/version-incident.json`, `evidence/traffic-incident.txt`, `evidence/revisions-incident.txt`, `evidence/compare-incident.txt`, `evidence/revision-old.txt`, `evidence/revision-new.txt` |
-| 19:23 | Andrea | diagnosis written (section 4): A supported, B rejected, before any reveal | this file |
+| 19:23 | Andrea | diagnosis written (section 4): A supported, B rejected, before any reveal (pushed in commit `8acbc3e`) | this file |
+| 19:27 | Julia | fault revealed (section 6): rejected model deployed at 19:15:29 -> 19:16:19 | section 6 |
 
 ## 3. First signal
 
@@ -68,8 +69,33 @@ Command and output: [`evidence/update-traffic.txt`](evidence/update-traffic.txt)
 
 ## 6. Fault revealed by the injector (after section 4)
 
-`<what Julia changed, exact command, UTC time, how it was reversible>`.
-Did the diagnosis match? `<yes / partly / no, and why>`.
+Julia used option 1, "the wrong model is online". She deployed on our Cloud Run
+service a rehearsal image (tag `drill-rejected`, digest
+`sha256:b169f7ed7f4c5f2b74d48fb4467282c5de36938a436d9cc52a930b4cac6c053c`)
+containing the candidate **rejected** in Lab 7, `shallow-trees-77df9d597f48`
+(gain_vs_accepted -11.232 bikes/h), with the same code (commit `a9eda78`). The
+image was built before the session from a temporary clone: the real registry,
+the decisions, `releases.md` and the data were not touched.
+
+Exact command (19:15:29 -> 19:16:19 UTC, then `bike-demand-drill-1` at 100% of traffic):
+
+    gcloud run deploy bike-demand --image "europe-west1-docker.pkg.dev/bike-demand-ai/bike-demand/api:drill-rejected" --region europe-west1 --port 8000 --memory 1Gi --max-instances 2 --update-env-vars "BIKE_DEMAND_EXPECTED_MODEL_SHA256=1227415f1aee86e71b8f15fc3d624a22cc4dd79135ada959fe82851bfcfc72a3" --revision-suffix drill-1
+
+Only the image and `BIKE_DEMAND_EXPECTED_MODEL_SHA256` changed; memory (1Gi),
+max instances (2), port and code are identical to v2. This answers the open point
+of hypothesis A ("other configuration changed?"): no.
+
+Why it was reversible: the accepted revision `bike-demand-v2-deeper` stayed
+available (as did `bike-demand-v1-baseline`). One traffic rollback
+(`gcloud run services update-traffic --to-revisions bike-demand-v2-deeper=100`)
+is enough, with no retraining and no registry change. Revision
+`bike-demand-drill-1` is kept as evidence.
+
+Did the diagnosis match? **Yes.** Hypothesis A (a new model was deployed) was
+supported and B rejected before the reveal; the operator identified the exact
+model (the Lab 7 rejected candidate), the new revision and its creation time
+(19:15:38, within Julia's 19:15:29 -> 19:16:19 window). The first signal came at
+19:16:22, 3 seconds after the deployment finished, on the next watch probe.
 
 ## 7. Three periods (same definitions)
 
