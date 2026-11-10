@@ -1,0 +1,24 @@
+spec:
+  containerConcurrency: 80
+  containers:
+  - env:
+    - name: BIKE_DEMAND_EXPECTED_MODEL_SHA256
+      value: 1227415f1aee86e71b8f15fc3d624a22cc4dd79135ada959fe82851bfcfc72a3
+    image: europe-west1-docker.pkg.dev/bike-demand-ai/bike-demand/api@sha256:f419838b7d9ccf9e6a52f7f45f2154319f3f979318d5b832ed257c25d71f69aa
+    name: api-1
+    ports:
+    - containerPort: 8000
+      name: http1
+    resources:
+      limits:
+        cpu: 1000m
+        memory: 1Gi
+    startupProbe:
+      failureThreshold: 1
+      periodSeconds: 240
+      tcpSocket:
+        port: 8000
+      timeoutSeconds: 240
+  sandboxes: {}
+  serviceAccountName: 694321399423-compute@developer.gserviceaccount.com
+  timeoutSeconds: 300
