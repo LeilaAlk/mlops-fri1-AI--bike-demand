@@ -1,0 +1,22 @@
+{
+  "scored_at": "2026-11-13T08:16:12Z",
+  "purpose": "single held-test evaluation of the model already selected on validation (Lab 7); not used to choose between models",
+  "code_commit": "d660349c486adf5b5690f24fdca125954f1d1c8f",
+  "decision_record": "decisions/20261108T215758Z-deeper-trees-eligible.json",
+  "model_version": "deeper-trees-e024f62d651a",
+  "model_sha256": "94f4f4b8f3482d034c10cec68cd65e66fdb91b0aac4119c61979f8bd2de9f857",
+  "data_sha256": "e03de4ee4ef4dc376ac6e04bf829673c6269e8eba5c60fa121640fa2f829504f",
+  "test_window": [
+    "2012-07-01",
+    "2012-12-31"
+  ],
+  "test_rows": 4376,
+  "metric": "MAE, bikes per hour",
+  "test_mae": 91.562,
+  "test_mae_train_mean_baseline": 182.214,
+  "validation_mae_at_selection": 86.039,
+  "environment": {
+    "python": "3.12.15",
+    "platform": "Windows-11-10.0.26200-SP0"
+  }
+}
