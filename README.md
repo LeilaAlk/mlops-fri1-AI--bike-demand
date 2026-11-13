@@ -1,4 +1,80 @@
-# Bike Demand: Week 1 starter
+# Bike Demand: hourly rental prediction service
+
+Team AI (Leila, Talia, Julia, Andrea). The service predicts the number of bike
+rentals in one hour (UCI Bike Sharing, Washington D.C., 2011-2012) from twelve
+calendar and weather features. It is trained, gated, packaged, deployed on
+Cloud Run, monitored and recovered with the steps below. Final submission:
+Release **v1.0.0** (tag `v1.0.0`). The lab-by-lab sections further down keep the
+detailed history (Labs 1-8).
+
+## Release v1.0.0 at a glance
+
+```mermaid
+flowchart LR
+  D["data/raw/hour.csv<br/>frozen, sha256 in manifest"] --> V["validate + chronological split<br/>train 2011 / validation 2012 H1 / test 2012 H2"]
+  V --> P["pipeline: train candidate<br/>(runs/, out of Git)"]
+  P --> G{"quality gate<br/>configs/gate-policy.yaml"}
+  G -- "rejected / blocked" --> R["decisions/ record only"]
+  G -- "eligible + reviewed PR" --> A["promote: registry/versions/<br/>immutable, previous kept"]
+  A --> I["Dockerfile.release image<br/>Artifact Registry"]
+  I --> C["Cloud Run revision<br/>/health /predict /version"]
+  C --> M["probe + logs<br/>alerts vs baseline"]
+  M -- "incident" --> K["RUNBOOK.md: traffic back<br/>to retained revision"]
+  CI["GitHub Actions: lock, ruff, tests,<br/>recompute, container check"] -.-> P
+  CI -.-> I
+```
+
+| Show | Where |
+| --- | --- |
+| System and purpose | this section; API contract in "Lab 4: prediction API" |
+| Reproducible run | `uv.lock` + `uv sync --locked`, `Dockerfile` (CI image), `Dockerfile.release` (serving image) |
+| API and container tests | `tests/` (`pytest -m "infra or lab1 or exercise or api or recompute or gate"`), workflows `CI` and `Container` |
+| Gate decisions | `configs/gate-policy.yaml`, `decisions/` (one accept, one reject, with reasons) |
+| Logging and incident | JSON logs (Lab 5), `reports/incidents/lab08-drill/`, `RUNBOOK.md` |
+| Final held-test result | `reports/final-evaluation.json` (scored once, after selection) |
+| Served identity | `reports/releases.md` (revision, model sha256, image digest, decision) |
+
+### Run, test and deploy (clean checkout, Windows PowerShell)
+
+```powershell
+git clone https://github.com/LeilaAlk/mlops-fri1-AI--bike-demand.git
+cd mlops-fri1-AI--bike-demand
+git checkout v1.0.0
+uv sync --locked                                   # exact versions from uv.lock
+uv run --locked python -m bike_demand.preflight
+uv run --locked ruff check .
+uv run --locked pytest -q                          # all groups; recompute retrains (about 30 s)
+```
+
+Serve the accepted model locally from the Release asset (no retraining):
+
+```powershell
+# download deeper-trees-e024f62d651a.tar.gz and its .sha256 from the Release, then:
+(Get-FileHash deeper-trees-e024f62d651a.tar.gz -Algorithm SHA256).Hash.ToLower()   # must equal the .sha256 file
+New-Item -ItemType Directory -Force registry\versions | Out-Null
+tar -xzf deeper-trees-e024f62d651a.tar.gz -C registry\versions
+docker build -f Dockerfile.release --build-arg BUNDLE=registry/versions/deeper-trees-e024f62d651a --build-arg GIT_COMMIT=$(git rev-parse HEAD) -t bike-demand:v1.0.0 .
+docker run --rm -p 127.0.0.1:8000:8000 -e BIKE_DEMAND_EXPECTED_MODEL_SHA256=94f4f4b8f3482d034c10cec68cd65e66fdb91b0aac4119c61979f8bd2de9f857 bike-demand:v1.0.0
+curl.exe -s http://127.0.0.1:8000/version
+```
+
+Deploy and verify on Cloud Run: "Serve the accepted version on Cloud Run"
+(Lab 7 section) and `RUNBOOK.md`. Live service:
+`https://bike-demand-6zxggmsv2a-ew.a.run.app` (`/health`, `/version`, `POST /predict`).
+
+### Known limits
+
+- Trained on 2011 only (`yr` is always 0 in training): the model cannot learn
+  the growth of 2012, which is why its error is about 86 bikes/hour on 2012.
+- The gate compares models on one validation window (Jan-Jun 2012); the gain of
+  the promoted model (0.8 bikes/hour) is not proof of future improvement.
+- Quality is measured only on the replay cohort, which has labels; live traffic
+  has none, so drift on real requests is not measured.
+- Latency is measured from one laptop; the drill lasted minutes, not weeks.
+- The accepted-model registry lives on one machine; the Release asset and the
+  Artifact Registry image are the shared copies.
+
+## Course history
 
 Teams of 3–4 use one private GitHub repository throughout the course. Lab 1 is
 repository setup, Git workflow and quality checks. Lab 2 adds validated data,
